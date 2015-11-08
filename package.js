@@ -1,24 +1,54 @@
 Package.describe({
-  name: 'chattersemantic',
+  name: 'chatter:semantic',
   version: '0.0.1',
-  // Brief, one-line summary of the package.
-  summary: '',
-  // URL to the Git repository containing the source code for this package.
-  git: '',
-  // By default, Meteor will default to using README.md for documentation.
-  // To avoid submitting documentation, set this field to null.
+  summary: 'UI package for chatter using the Semantic UI framework',
+  git: 'git@github.com:jorgeer/chatter-semantic.git',
   documentation: 'README.md'
 });
 
 Package.onUse(function(api) {
   api.versionsFrom('1.2.0.2');
-  api.use('ecmascript');
-  api.addFiles('chattersemantic.js');
+  
+  api.use([
+    'ecmascript',
+    'chatter:core'
+  ]);
+
+  api.imply('chatter:core');
+  
+  api.addFiles([
+    'client/room.jade',    
+    'client/roomList.jade',
+    'client/users.jade',   
+    'client/writer.jade',  
+    'client/nav.jade',     
+    'client/chatter.jade', 
+    
+    'client/room.js',      
+    'client/roomList.js',  
+    'client/users.js',     
+    'client/writer.js',    
+    'client/nav.js',       
+    'client/chatter.js',
+    
+    'client/styles.styl',
+  ], ['client']);
+  
+  api.use([
+    'reactive-dict',
+    'templating',
+    'jquery',
+    'session',
+    
+    'mquandalle:jade@0.4.5',
+    'mquandalle:stylus',
+  ], 'client');
+
 });
 
 Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('tinytest');
-  api.use('chattersemantic');
+  api.use('chatter:semantic');
   api.addFiles('chattersemantic-tests.js');
 });
