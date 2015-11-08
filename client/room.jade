@@ -1,197 +1,20 @@
 template(name="room")
     .room.ui.comments.basic.segment
+        if messagesReady
+            each messages
+                +message
+        else
+            .ui.active.inverted.dimmer
+                .ui.text.loader Loading messages
+            
+template(name="message")
         .comment
             //- Add avatar support later
                 a.avatar
                     img(src=avatar)
             .content
-                a.author Bob
+                a.author=userNick
                 .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        .comment
-            //- Add avatar support later
-                a.avatar
-                    img(src=avatar)
-            .content
-                a.author Bob
-                .metadata
-                    span.date 2h ago
-                .text HAHAHHA LOL
-        
-        
-        
+                    span.date=timeAgo
+                .text=message
+    
