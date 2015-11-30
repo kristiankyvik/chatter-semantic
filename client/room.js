@@ -6,6 +6,10 @@ Template.room.onCreated(function () {
             roomName: Session.get("chatter-room"),
             messageLimit: 30
         });
+        
+        this.usersSub = this.subscribe("chatterUsers", {
+            roomName: Session.get("chatter-room"),
+        });
     });
 });
 

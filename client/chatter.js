@@ -1,9 +1,25 @@
 Template.chatter.onCreated(function () {
     Session.set("chatter-room", "help");
+    Session.set("chatter-view", "room");
+    Session.set("chatter-state", "open");
+});
+
+Template.chatter.helpers({
+    view() {
+        return Session.get("chatter-view");
+    },
     
-    
+    state(s) {
+        return Session.get("chatter-state") === s;
+    }
 });
 
 Template.registerHelper("session", function (key) {
     return Session.get(key);
+});
+
+Template.chatter.events({
+    "click .chatter-open"() {
+        Session.set("chatter-state", "open");
+    }
 });

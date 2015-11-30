@@ -1,5 +1,9 @@
 template(name="chatter")
-    .ui.right.vertical.wide.visible.sidebar.chatter
-        +nav
-        +room
-        +writer
+    if state "open"
+        .ui.right.vertical.wide.visible.sidebar.chatter
+            +nav
+            
+            +Template.dynamic(template=view)
+    else if state "minimized"
+        .ui.button.teal.chatter-open
+            | Chat

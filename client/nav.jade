@@ -7,5 +7,17 @@ template(name="nav")
             | {{session "chatter-room"}}
         
         .right.menu
-            a.icon.item
+            a.icon.item.minimize
+                i.minus.icon
+            a.icon.item.close
                 i.close.icon
+                    
+    .ui.two.column.grid.basic.bottom.attached.secondary.segment
+        .column(style="padding:5px")
+            .ui.fluid.icon.button.users
+                i.users.icon
+                | 1 users
+        .column(style="padding:5px")
+            .ui.fluid.icon.button.rooms
+                i.list.icon
+                | 3 channels
