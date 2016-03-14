@@ -2,13 +2,15 @@ Template.chatter.onCreated(function () {
     Session.set("chatter-room", "help");
     Session.set("chatter-view", "room");
     Session.set("chatter-state", "open");
+    Meteor.subscribe('chatterUsers', Session.get("chatter-room"));
+    Meteor.subscribe('chatterUserRooms');
 });
 
 Template.chatter.helpers({
     view() {
         return Session.get("chatter-view");
     },
-    
+
     state(s) {
         return Session.get("chatter-state") === s;
     }
@@ -23,3 +25,6 @@ Template.chatter.events({
         Session.set("chatter-state", "open");
     }
 });
+
+
+
