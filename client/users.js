@@ -1,11 +1,9 @@
 
 Template.users.helpers({
     users() {
-        return [
-            { nickname: "Bob" },
-            { nickname: "Olga"},
-            { nickname: "Joe" },
-        ]
+        var userRooms = Chatter.UserRoom.find({"roomName": Session.get("chatter-room")}).fetch();
+        var usernames = userRooms.map(function(userRoom) { return { "nickname" : userRoom.nickname}});
+        return usernames;
     }
 });
 
