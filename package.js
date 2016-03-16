@@ -11,12 +11,15 @@ Package.onUse(function(api) {
 
   api.use([
     'ecmascript',
-    'jorgeer:chatter-core@0.1.0'
+    'jorgeer:chatter-core@0.1.0',
+    'react'
   ]);
 
   api.imply('jorgeer:chatter-core@0.1.0');
 
   api.addFiles([
+    'client/App.jsx',
+    'client/Task.jsx',
     'client/room.jade',
     'client/roomList.jade',
     'client/users.jade',
@@ -45,6 +48,7 @@ Package.onUse(function(api) {
     'templating',
     'jquery',
     'session',
+    'react',
 
     'mquandalle:jade@0.4.5',
     'mquandalle:stylus@1.0.10',
