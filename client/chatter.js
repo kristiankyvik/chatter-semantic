@@ -1,8 +1,10 @@
 Template.chatter.onCreated(function () {
-    Session.set("chatter-room", "help");
-    Session.set("chatter-view", "room");
+    Session.set("chatter-room", "Channels");
+    Session.set("chatter-view", "roomList");
     Session.set("chatter-state", "open");
+
     Meteor.subscribe('chatterUsers', Session.get("chatter-room"));
+    Meteor.subscribe('chatterRooms');
     Meteor.subscribe('chatterUserRooms');
 });
 

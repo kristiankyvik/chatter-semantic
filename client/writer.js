@@ -6,7 +6,7 @@ Template.writer.events({
             let nick = Meteor.user();
             _.each(Chatter.options.nickProperty.split("."), (prop) => {
                 nick = nick[prop];
-                console.log(nick, prop);
+                //console.log(nick, prop);
             });
 
             if (typeof nick !== "string") {

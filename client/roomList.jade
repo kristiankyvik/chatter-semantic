@@ -1,8 +1,25 @@
 template(name="roomList")
-    .ui.selection.list
-        each rooms
-            +roomItem
+      if empty
+          p
+              | no channels have been created yet!
+      else
+          .content
+              .ui.header
+                | Your channels
+              .ui.selection.list
+                  each joinedRooms
+                      +roomItem
+              .ui.header
+                | Other channels
+              .ui.selection.list
+                  each otherRooms
+                      +roomItem
+      .ui.fluid.button.primary.newroom-btn
+          i.write.icon
+          | New channel
 
 template(name="roomItem")
     .item
-        | #{name}
+        | #{name} ( #{users}#[i.user.icon])
+//-     | {{roomUsers name}}
+
