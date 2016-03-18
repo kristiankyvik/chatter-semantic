@@ -1,24 +1,48 @@
+#chatter
+    overflow-y: hidden !important
+
 .chatter
-    display: flex
-    flex-direction: column
 
     .content
-        padding: 20px 10px 0;
+        padding: 20px 10px 0
+
+    .wrapper
+        position: absolute
+        height: 100%
+        width: 100%
+        top: 0
+        bottom: 0
+        z-index: -1
 
     .menu
         margin: 0 !important
 
-    .room
-        overflow:hidden
+    .roomList
+        position: absolute
+        width: 100%
+        top: 40px
+        bottom: 0
+        overflow: hidden
         overflow-y: auto
+
+    .room
+        position: absolute
+        width: 100%
+        top: 40px
+        bottom: 56px
+        overflow: hidden
+        overflow-y: auto
+        padding: 0
         margin: 0 !important
-        flex:1
 
     .newroom-btn
         position: absolute
         bottom: 0
 
     .writer
+        position: absolute
+        width: 100%
+        bottom: 0
         border: none
         border-top: 2px solid rgba(34, 36, 38, 0.15) !important
 
