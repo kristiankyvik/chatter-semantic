@@ -39,6 +39,7 @@ ChatterApp = React.createClass({
       view: 'room',
       header: roomName
     });
+    Meteor.call("userroom.build", roomName);
   },
 
   setView(view) {
