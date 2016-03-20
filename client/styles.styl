@@ -38,11 +38,24 @@
         margin: 0 !important
         background-color: #FAFAFB !important
 
-        .comment
-            .content
+        &.ui.comments .comment
+            text-align: left
+            >.content
+                max-width: 257px;
                 padding: 5px
                 background-color: #E6EEF4
                 border-radius: 5px
+                margin-left: 1em
+                display: inline-block
+            &.yours
+                text-align: right
+                >.content
+                    text-align: left
+                    margin-right: 1em
+                    margin-left: 0
+                    display: inline-block
+                .avatar
+                    float: right
 
     .newroom-btn
         position: absolute

@@ -19,7 +19,7 @@ RoomList = React.createClass({
           <div className="ui header">
             Your channels
           </div>
-          <div className="ui selection list">
+          <div className="ui selection list divided">
             {this.props.joinedRooms.map(function(room){
               return (
                 <div className="item" onClick={() => that.goToRoom(room._id, room.name)}>
