@@ -29,7 +29,8 @@ ChatterApp = React.createClass({
 
     return {
       joinedRooms: joinedRooms,
-      otherRooms: otherRooms
+      otherRooms: otherRooms,
+      subsReady: subsReady
     }
   },
 
@@ -51,7 +52,7 @@ ChatterApp = React.createClass({
   getView() {
     var view =  this.state.view;
     if (view == "roomList") {
-      return <RoomList goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView}/>;
+      return <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView}/>;
     } else if ( view == "room") {
       return <Room room={this.state.room}/>
     } else if ( view == "settings") {
