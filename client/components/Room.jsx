@@ -55,11 +55,13 @@ Room = React.createClass({
       messages = (
         this.data.messages.map(function(message){
           return (
-            <div className="comment">
+            <div className={ Meteor.userId() == message.userId ? "comment yours" : "comment theirs" }>
+              <div className="avatar">
+              </div>
               <div className="content">
                 <a className="author">{message.userNick}</a>
                 <a className="metadata">
-                  <span className="date"> message.timeAgo() </span>
+                  <span className="date"> {message.timeAgo()} </span>
                 </a>
                 <div className="text">
                  {message.message}
@@ -76,7 +78,7 @@ Room = React.createClass({
         <div className="room ui comments basic segment">
           {messages}
         </div>
-        <Writer pushMessage={this.pushMessage}/>
+        // <Writer pushMessage={this.pushMessage}/>
       </div>
     );
   }
