@@ -28,6 +28,8 @@ Package.onUse(function(api) {
     'client/components/Settings.jsx',
     'client/components/Writer.jsx',
     'client/components/NewRoom.jsx',
+    'client/components/RoomListItem.jsx',
+
 
     'client/styles.styl',
   ], ['client']);

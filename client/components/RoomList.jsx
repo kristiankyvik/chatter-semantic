@@ -10,8 +10,6 @@ RoomList = React.createClass({
 
   render() {
     var that = this;
-    //var userIcon = <i className="user icon"></i>;
-    var userIcon = "users";
 
     return (
       <div className="roomList">
@@ -19,25 +17,17 @@ RoomList = React.createClass({
           <div className="ui header">
             Your channels
           </div>
-          <div className="ui selection list divided">
+          <div className="ui selection list celled">
             {this.props.joinedRooms.map(function(room){
-              return (
-                <div className="item" onClick={() => that.goToRoom(room._id, room.name)}>
-                  {`(${that.props.getUserCount(room._id)} ${userIcon}) ${room.name}`}
-                </div>
-              );
+              return <RoomListItem getUserCount={that.props.getUserCount} goToRoom={that.goToRoom} goToNewRoom={that.goToNewRoom} room={room} />;
             })}
           </div>
           <div className="ui header">
             Other channels
           </div>
-          <div className="ui selection list">
+          <div className="ui selection list celled">
             {this.props.otherRooms.map(function(room){
-              return (
-                <div className="item" onClick={() => that.goToRoom(room._id, room.name)}>
-                  {`(${that.props.getUserCount(room._id)} ${userIcon}) ${room.name}`}
-                </div>
-              );
+              return <RoomListItem getUserCount={that.props.getUserCount} goToRoom={that.goToRoom} goToNewRoom={that.goToNewRoom} room={room} />;
             })}
           </div>
         </div>

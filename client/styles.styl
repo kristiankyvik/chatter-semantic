@@ -26,6 +26,16 @@
         overflow: hidden
         overflow-y: auto
         background-color: #FAFAFB !important
+        .ui.list .content
+            width: 90%
+            .description
+                overflow: hidden
+                text-overflow: ellipsis
+                white-space: nowrap
+        .ui.celled.list
+            > .item:first-child, > .item:last-child
+                padding-top: 10px
+                padding-bottom: 10px
 
     .room
         position: absolute
@@ -37,7 +47,6 @@
         padding: 0
         margin: 0 !important
         background-color: #FAFAFB !important
-
         &.ui.comments .comment
             text-align: left
             >.content
@@ -67,7 +76,6 @@
         bottom: 0
         border: none
         border-top: 2px solid rgba(34, 36, 38, 0.15) !important
-
         textarea
             border-radius: 0 !important
             border: none
