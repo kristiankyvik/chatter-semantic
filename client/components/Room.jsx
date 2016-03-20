@@ -56,8 +56,9 @@ Room = React.createClass({
         this.data.messages.map(function(message){
           return (
             <div className={ Meteor.userId() == message.userId ? "comment yours" : "comment theirs" }>
-              <div className="avatar">
-              </div>
+              <a className="avatar">
+                <img src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg" />
+              </a>
               <div className="content">
                 <a className="author">{message.userNick}</a>
                 <a className="metadata">
@@ -75,12 +76,14 @@ Room = React.createClass({
 
     return (
       <div className="wrapper">
-        <div className="room ui comments basic segment">
+        <div className="room ui comments basic segment padded">
           {messages}
         </div>
-        // <Writer pushMessage={this.pushMessage}/>
+        <Writer pushMessage={this.pushMessage}/>
       </div>
     );
   }
 });
+
+
 

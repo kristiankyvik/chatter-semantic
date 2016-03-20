@@ -17,7 +17,7 @@ NewRoom = React.createClass({
   render() {
     return (
       <div className="newRoom">
-        <div className="content">
+        <div className="padded">
           <form className="ui form" onSubmit={this.handleSubmit} ref="form">
             <div className="field">
               <label>

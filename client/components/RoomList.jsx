@@ -15,7 +15,7 @@ RoomList = React.createClass({
 
     return (
       <div className="roomList">
-        <div className="content">
+        <div className="padded">
           <div className="ui header">
             Your channels
           </div>

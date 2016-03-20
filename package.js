@@ -29,9 +29,10 @@ Package.onUse(function(api) {
     'client/components/Writer.jsx',
     'client/components/NewRoom.jsx',
 
-
     'client/styles.styl',
   ], ['client']);
+
+  api.addAssets('public/images/avatar.jpg', 'client');
 
   api.use([
     'session',
