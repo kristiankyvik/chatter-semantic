@@ -4,7 +4,7 @@ ChatterApp = React.createClass({
   getInitialState: function() {
      return {
         chatState: "open",
-        room: null,
+        roomId: null,
         header: "Channels",
         view: "roomList",
         joinedRooms: [],
@@ -36,7 +36,7 @@ ChatterApp = React.createClass({
 
   goToRoom(roomId, roomName) {
     this.setState({
-      room: roomId,
+      roomId: roomId,
       view: 'room',
       header: roomName
     });
@@ -54,9 +54,9 @@ ChatterApp = React.createClass({
     if (view == "roomList") {
       return <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView}/>;
     } else if ( view == "room") {
-      return <Room room={this.state.room}/>
+      return <Room roomId={this.state.roomId}/>
     } else if ( view == "settings") {
-      return <Settings room={this.state.room}/>
+      return <Settings roomId={this.state.roomId}/>
     } else if ( view == "newRoom") {
       return <NewRoom goToRoom={this.goToRoom} />
     }  else {
@@ -96,7 +96,7 @@ ChatterApp = React.createClass({
   render() {
     return (
       <div className="ui right vertical wide visible sidebar chatter" id="chatter">
-          <Nav chatState={this.state.chatState} room={this.state.room} header={this.state.header} doNavAction={this.doNavAction} />
+          <Nav chatState={this.state.chatState} roomId={this.state.roomId} header={this.state.header} doNavAction={this.doNavAction} />
           {this.getView()}
       </div>
 

@@ -3,12 +3,12 @@ Room = React.createClass({
 
   getMeteorData () {
     const messagesHandle = Meteor.subscribe("chatterMessages", {
-      roomId: this.props.room,
+      roomId: this.props.roomId,
       messageLimit: 30
     });
 
     const usersHandle = Meteor.subscribe("chatterUsers", {
-      roomId: this.props.room
+      roomId: this.props.roomId
     });
 
     const subsReady = messagesHandle.ready() && usersHandle.ready();
@@ -18,8 +18,8 @@ Room = React.createClass({
 
 
     if (subsReady) {
-      messages = Chatter.Message.find({"roomId": this.props.room}).fetch();
-      users = Meteor.users.find({"roomId": this.props.room }).fetch();
+      messages = Chatter.Message.find({"roomId": this.props.roomId}).fetch();
+      users = Meteor.users.find({"roomId": this.props.roomId }).fetch();
     }
 
     return {
@@ -34,7 +34,7 @@ Room = React.createClass({
     var user = Meteor.user();
     var params = {
         message: text,
-        roomId: this.props.room,
+        roomId: this.props.roomId,
         userId: user._id,
         userNick: user.emails[0].address
     };
