@@ -43,7 +43,7 @@ Room = React.createClass({
 
   render() {
 
-    var messages =  (
+    var loader =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
           Loading messages
@@ -51,33 +51,31 @@ Room = React.createClass({
       </div>
     );
 
-    if (this.data.subsReady) {
-      messages = (
-        this.data.messages.map(function(message){
-          return (
-            <div className={ Meteor.userId() == message.userId ? "comment yours" : "comment"}>
-              <a className="avatar">
-                <img src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg" />
+    var messages = (
+      this.data.messages.map(function(message){
+        return (
+          <div className={ Meteor.userId() == message.userId ? "comment yours" : "comment"}>
+            <a className="avatar">
+              <img src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg" />
+            </a>
+            <div className="content">
+              <a className="author">{message.userNick}</a>
+              <a className="metadata">
+                <span className="date"> {message.timeAgo()} </span>
               </a>
-              <div className="content">
-                <a className="author">{message.userNick}</a>
-                <a className="metadata">
-                  <span className="date"> {message.timeAgo()} </span>
-                </a>
-                <div className="text">
-                 {message.message}
-                </div>
+              <div className="text">
+               {message.message}
               </div>
             </div>
-          );
-        })
-      );
-    }
+          </div>
+        );
+      })
+    );
 
     return (
       <div className="wrapper">
         <div className="room ui comments basic segment padded">
-          {messages}
+          {this.data.subsReady ? messages : loader}
         </div>
         <Writer pushMessage={this.pushMessage}/>
       </div>
