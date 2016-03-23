@@ -3,13 +3,13 @@ ChatterApp = React.createClass({
 
   getInitialState: function() {
      return {
-              chatState: "open",
-              room: null,
-              header: "Channels",
-              view: "roomList",
-              joinedRooms: [],
-              otherRooms: []
-            };
+        chatState: "open",
+        room: null,
+        header: "Channels",
+        view: "roomList",
+        joinedRooms: [],
+        otherRooms: []
+      };
    },
 
   getMeteorData () {
@@ -28,9 +28,9 @@ ChatterApp = React.createClass({
     }
 
     return {
-      joinedRooms: joinedRooms,
-      otherRooms: otherRooms,
-      subsReady: subsReady
+      joinedRooms,
+      otherRooms,
+      subsReady
     }
   },
 

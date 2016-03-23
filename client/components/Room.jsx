@@ -23,9 +23,9 @@ Room = React.createClass({
     }
 
     return {
-      messages: messages,
-      users: users,
-      subsReady: subsReady
+      messages,
+      users,
+      subsReady
     }
   },
 
