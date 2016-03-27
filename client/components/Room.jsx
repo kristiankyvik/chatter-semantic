@@ -54,7 +54,7 @@ Room = React.createClass({
     const messages = (
       this.data.messages.map(function(message){
         return (
-          <div className={ Meteor.userId() == message.userId ? "comment yours" : "comment"}>
+          <div className={ Meteor.userId() === message.userId ? "comment yours" : "comment"}>
             <a className="avatar">
               <img src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg" />
             </a>

@@ -1,7 +1,7 @@
 Writer = React.createClass({
 
   handleSubmit(event) {
-    if(event.keyCode == 13) {
+    if(event.keyCode === 13) {
       var input = document.getElementById("message")
       var text = input.value;
       input.value = "";
