@@ -29,7 +29,7 @@ Package.onUse(function(api) {
     'client/components/Writer.jsx',
     'client/components/NewRoom.jsx',
     'client/components/RoomListItem.jsx',
-
+    'client/components/Widget.jsx',
 
     'client/styles.styl',
   ], ['client']);

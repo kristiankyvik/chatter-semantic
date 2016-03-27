@@ -1,11 +1,9 @@
 
-#chatter
+.chatter
     overflow-y: hidden !important
 
-.chatter
-
     .padded
-        padding: 20px 10px 0
+        padding: 20px 16px 0
 
     .wrapper
         position: absolute
@@ -28,6 +26,14 @@
         background-color: #FAFAFB !important
         .ui.list .content
             width: 90%
+            .header, .description
+                color: #60686e
+                color: rgba(96,104,110,.8)
+            .header .meta
+                display: block
+                float: right
+                font-weight: 400
+                font-size: 0.8em
             .description
                 overflow: hidden
                 text-overflow: ellipsis
@@ -44,9 +50,9 @@
         bottom: 56px
         overflow: hidden
         overflow-y: auto
-        padding: 0
         margin: 0 !important
         background-color: #FAFAFB !important
+
         &.ui.comments .comment
             text-align: left
             >.content
@@ -54,8 +60,10 @@
                 padding: 5px
                 background-color: #E6EEF4
                 border-radius: 5px
-                margin-left: 1em
+                margin-left: 0.6em
                 display: inline-block
+            .avatar
+                width: 2em
             &.yours
                 text-align: right
                 .author, .date, .content .text
@@ -84,8 +92,16 @@
             border-radius: 0 !important
             border: none
 
-.chatter-open
+.chatter-open.ui.button
+    font-size: 2.2em
+    padding: 0.4em 0.5em
+    opacity: 1
     position: fixed
-    transform: rotate(-90deg)
-    right: -25px
-    top: 10%
+    bottom: 3%
+    right: 12px
+    box-shadow: 0 6px 13px 0 rgba(0,0,0,.23)
+    border-radius: 100px
+
+    i.icon
+        margin: 0
+        color: #fff

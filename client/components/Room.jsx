@@ -74,7 +74,7 @@ Room = React.createClass({
 
     return (
       <div className="wrapper">
-        <div className="room ui comments basic segment padded">
+        <div className="room ui comments basic padded">
           {this.data.subsReady ? messages : loader}
         </div>
         <Writer pushMessage={this.pushMessage}/>

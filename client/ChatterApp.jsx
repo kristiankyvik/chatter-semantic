@@ -3,7 +3,7 @@ ChatterApp = React.createClass({
 
   getInitialState: function() {
     return {
-      chatState: "open",
+      chatOpen: true,
       roomId: null,
       header: "Channels",
       view: "roomList",
@@ -49,12 +49,19 @@ ChatterApp = React.createClass({
     });
   },
 
+  toggleChatState() {
+    this.setState({
+      chatState: !this.state.chatOpen
+    });
+  },
+
   getView() {
     const views = {
       "roomList": <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView} />,
       "room": <Room roomId={this.state.roomId} />,
       "settings": <Settings roomId={this.state.roomId} />,
-      "newRoom": <NewRoom goToRoom={this.goToRoom} />
+      "newRoom": <NewRoom goToRoom={this.goToRoom} />,
+      "widget": <Widget />
     };
     return views[this.state.view]
   },
@@ -66,9 +73,7 @@ ChatterApp = React.createClass({
         view: "roomList"
       },
       "minimize": {
-        chatState: "minimized",
-        header: "Channels",
-        view: "roomList"
+        chatState: "minimized"
       },
       "settings": {
         view: "settings"
@@ -82,12 +87,12 @@ ChatterApp = React.createClass({
   },
 
   render() {
-    return (
+    let chatHTML = (
       <div className="ui right vertical wide visible sidebar chatter" id="chatter">
           <Nav chatState={this.state.chatState} roomId={this.state.roomId} header={this.state.header} doNavAction={this.doNavAction} />
           {this.getView()}
       </div>
-
     );
+    return this.state.chatState === "minimized" ? <Widget toggleChatState={this.toggleChatState} /> : chatHTML;
   }
 });

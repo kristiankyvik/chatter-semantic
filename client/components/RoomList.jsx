@@ -30,15 +30,15 @@ RoomList = React.createClass({
       <div className="roomList">
         <div className="padded">
           <div className="ui header">
-            Your channels
+            Your channels <span>({joinedRooms.length})</span>
           </div>
-          <div className="ui selection list celled">
+          <div className="ui selection middle aligned list celled">
             { subsReady ? joinedRoomsHTML : loaderHTML}
           </div>
           <div className="ui header">
-            Other channels
+            Other channels <span>({otherRooms.length})</span>
           </div>
-          <div className="ui selection list celled">
+          <div className="ui selection middle aligned list celled">
             { subsReady ? otherRoomsHTML : loaderHTML}
           </div>
         </div>
