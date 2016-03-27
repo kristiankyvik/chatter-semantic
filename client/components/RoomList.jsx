@@ -9,7 +9,8 @@ RoomList = React.createClass({
   },
 
   render() {
-    const loader =  (
+    const { subsReady, otherRooms, joinedRooms } = this.props;
+    const loaderHTML =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
           Loading messages
@@ -17,11 +18,11 @@ RoomList = React.createClass({
       </div>
     );
 
-    const joinedRooms = this.props.joinedRooms.map(room => {
+    const joinedRoomsHTML = joinedRooms.map(room => {
       return <RoomListItem getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
     });
 
-    const otherRooms = this.props.otherRooms.map(room => {
+    const otherRoomsHTML = otherRooms.map(room => {
       return <RoomListItem getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
     });
 
@@ -32,13 +33,13 @@ RoomList = React.createClass({
             Your channels
           </div>
           <div className="ui selection list celled">
-            { this.props.subsReady ? joinedRooms : loader}
+            { subsReady ? joinedRoomsHTML : loaderHTML}
           </div>
           <div className="ui header">
             Other channels
           </div>
           <div className="ui selection list celled">
-            { this.props.subsReady ? otherRooms : loader}
+            { subsReady ? otherRoomsHTML : loaderHTML}
           </div>
         </div>
         <div className="ui fluid button primary newroom-btn" onClick={() => this.goToNewRoom()}>
