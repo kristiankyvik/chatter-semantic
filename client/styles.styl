@@ -1,6 +1,9 @@
+chatter-light-blue = #FAFAFB
+chatter-light-gray = #E6EEF4
+chatter-trans-gray = rgba(96,104,110,.8)
+chatter-blue = #2185d0
 
 .chatter
-    overflow-y: hidden !important
 
     .padded
         padding: 20px 16px 0
@@ -19,16 +22,16 @@
     .roomList
         position: absolute
         width: 100%
-        top: 40px
-        bottom: 0
         overflow: hidden
         overflow-y: auto
-        background-color: #FAFAFB !important
+        top: 40px
+        bottom: 0
+        background-color: chatter-light-blue !important
         .ui.list .content
             width: 90%
             .header, .description
                 color: #60686e
-                color: rgba(96,104,110,.8)
+                color: chatter-trans-gray
             .header .meta
                 display: block
                 float: right
@@ -46,19 +49,19 @@
     .room
         position: absolute
         width: 100%
-        top: 40px
-        bottom: 56px
         overflow: hidden
         overflow-y: auto
+        top: 40px
+        bottom: 56px
         margin: 0 !important
-        background-color: #FAFAFB !important
+        background-color: chatter-light-blue !important
 
         &.ui.comments .comment
             text-align: left
             >.content
                 max-width: 257px;
                 padding: 5px
-                background-color: #E6EEF4
+                background-color: chatter-light-gray
                 border-radius: 5px
                 margin-left: 0.6em
                 display: inline-block
@@ -71,10 +74,10 @@
 
                 >.content
                     text-align: left
-                    margin-right: 1em
+                    margin-right: 0.6em
                     margin-left: 0
                     display: inline-block
-                    background-color: #2185d0
+                    background-color: chatter-blue
                 .avatar
                     float: right
 
@@ -87,7 +90,8 @@
         width: 100%
         bottom: 0
         border: none
-        border-top: 2px solid rgba(34, 36, 38, 0.15) !important
+        border-top: 2px solid rgba(34, 36, 38, 0.15)
+
         textarea
             border-radius: 0 !important
             border: none
