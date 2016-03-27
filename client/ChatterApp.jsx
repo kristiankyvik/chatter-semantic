@@ -50,18 +50,14 @@ ChatterApp = React.createClass({
   },
 
   getView() {
-    var view =  this.state.view;
-    if (view == "roomList") {
-      return <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView}/>;
-    } else if ( view == "room") {
-      return <Room roomId={this.state.roomId}/>
-    } else if ( view == "settings") {
-      return <Settings roomId={this.state.roomId}/>
-    } else if ( view == "newRoom") {
-      return <NewRoom goToRoom={this.goToRoom} />
-    }  else {
-      return (<div>Nothing much!</div>)
-    }
+    let view =  this.state.view;
+    let views = {
+      "roomList": <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView} />,
+      "room": <Room roomId={this.state.roomId} />,
+      "settings": <Settings roomId={this.state.roomId} />,
+      "newRoom": <NewRoom goToRoom={this.goToRoom} />
+    };
+    return views[view]
   },
 
   doNavAction(action) {
