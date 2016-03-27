@@ -6,7 +6,7 @@ chatter-blue = #2185d0
 .chatter
 
     .padded
-        padding: 20px 16px 0
+        padding: 20px 14px 0
 
     .wrapper
         position: absolute
@@ -27,20 +27,27 @@ chatter-blue = #2185d0
         top: 40px
         bottom: 0
         background-color: chatter-light-blue !important
-        .ui.list .content
-            width: 90%
-            .header, .description
-                color: #60686e
-                color: chatter-trans-gray
-            .header .meta
-                display: block
-                float: right
-                font-weight: 400
-                font-size: 0.8em
-            .description
-                overflow: hidden
-                text-overflow: ellipsis
-                white-space: nowrap
+        .ui.list .item
+            .ui.avatar.image
+                width: 3em
+                height: 3em
+            .content
+                width: 86%
+                .header, .description
+                    color: #60686e
+                    color: chatter-trans-gray
+                .header
+                    font-size: 1.1em
+                    .meta
+                        display: block
+                        float: right
+                        font-weight: 400
+                        font-size: 0.8em
+                .description
+                    overflow: hidden
+                    text-overflow: ellipsis
+                    white-space: nowrap
+                    padding-top: 8px
         .ui.celled.list
             > .item:first-child, > .item:last-child
                 padding-top: 10px
