@@ -21,8 +21,8 @@ ChatterApp = React.createClass({
     let otherRooms = [];
 
     if (subsReady) {
-      var userRooms = Chatter.UserRoom.find({"userId": Meteor.userId()});
-      var roomIds = userRooms.map(function(userRoom) { return userRoom.roomId });
+      const userRooms = Chatter.UserRoom.find({"userId": Meteor.userId()});
+      const roomIds = userRooms.map(function(userRoom) { return userRoom.roomId });
       joinedRooms = Chatter.Room.find({"_id": {$in:roomIds}}).fetch();
       otherRooms = Chatter.Room.find({"_id": {$nin:roomIds}}).fetch();
     }
@@ -50,7 +50,7 @@ ChatterApp = React.createClass({
   },
 
   getView() {
-    let views = {
+    const views = {
       "roomList": <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView} />,
       "room": <Room roomId={this.state.roomId} />,
       "settings": <Settings roomId={this.state.roomId} />,
@@ -60,7 +60,7 @@ ChatterApp = React.createClass({
   },
 
   doNavAction(action) {
-    let actions = {
+    const actions = {
       "home": {
         header: "Channels",
         view: "roomList"
