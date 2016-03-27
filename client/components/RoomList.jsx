@@ -42,7 +42,7 @@ RoomList = React.createClass({
             { subsReady ? otherRoomsHTML : loaderHTML}
           </div>
         </div>
-        <div className="ui fluid button primary newroom-btn" onClick={() => this.goToNewRoom()}>
+        <div className="ui fluid button primary newroom-btn" onClick={this.goToNewRoom}>
           <i className="write icon"></i> New channel
         </div>
       </div>
