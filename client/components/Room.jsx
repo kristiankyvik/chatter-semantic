@@ -29,6 +29,22 @@ Room = React.createClass({
     }
   },
 
+  componentDidMount() {
+    const scroller = this.refs.scroller.getDOMNode();
+    scroller.scrollTop = scroller.scrollHeight;
+  },
+
+  componentWillUpdate() {
+    const scroller = this.refs.scroller.getDOMNode();
+    this.shouldScroll = scroller.scrollTop + scroller.offsetHeight === scroller.scrollHeight;
+  },
+
+  componentDidUpdate() {
+    if (this.shouldScroll) {
+      const scroller = this.refs.scroller.getDOMNode();
+      scroller.scrollTop = scroller.scrollHeight;
+    }
+  },
 
   pushMessage(text) {
     const user = Meteor.user();
@@ -39,6 +55,8 @@ Room = React.createClass({
         userNick: user.emails[0].address
     };
     Meteor.call("message.build", params);
+    const scroller = this.refs.scroller.getDOMNode();
+    scroller.scrollTop = scroller.scrollHeight;
   },
 
   render() {
@@ -74,7 +92,7 @@ Room = React.createClass({
 
     return (
       <div className="wrapper">
-        <div className="room ui comments basic padded">
+        <div className="room ui comments basic padded" ref="scroller">
           {this.data.subsReady ? messages : loader}
         </div>
         <Writer pushMessage={this.pushMessage}/>
