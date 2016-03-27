@@ -2,14 +2,14 @@ ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
 
   getInitialState: function() {
-     return {
-        chatState: "open",
-        roomId: null,
-        header: "Channels",
-        view: "roomList",
-        joinedRooms: [],
-        otherRooms: []
-      };
+    return {
+      chatState: "open",
+      roomId: null,
+      header: "Channels",
+      view: "roomList",
+      joinedRooms: [],
+      otherRooms: []
+    };
    },
 
   getMeteorData () {
@@ -50,39 +50,31 @@ ChatterApp = React.createClass({
   },
 
   getView() {
-    let view =  this.state.view;
     let views = {
       "roomList": <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView} />,
       "room": <Room roomId={this.state.roomId} />,
       "settings": <Settings roomId={this.state.roomId} />,
       "newRoom": <NewRoom goToRoom={this.goToRoom} />
     };
-    return views[view]
+    return views[this.state.view]
   },
 
   doNavAction(action) {
-    switch (action) {
-      case "home":
-        this.setState({
-          header: "Channels",
-          view: "roomList"
-        });
-        break;
-      case "minimize":
-        this.setState({
-          chatState: "minimized",
-          header: "Channels",
-          view: "roomList"
-        });
-        break;
-      case "settings":
-        this.setState({
-          view: "settings"
-        });
-        break;
-      default:
-        break;
-    }
+    let actions = {
+      "home": {
+        header: "Channels",
+        view: "roomList"
+      },
+      "minimize": {
+        chatState: "minimized",
+        header: "Channels",
+        view: "roomList"
+      },
+      "settings": {
+        view: "settings"
+      }
+    };
+    this.setState(actions[action]);
   },
 
   getUserCount(roomId) {
