@@ -9,8 +9,6 @@ RoomList = React.createClass({
   },
 
   render() {
-    const that = this;
-
     const loader =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
@@ -19,12 +17,12 @@ RoomList = React.createClass({
       </div>
     );
 
-    const joinedRooms = this.props.joinedRooms.map(function(room){
-      return <RoomListItem getUserCount={that.props.getUserCount} goToRoom={that.goToRoom} goToNewRoom={that.goToNewRoom} room={room} />;
+    const joinedRooms = this.props.joinedRooms.map(room => {
+      return <RoomListItem getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
     });
 
-    const otherRooms = this.props.otherRooms.map(function(room){
-      return <RoomListItem getUserCount={that.props.getUserCount} goToRoom={that.goToRoom} goToNewRoom={that.goToNewRoom} room={room} />;
+    const otherRooms = this.props.otherRooms.map(room => {
+      return <RoomListItem getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
     });
 
     return (
