@@ -31,8 +31,8 @@ Room = React.createClass({
 
 
   pushMessage(text) {
-    var user = Meteor.user();
-    var params = {
+    const user = Meteor.user();
+    const params = {
         message: text,
         roomId: this.props.roomId,
         userId: user._id,
@@ -43,7 +43,7 @@ Room = React.createClass({
 
   render() {
 
-    var loader =  (
+    const loader =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
           Loading messages
@@ -51,7 +51,7 @@ Room = React.createClass({
       </div>
     );
 
-    var messages = (
+    const messages = (
       this.data.messages.map(function(message){
         return (
           <div className={ Meteor.userId() == message.userId ? "comment yours" : "comment"}>
