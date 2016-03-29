@@ -34,7 +34,7 @@ RoomListItem = React.createClass({
 
   render() {
     return (
-      <div className="item" onClick={() => this.props.goToRoom(this.props.room._id, this.props.room.name)}>
+      <div className="item transition visible" onClick={() => this.props.goToRoom(this.props.room._id, this.props.room.name)}>
         <img className="ui avatar image" src={this.data.avatar} />
         <div className="content">
           <div className="header">

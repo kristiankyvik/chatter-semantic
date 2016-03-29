@@ -8,6 +8,10 @@ RoomList = React.createClass({
     this.props.setView("newRoom");
   },
 
+  componentDidMount() {
+    $('.ui.accordion').accordion();
+  },
+
   render() {
     const { subsReady, otherRooms, joinedRooms } = this.props;
     const loaderHTML =  (
@@ -25,21 +29,34 @@ RoomList = React.createClass({
     const otherRoomsHTML = otherRooms.map(room => {
       return <RoomListItem getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
     });
-
     return (
       <div className="roomList">
         <div className="padded">
-          <div className="ui header">
-            Your channels <span>({joinedRooms.length})</span>
+          <div className="ui accordion">
+            <div className="title active">
+              <div className="ui header">
+                <i className="dropdown icon"></i>
+                Your channels <span>({joinedRooms.length})</span>
+              </div>
+            </div>
+            <div className="content active">
+              <div className="ui selection middle aligned list celled">
+                { subsReady ? joinedRoomsHTML : loaderHTML}
+              </div>
+            </div>
           </div>
-          <div className="ui selection middle aligned list celled">
-            { subsReady ? joinedRoomsHTML : loaderHTML}
-          </div>
-          <div className="ui header">
-            Other channels <span>({otherRooms.length})</span>
-          </div>
-          <div className="ui selection middle aligned list celled">
-            { subsReady ? otherRoomsHTML : loaderHTML}
+          <div className="ui accordion">
+            <div className="title">
+              <div className="ui header">
+                <i className="dropdown icon"></i>
+                Other channels <span>({otherRooms.length})</span>
+              </div>
+            </div>
+            <div className="content">
+              <div className="ui selection middle aligned list celled">
+                { subsReady ? otherRoomsHTML : loaderHTML}
+              </div>
+            </div>
           </div>
         </div>
         <div className="ui fluid button primary newroom-btn" onClick={this.goToNewRoom}>
@@ -49,3 +66,4 @@ RoomList = React.createClass({
     );
   }
 });
+
