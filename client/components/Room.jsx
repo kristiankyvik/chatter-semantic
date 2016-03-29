@@ -59,7 +59,6 @@ Room = React.createClass({
   },
 
   render() {
-
     const loader =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
@@ -70,10 +69,10 @@ Room = React.createClass({
 
     const messages = (
       this.data.messages.map(function(message){
-        return (
+´        return (
           <div className={ Meteor.userId() === message.userId ? "comment yours" : "comment"}>
             <a className="avatar">
-              <img src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg" />
+              <img src={ message.userAvatar } />
             </a>
             <div className="content">
               <a className="author">{message.userNick}</a>
