@@ -1,7 +1,7 @@
 Nav = React.createClass({
 
-  doNavAction(action) {
-    this.props.doNavAction(action);
+  setView(view) {
+    this.props.setView(view);
   },
 
   render() {
@@ -25,7 +25,7 @@ Nav = React.createClass({
     };
 
     const iconHTML = (
-      <a className="icon item" onClick={() => this.doNavAction(iconSettings[this.props.view].nextView)}>
+      <a className="icon item" onClick={() => this.setView(iconSettings[this.props.view].nextView)}>
         <i className={iconSettings[this.props.view].icon}></i>
       </a>
     );
@@ -37,10 +37,10 @@ Nav = React.createClass({
           {this.props.header}
         </div>
         <div className="right menu">
-          <a className="icon item" onClick={() => this.doNavAction("minimize")}>
+          <a className="icon item" onClick={() => this.setView("minimize")}>
             <i className="minus icon"></i>
           </a>
-          <a className="icon item" onClick={() => this.doNavAction("settings")}>
+          <a className="icon item" onClick={() => this.setView("settings")}>
             <i className="setting icon"></i>
           </a>
         </div>
