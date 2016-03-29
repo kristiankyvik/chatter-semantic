@@ -25,7 +25,7 @@ Settings = React.createClass({
           <img className="ui avatar image" src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg"/>
           <div className="content">
             <a className="header">
-              {user.nick}
+              {user.userNick}
             </a>
             <div className="description">
               Last logged in just now.

@@ -51,8 +51,7 @@ Room = React.createClass({
     const params = {
         message: text,
         roomId: this.props.roomId,
-        userId: user._id,
-        userNick: user.emails[0].address
+        userId: user._id
     };
     Meteor.call("message.build", params);
     const scroller = this.refs.scroller.getDOMNode();
