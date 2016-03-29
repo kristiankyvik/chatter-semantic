@@ -57,28 +57,28 @@ ChatterApp = React.createClass({
 
   getView() {
     const views = {
-      "roomList": <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView} />,
-      "room": <Room roomId={this.state.roomId} />,
-      "settings": <Settings roomId={this.state.roomId} />,
-      "newRoom": <NewRoom goToRoom={this.goToRoom} />,
-      "widget": <Widget />
+      roomList: <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView} />,
+      room: <Room roomId={this.state.roomId} />,
+      settings: <Settings roomId={this.state.roomId} />,
+      newRoom: <NewRoom goToRoom={this.goToRoom} />,
+      widget: <Widget />
     };
     return views[this.state.view]
   },
 
   doNavAction(action) {
     const actions = {
-      "home": {
+      home: {
         header: "Channels",
         view: "roomList"
       },
-      "minimize": {
+      minimize: {
         chatState: "minimized"
       },
-      "settings": {
+      settings: {
         view: "settings"
       },
-      "room": {
+      room: {
         view: "room"
       }
     };
