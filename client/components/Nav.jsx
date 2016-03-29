@@ -18,7 +18,7 @@ Nav = React.createClass({
         icon: "close icon",
         nextView: "room"
       },
-      room: {
+      newRoom: {
         icon: "chevron left icon",
         nextView: "home"
       }
