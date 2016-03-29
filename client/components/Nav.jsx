@@ -5,12 +5,24 @@ Nav = React.createClass({
   },
 
   render() {
+    const topRight = {
+      roomList: null,
+      room: (
+        <a className="ui icon item" onClick={() => this.doNavAction("home")}>
+          <i className="chevron left icon"></i>
+        </a>
+      ),
+      settings:
+        (
+          <a className="icon item" onClick={() => this.doNavAction("room")}>
+            <i className="close icon" ></i>
+          </a>
+        )
+    };
 
     return (
       <div className="ui secondary pointing menu">
-        <a className="ui icon item" onClick={() => this.doNavAction("home")}>
-          <i className="sidebar icon"></i>
-        </a>
+        {topRight[this.props.view]}
         <div className="header item">
           {this.props.header}
         </div>
@@ -20,9 +32,6 @@ Nav = React.createClass({
           </a>
           <a className="icon item" onClick={() => this.doNavAction("settings")}>
             <i className="setting icon"></i>
-          </a>
-          <a className="icon item" onClick={() => this.doNavAction("close")}>
-            <i className="close icon" ></i>
           </a>
         </div>
       </div>

@@ -77,6 +77,9 @@ ChatterApp = React.createClass({
       },
       "settings": {
         view: "settings"
+      },
+      "room": {
+        view: "room"
       }
     };
     this.setState(actions[action]);
@@ -89,7 +92,7 @@ ChatterApp = React.createClass({
   render() {
     let chatHTML = (
       <div className="ui right vertical wide visible sidebar chatter" id="chatter">
-          <Nav chatState={this.state.chatState} roomId={this.state.roomId} header={this.state.header} doNavAction={this.doNavAction} />
+          <Nav view={this.state.view}  setView={this.setView} chatState={this.state.chatState} roomId={this.state.roomId} header={this.state.header} doNavAction={this.doNavAction} />
           {this.getView()}
       </div>
     );
