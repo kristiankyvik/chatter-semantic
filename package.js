@@ -35,6 +35,7 @@ Package.onUse(function(api) {
   ], ['client']);
 
   api.addAssets('public/images/avatar.jpg', 'client');
+  api.addAssets('public/images/default.jpg', 'client');
 
   api.use([
     'session',

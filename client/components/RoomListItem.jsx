@@ -14,32 +14,29 @@ RoomListItem = React.createClass({
     const subsReady = messagesHandle.ready() && usersHandle.ready();
 
     let message = "";
-    let last_user = null;
+    let avatar = null;
     let timeAgo = "";
-
 
     if (subsReady) {
       const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
       const roomEmpty = typeof lastMessage === 'undefined';
       message = roomEmpty ?  "no messages yet" : lastMessage.message;
       timeAgo = roomEmpty ? "" : lastMessage.timeAgo();
-      last_user = Meteor.users.find({"_id": message.userId }).fetch();
+      avatar = roomEmpty ?  "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/default.jpg" : lastMessage.userAvatar;
     }
 
     return {
       message,
-      last_user,
+      avatar,
       timeAgo
     }
   },
 
   render() {
-
     return (
       <div className="item" onClick={() => this.props.goToRoom(this.props.room._id, this.props.room.name)}>
-        <img className="ui avatar image" src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg" />
+        <img className="ui avatar image" src={this.data.avatar} />
         <div className="content">
-
           <div className="header">
             <span>{this.props.room.name}</span> (<span>{this.props.getUserCount(this.props.room._id)}</span>)
             <div className="meta">
@@ -54,6 +51,3 @@ RoomListItem = React.createClass({
     );
   }
 });
-
-
-
