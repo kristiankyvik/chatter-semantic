@@ -5,7 +5,7 @@ ChatterApp = React.createClass({
     return {
       chatOpen: true,
       roomId: null,
-      header: "Channels",
+      header: "Chatter",
       view: "roomList",
       joinedRooms: [],
       otherRooms: []
@@ -69,7 +69,7 @@ ChatterApp = React.createClass({
   doNavAction(action) {
     const actions = {
       home: {
-        header: "Channels",
+        header: "Chatter",
         view: "roomList"
       },
       minimize: {

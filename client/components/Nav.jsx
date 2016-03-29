@@ -5,24 +5,34 @@ Nav = React.createClass({
   },
 
   render() {
-    const topRight = {
-      roomList: null,
-      room: (
-        <a className="ui icon item" onClick={() => this.doNavAction("home")}>
-          <i className="chevron left icon"></i>
-        </a>
-      ),
-      settings:
-        (
-          <a className="icon item" onClick={() => this.doNavAction("room")}>
-            <i className="close icon" ></i>
-          </a>
-        )
+    const iconSettings = {
+      roomList: {
+        icon: "",
+        nextView: "home"
+      },
+      room: {
+        icon: "chevron left icon",
+        nextView: "home"
+      },
+      settings: {
+        icon: "close icon",
+        nextView: "room"
+      },
+      room: {
+        icon: "chevron left icon",
+        nextView: "home"
+      }
     };
+
+    const iconHTML = (
+      <a className="icon item" onClick={() => this.doNavAction(iconSettings[this.props.view].nextView)}>
+        <i className={iconSettings[this.props.view].icon}></i>
+      </a>
+    );
 
     return (
       <div className="ui secondary pointing menu">
-        {topRight[this.props.view]}
+        {iconHTML}
         <div className="header item">
           {this.props.header}
         </div>
