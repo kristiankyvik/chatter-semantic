@@ -34,18 +34,18 @@ const Room = React.createClass({
   },
 
   componentDidMount() {
-    const scroller = this.refs.scroller.getDOMNode();
+    const scroller = this.refs.scroller;
     scroller.scrollTop = scroller.scrollHeight;
   },
 
   componentWillUpdate() {
-    const scroller = this.refs.scroller.getDOMNode();
+    const scroller = this.refs.scroller;
     this.shouldScroll = scroller.scrollTop + scroller.offsetHeight === scroller.scrollHeight;
   },
 
   componentDidUpdate() {
     if (this.shouldScroll) {
-      const scroller = this.refs.scroller.getDOMNode();
+      const scroller = this.refs.scroller;
       scroller.scrollTop = scroller.scrollHeight;
     }
   },
@@ -63,7 +63,7 @@ const Room = React.createClass({
       Meteor.call("room.update", roomId);
     });
 
-    const scroller = this.refs.scroller.getDOMNode();
+    const scroller = this.refs.scroller;
     scroller.scrollTop = scroller.scrollHeight;
   },
 
