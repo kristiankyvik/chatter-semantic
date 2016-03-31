@@ -19,19 +19,21 @@ const RoomListItem = React.createClass({
 
     const subsReady = messagesHandle.ready() && usersHandle.ready() && countHandle.ready();
 
-    let message = "";
-    let avatar = null;
-    let timeAgo = "";
-    let count = 0;
+    let message = "no messages yet",
+        avatar = "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/default.jpg",
+        timeAgo = "",
+        count = 0;
 
     if (subsReady) {
-      const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
       const checkCount = Chatter.UserRoomCount.findOne({roomId: this.props.room._id, userId: Meteor.userId() });
       count =  typeof checkCount === 'undefined' ? "0" : checkCount.count;
-      const roomEmpty = typeof lastMessage === 'undefined';
-      message = roomEmpty ?  "no messages yet" : lastMessage.message;
-      timeAgo = roomEmpty ? "" : lastMessage.timeAgo();
-      avatar = roomEmpty ?  "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/default.jpg" : lastMessage.userAvatar;
+
+      const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
+      if (typeof lastMessage != 'undefined') {
+        message = lastMessage.message;
+        timeAgo = lastMessage.timeAgo();
+        avatar = lastMessage.userAvatar;
+      }
     }
 
     return {
