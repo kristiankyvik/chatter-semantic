@@ -1,4 +1,14 @@
-ChatterApp = React.createClass({
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import RoomList from "./components/RoomList.jsx";
+import Settings from "./components/Settings.jsx"
+import Room from "./components/Room.jsx";
+import Widget from "./components/Widget.jsx";
+import NewRoom from "./components/NewRoom.jsx";
+import Nav from "./components/Nav.jsx";
+
+const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
 
   getInitialState: function() {
@@ -95,5 +105,8 @@ ChatterApp = React.createClass({
       </div>
     );
     return this.state.chatState === "minimized" ? <Widget toggleChatState={this.toggleChatState} /> : chatHTML;
+    return (<div>hello!</div>);
   }
 });
+
+export default ChatterApp;

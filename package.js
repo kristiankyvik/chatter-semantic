@@ -16,19 +16,12 @@ Package.onUse(function(api) {
 
   api.imply('jorgeer:chatter-core@0.1.0');
 
+  //api.mainModule('./main.client.js');
+
   api.addFiles([
     'client/ChatterApp.jsx',
     'client/chatter.html',
     'client/chatter.js',
-
-    'client/components/Nav.jsx',
-    'client/components/RoomList.jsx',
-    'client/components/Room.jsx',
-    'client/components/Settings.jsx',
-    'client/components/Writer.jsx',
-    'client/components/NewRoom.jsx',
-    'client/components/RoomListItem.jsx',
-    'client/components/Widget.jsx',
 
     'client/styles.styl',
   ], ['client']);
@@ -38,9 +31,8 @@ Package.onUse(function(api) {
 
   api.use([
     'session',
-    'react',
     'templating',
-    'react-template-helper',
+    'react-template-helper@0.2.7',
     'react-meteor-data',
 
     'mquandalle:stylus@1.0.10',

@@ -1,4 +1,6 @@
-NewRoom = React.createClass({
+import React from 'react';
+
+const NewRoom = React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
@@ -34,3 +36,5 @@ NewRoom = React.createClass({
     );
   }
 });
+
+export default NewRoom;

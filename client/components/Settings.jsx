@@ -1,4 +1,6 @@
-Settings = React.createClass({
+import React from 'react';
+
+const Settings = React.createClass({
 
   getInitialState: function() {
     return {
@@ -56,6 +58,6 @@ Settings = React.createClass({
   }
 });
 
-
+export default Settings;
 
 

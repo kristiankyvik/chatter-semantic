@@ -1,4 +1,6 @@
-RoomListItem = React.createClass({
+import React from 'react';
+
+const RoomListItem = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData () {
@@ -51,3 +53,5 @@ RoomListItem = React.createClass({
     );
   }
 });
+
+export default RoomListItem;

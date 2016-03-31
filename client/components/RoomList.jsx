@@ -1,4 +1,8 @@
-RoomList = React.createClass({
+import React from 'react';
+
+import RoomListItem from "../components/RoomListItem.jsx";
+
+const RoomList = React.createClass({
 
   goToRoom(roomId, roomName) {
     this.props.goToRoom(roomId, roomName);
@@ -69,4 +73,6 @@ RoomList = React.createClass({
     );
   }
 });
+
+export default RoomList;
 

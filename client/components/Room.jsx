@@ -1,4 +1,8 @@
-Room = React.createClass({
+import React from 'react';
+
+import Writer from "../components/Writer.jsx"
+
+const Room = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData () {
@@ -103,6 +107,8 @@ Room = React.createClass({
     );
   }
 });
+
+export default Room;
 
 
 

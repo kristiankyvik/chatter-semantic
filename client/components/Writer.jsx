@@ -1,4 +1,6 @@
-Writer = React.createClass({
+import React from 'react';
+
+const Writer = React.createClass({
 
   handleSubmit(event) {
     if(event.keyCode === 13) {
@@ -21,5 +23,7 @@ Writer = React.createClass({
     );
   }
 });
+
+export default Writer;
 
 

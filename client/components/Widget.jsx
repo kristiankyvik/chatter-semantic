@@ -1,4 +1,6 @@
-Widget = React.createClass({
+import React from 'react';
+
+const Widget = React.createClass({
 
   render() {
 
@@ -9,3 +11,5 @@ Widget = React.createClass({
     );
   }
 });
+
+export default Widget;

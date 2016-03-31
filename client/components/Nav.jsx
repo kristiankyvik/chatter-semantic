@@ -1,4 +1,6 @@
-Nav = React.createClass({
+import React from 'react';
+
+const Nav = React.createClass({
 
   setView(view) {
     this.props.setView(view);
@@ -48,3 +50,5 @@ Nav = React.createClass({
     );
   }
 });
+
+export default Nav;
