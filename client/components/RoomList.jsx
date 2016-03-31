@@ -27,11 +27,11 @@ const RoomList = React.createClass({
     );
 
     const joinedRoomsHTML = joinedRooms.map(room => {
-      return <RoomListItem getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
+      return <RoomListItem key={room._id} getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
     });
 
     const otherRoomsHTML = otherRooms.map(room => {
-      return <RoomListItem getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
+      return <RoomListItem key={room._id} getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
     });
 
     return (

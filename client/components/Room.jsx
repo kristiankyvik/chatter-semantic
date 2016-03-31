@@ -79,7 +79,7 @@ const Room = React.createClass({
     const messages = (
       this.data.messages.map(function(message) {
         return (
-          <div className={ Meteor.userId() === message.userId ? "comment yours" : "comment"}>
+          <div key={message._id} className={ Meteor.userId() === message.userId ? "comment yours" : "comment"}>
             <a className="avatar">
               <img src={ message.userAvatar } />
             </a>
