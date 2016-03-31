@@ -1,7 +1,0 @@
-template(name="writer")
-    .ui.form.writer
-        .field
-            if currentUser
-                textarea(name="message" rows="2" placeholder="Message..")
-            else
-                textarea(disabled rows="2" placeholder="Log in to chat")

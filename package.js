@@ -18,7 +18,6 @@ Package.onUse(function(api) {
 
   api.addFiles([
     'client/ChatterApp.jsx',
-    'client/Task.jsx',
     'client/chatter.html',
     'client/chatter.js',
 
