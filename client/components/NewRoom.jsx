@@ -1,11 +1,12 @@
 import React from 'react';
+import ReactDom from 'react-dom';
 
 const NewRoom = React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
     form = {};
-    form.name = React.findDOMNode(this.refs.channelName).value.trim();
+    form.name = ReactDOM.findDOMNode(this.refs.channelName).value.trim();
     form.roomType = "public";
 
     var that = this;
