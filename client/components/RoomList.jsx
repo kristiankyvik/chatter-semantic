@@ -29,6 +29,7 @@ RoomList = React.createClass({
     const otherRoomsHTML = otherRooms.map(room => {
       return <RoomListItem getUserCount={this.props.getUserCount} goToRoom={this.goToRoom} goToNewRoom={this.goToNewRoom} room={room} />;
     });
+
     return (
       <div className="wrapper">
         <div className="roomList">

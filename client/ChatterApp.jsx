@@ -23,7 +23,7 @@ ChatterApp = React.createClass({
     if (subsReady) {
       const userRooms = Chatter.UserRoom.find({"userId": Meteor.userId()});
       const roomIds = userRooms.map(function(userRoom) { return userRoom.roomId });
-      joinedRooms = Chatter.Room.find({"_id": {$in:roomIds}}).fetch();
+      joinedRooms = Chatter.Room.find({"_id": {$in:roomIds}}, {sort: {lastActive: -1}}).fetch();
       otherRooms = Chatter.Room.find({"_id": {$nin:roomIds}}).fetch();
     }
 

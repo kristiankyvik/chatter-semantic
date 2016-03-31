@@ -48,12 +48,17 @@ Room = React.createClass({
 
   pushMessage(text) {
     const user = Meteor.user();
+    const roomId = this.props.roomId;
     const params = {
         message: text,
-        roomId: this.props.roomId,
+        roomId: roomId,
         userId: user._id
     };
-    Meteor.call("message.build", params);
+
+    Meteor.call("message.build", params, function(error, result) {
+      Meteor.call("room.update", roomId);
+    });
+
     const scroller = this.refs.scroller.getDOMNode();
     scroller.scrollTop = scroller.scrollHeight;
   },
@@ -68,7 +73,7 @@ Room = React.createClass({
     );
 
     const messages = (
-      this.data.messages.map(function(message){
+      this.data.messages.map(function(message) {
         return (
           <div className={ Meteor.userId() === message.userId ? "comment yours" : "comment"}>
             <a className="avatar">
