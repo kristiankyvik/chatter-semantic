@@ -85,17 +85,13 @@ const ChatterApp = React.createClass({
 
   getView() {
     const views = {
-      roomList: <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms} getUserCount={this.getUserCount} setView={this.setView} />,
+      roomList: <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms}  setView={this.setView} />,
       room: <Room roomId={this.state.roomId} />,
       settings: <Settings roomId={this.state.roomId} />,
       newRoom: <NewRoom goToRoom={this.goToRoom} />,
       widget: <Widget />
     };
     return views[this.state.view]
-  },
-
-  getUserCount(roomId) {
-    return parseInt(Chatter.UserRoom.find({"roomId": roomId}).fetch().length);
   },
 
   render() {
