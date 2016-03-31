@@ -7,7 +7,7 @@ const Nav = React.createClass({
   },
 
   render() {
-    const iconSettings = {
+    const rightIconSettings = {
       roomList: {
         icon: "",
         nextView: "home"
@@ -26,15 +26,21 @@ const Nav = React.createClass({
       }
     };
 
-    const iconHTML = (
-      <a className="icon item" onClick={() => this.setView(iconSettings[this.props.view].nextView)}>
-        <i className={iconSettings[this.props.view].icon}></i>
+    const rightIconHTML = (
+      <a className="icon item" onClick={() => this.setView(rightIconSettings[this.props.view].nextView)}>
+        <i className={rightIconSettings[this.props.view].icon}></i>
+      </a>
+    );
+
+    const settingsIconHTML = (
+      <a className="icon item" onClick={() => this.setView("settings")}>
+        <i className="setting icon"></i>
       </a>
     );
 
     return (
       <div className="ui secondary pointing menu">
-        {iconHTML}
+        {rightIconHTML}
         <div className="header item">
           {this.props.header}
         </div>
@@ -42,9 +48,7 @@ const Nav = React.createClass({
           <a className="icon item" onClick={() => this.setView("minimize")}>
             <i className="minus icon"></i>
           </a>
-          <a className="icon item" onClick={() => this.setView("settings")}>
-            <i className="setting icon"></i>
-          </a>
+          {this.props.view == "roomList" ? null : settingsIconHTML }
         </div>
       </div>
     );
