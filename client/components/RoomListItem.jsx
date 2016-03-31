@@ -13,14 +13,21 @@ const RoomListItem = React.createClass({
       roomId: this.props.room._id
     });
 
-    const subsReady = messagesHandle.ready() && usersHandle.ready();
+    const countHandle = Meteor.subscribe("chatterUserRoomCounts", {
+      roomId: this.props.room._id
+    });
+
+    const subsReady = messagesHandle.ready() && usersHandle.ready() && countHandle.ready();
 
     let message = "";
     let avatar = null;
     let timeAgo = "";
+    let count = 0;
 
     if (subsReady) {
       const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
+      const checkCount = Chatter.UserRoomCount.findOne({roomId: this.props.room._id, userId: Meteor.userId() });
+      count =  typeof checkCount === 'undefined' ? "0" : checkCount.count;
       const roomEmpty = typeof lastMessage === 'undefined';
       message = roomEmpty ?  "no messages yet" : lastMessage.message;
       timeAgo = roomEmpty ? "" : lastMessage.timeAgo();
@@ -30,7 +37,8 @@ const RoomListItem = React.createClass({
     return {
       message,
       avatar,
-      timeAgo
+      timeAgo,
+      count
     }
   },
 
@@ -40,7 +48,7 @@ const RoomListItem = React.createClass({
         <img className="ui avatar image" src={this.data.avatar} />
         <div className="content">
           <div className="header">
-            <span>{this.props.room.name}</span> (<span>{this.props.getUserCount(this.props.room._id)}</span>)
+            <span>{this.props.room.name}</span> (<span>{this.data.count}</span>)
             <div className="meta">
               {this.data.timeAgo}
             </div>
