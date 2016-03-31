@@ -34,8 +34,7 @@ const Room = React.createClass({
   },
 
   componentDidMount() {
-    const scroller = this.refs.scroller;
-    scroller.scrollTop = scroller.scrollHeight;
+    this.scrollDown()
     Meteor.call("userroomcount.reset", Meteor.userId(), this.props.roomId);
   },
 
@@ -50,9 +49,13 @@ const Room = React.createClass({
 
   componentDidUpdate() {
     if (this.shouldScroll) {
-      const scroller = this.refs.scroller;
-      scroller.scrollTop = scroller.scrollHeight;
+      this.scrollDown();
     }
+  },
+
+  scrollDown() {
+    const scroller = this.refs.scroller;
+    scroller.scrollTop = scroller.scrollHeight;
   },
 
   pushMessage(text) {
@@ -69,8 +72,7 @@ const Room = React.createClass({
       Meteor.call("userroomcount.increase", params.userId, params.roomId);
     });
 
-    const scroller = this.refs.scroller;
-    scroller.scrollTop = scroller.scrollHeight;
+    this.scrollDown();
   },
 
   render() {
