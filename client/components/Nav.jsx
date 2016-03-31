@@ -42,7 +42,9 @@ const Nav = React.createClass({
       <div className="ui secondary pointing menu">
         {rightIconHTML}
         <div className="header item">
-          {this.props.header}
+          <div className="status">
+            {this.props.header}
+          </div>
         </div>
         <div className="right menu">
           <a className="icon item" onClick={() => this.setView("minimize")}>
