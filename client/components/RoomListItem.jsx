@@ -13,7 +13,7 @@ const RoomListItem = React.createClass({
       roomId: this.props.room._id
     });
 
-    const countHandle = Meteor.subscribe("chatterUserRoomCounts", {
+    const countHandle = Meteor.subscribe("chatterUserRooms", {
       roomId: this.props.room._id
     });
 
@@ -25,7 +25,7 @@ const RoomListItem = React.createClass({
         count = 0;
 
     if (subsReady) {
-      const checkCount = Chatter.UserRoomCount.findOne({roomId: this.props.room._id, userId: Meteor.userId() });
+      const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: Meteor.userId() });
       count =  typeof checkCount === 'undefined' ? "0" : checkCount.count;
 
       const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
