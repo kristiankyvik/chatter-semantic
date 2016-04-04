@@ -2,6 +2,14 @@ import React from 'react';
 
 import Writer from "../components/Writer.jsx"
 
+const userIdToNick = function(chatterUsers) {
+  const idToNick = {};
+  chatterUsers.forEach( (user) => {
+    idToNick[user._id] = user.nickname;
+  });
+  return idToNick;
+};
+
 const Room = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -11,24 +19,17 @@ const Room = React.createClass({
       messageLimit: 30
     });
 
-    const usersHandle = Meteor.subscribe("users", {
-      roomId: this.props.roomId
-    });
 
-    const subsReady = messagesHandle.ready() && usersHandle.ready();
+    const subsReady = messagesHandle.ready();
 
     let messages = [];
-    let users = [];
-
 
     if (subsReady) {
       messages = Chatter.Message.find({"roomId": this.props.roomId}).fetch();
-      users = Meteor.users.find({"roomId": this.props.roomId }).fetch();
     }
 
     return {
       messages,
-      users,
       subsReady
     }
   },
@@ -76,6 +77,8 @@ const Room = React.createClass({
   },
 
   render() {
+    const getNickname = userIdToNick(this.props.chatterUsers);
+    console.log(getNickname);
     const loader =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
@@ -92,7 +95,7 @@ const Room = React.createClass({
               <img src={ message.userAvatar } />
             </a>
             <div className="content">
-              <a className="author">{message.userNick}</a>
+              <a className="author">{getNickname[message.userId]}</a>
               <a className="metadata">
                 <span className="date"> {message.timeAgo()} </span>
               </a>

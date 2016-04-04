@@ -17,7 +17,7 @@ const RoomList = React.createClass({
   },
 
   render() {
-    const { subsReady, otherRooms, joinedRooms } = this.props;
+    const { subsReady, otherRooms, subscribedRooms } = this.props;
     const loaderHTML =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
@@ -26,7 +26,7 @@ const RoomList = React.createClass({
       </div>
     );
 
-    const joinedRoomsHTML = joinedRooms.map(room => {
+    const subscribedRoomsHTML = subscribedRooms.map(room => {
       return <RoomListItem key={room._id} goToRoom={this.goToRoom} chatterUser={this.props.chatterUser} goToNewRoom={this.goToNewRoom} room={room} />;
     });
 
@@ -42,25 +42,12 @@ const RoomList = React.createClass({
               <div className="title active">
                 <div className="ui header">
                   <i className="dropdown icon"></i>
-                  Your channels <span>({joinedRooms.length})</span>
+                  Subscribed channels <span>({subscribedRooms.length})</span>
                 </div>
               </div>
               <div className="content active">
                 <div className="ui selection middle aligned list celled">
-                  { subsReady ? joinedRoomsHTML : loaderHTML}
-                </div>
-              </div>
-            </div>
-            <div className="ui accordion">
-              <div className="title">
-                <div className="ui header">
-                  <i className="dropdown icon"></i>
-                  Other channels <span>({otherRooms.length})</span>
-                </div>
-              </div>
-              <div className="content">
-                <div className="ui selection middle aligned list celled">
-                  { subsReady ? otherRoomsHTML : loaderHTML}
+                  { subsReady ? subscribedRoomsHTML : loaderHTML}
                 </div>
               </div>
             </div>
@@ -75,4 +62,3 @@ const RoomList = React.createClass({
 });
 
 export default RoomList;
-

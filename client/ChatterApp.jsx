@@ -37,7 +37,7 @@ const ChatterApp = React.createClass({
       roomId: null,
       header: "Chatter",
       view: "roomList",
-      joinedRooms: [],
+      subscribedRooms: [],
       otherRooms: []
     };
    },
@@ -48,7 +48,7 @@ const ChatterApp = React.createClass({
     const userRoomsHandle = Meteor.subscribe("chatterUserRooms");
     const subsReady = roomsHandle.ready() && userRoomsHandle.ready() && chatterUsersHandle.ready();
 
-    let joinedRooms = [];
+    let subscribedRooms = [];
     let otherRooms = [];
     let chatterUsers = [];
     let chatterUser = null;
@@ -58,14 +58,14 @@ const ChatterApp = React.createClass({
       chatterUsers = Chatter.User.find().fetch();
       const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id});
       const roomIds = userRooms.map(function(userRoom) { return userRoom.roomId });
-      joinedRooms = Chatter.Room.find({"_id": {$in:roomIds}}, {sort: {lastActive: -1}}).fetch();
+      subscribedRooms = Chatter.Room.find({"_id": {$in:roomIds}}, {sort: {lastActive: -1}}).fetch();
       //otherRooms = Chatter.Room.find({"_id": {$nin:roomIds}}).fetch();
       otherRooms = [];
 
     }
 
     return {
-      joinedRooms,
+      subscribedRooms,
       otherRooms,
       subsReady,
       chatterUsers,
@@ -113,8 +113,8 @@ const ChatterApp = React.createClass({
 
   getView() {
     const views = {
-      roomList: <RoomList chatterUser={this.data.chatterUser} subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms}  setView={this.setView} />,
-      room: <Room chatterUser={this.data.chatterUser} roomId={this.state.roomId} />,
+      roomList: <RoomList chatterUser={this.data.chatterUser} subsReady={this.data.subsReady} goToRoom={this.goToRoom} subscribedRooms={this.data.subscribedRooms} otherRooms={this.data.otherRooms}  setView={this.setView} />,
+      room: <Room chatterUser={this.data.chatterUser} chatterUsers={this.data.chatterUsers} chatterUser={this.data.chatterUser} roomId={this.state.roomId} />,
       settings: <Settings chatterUser={this.data.chatterUser} roomId={this.state.roomId} />,
       newRoom: <NewRoom chatterUser={this.data.chatterUser} goToRoom={this.goToRoom} />,
       widget: <Widget />
