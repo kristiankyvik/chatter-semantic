@@ -11,7 +11,7 @@ const Room = React.createClass({
       messageLimit: 30
     });
 
-    const usersHandle = Meteor.subscribe("chatterUsers", {
+    const usersHandle = Meteor.subscribe("users", {
       roomId: this.props.roomId
     });
 
@@ -35,11 +35,11 @@ const Room = React.createClass({
 
   componentDidMount() {
     this.scrollDown()
-    Meteor.call("userroom.count.reset", Meteor.userId(), this.props.roomId);
+    Meteor.call("userroom.count.reset", this.props.chatterUser._id, this.props.roomId);
   },
 
   componentWillUnmount() {
-    Meteor.call("userroom.count.reset", Meteor.userId(), this.props.roomId);
+    Meteor.call("userroom.count.reset", this.props.chatterUser._id, this.props.roomId);
   },
 
   componentWillUpdate() {
@@ -64,7 +64,7 @@ const Room = React.createClass({
     const params = {
         message: text,
         roomId: roomId,
-        userId: user._id
+        userId: this.props.chatterUser._id
     };
 
     Meteor.call("message.build", params, function(error, result) {
@@ -85,9 +85,9 @@ const Room = React.createClass({
     );
 
     const messages = (
-      this.data.messages.map(function(message) {
+      this.data.messages.map((message) => {
         return (
-          <div key={message._id} className={ Meteor.userId() === message.userId ? "comment yours" : "comment"}>
+          <div key={message._id} className={ this.props.chatterUser._id === message.userId ? "comment yours" : "comment"}>
             <a className="avatar">
               <img src={ message.userAvatar } />
             </a>

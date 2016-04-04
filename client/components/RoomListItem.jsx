@@ -9,15 +9,11 @@ const RoomListItem = React.createClass({
       messageLimit: 30
     });
 
-    const usersHandle = Meteor.subscribe("chatterUsers", {
-      roomId: this.props.room._id
-    });
-
     const countHandle = Meteor.subscribe("chatterUserRooms", {
       roomId: this.props.room._id
     });
 
-    const subsReady = messagesHandle.ready() && usersHandle.ready() && countHandle.ready();
+    const subsReady = messagesHandle.ready() && countHandle.ready();
 
     let message = "no messages yet",
         avatar = "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/default.jpg",
@@ -25,7 +21,7 @@ const RoomListItem = React.createClass({
         count = 0;
 
     if (subsReady) {
-      const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: Meteor.userId() });
+      const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: this.props.chatterUser._id});
 
       count =  typeof checkCount === 'undefined' ? -1 : checkCount.count;
 

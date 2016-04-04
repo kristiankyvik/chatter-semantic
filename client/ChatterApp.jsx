@@ -8,6 +8,26 @@ import Widget from "./components/Widget.jsx";
 import NewRoom from "./components/NewRoom.jsx";
 import Nav from "./components/Nav.jsx";
 
+const isChatterUser = function(chatterUsers) {
+  const chatterUserIds = chatterUsers.map(function(user) {
+    return user.userId;
+  });
+  return (chatterUserIds.indexOf(Meteor.userId()) > -1) ;
+};
+
+const getChatHTML = function(data) {
+  let chatHTML = <div>Hei Man not useing chatter</div>;
+  if (isChatterUser(data.data.chatterUsers, Meteor.userId())) {
+    chatHTML = (
+      <div className="ui right vertical wide visible sidebar chatter" id="chatter">
+          <Nav view={data.state.view}  setView={data.setView} chatState={data.state.chatState} roomId={data.state.roomId} header={data.state.header}/>
+          {data.getView()}
+      </div>
+    );
+  };
+  return chatHTML;
+};
+
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -23,24 +43,33 @@ const ChatterApp = React.createClass({
    },
 
   getMeteorData () {
+    const chatterUsersHandle = Meteor.subscribe("chatterUsers");
     const roomsHandle = Meteor.subscribe("chatterRooms");
     const userRoomsHandle = Meteor.subscribe("chatterUserRooms");
-    const subsReady = roomsHandle.ready() && userRoomsHandle.ready();
+    const subsReady = roomsHandle.ready() && userRoomsHandle.ready() && chatterUsersHandle.ready();
 
     let joinedRooms = [];
     let otherRooms = [];
+    let chatterUsers = [];
+    let chatterUser = null;
 
     if (subsReady) {
-      const userRooms = Chatter.UserRoom.find({"userId": Meteor.userId()});
+      chatterUser = Chatter.User.findOne({userId: Meteor.userId()});
+      chatterUsers = Chatter.User.find().fetch();
+      const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id});
       const roomIds = userRooms.map(function(userRoom) { return userRoom.roomId });
       joinedRooms = Chatter.Room.find({"_id": {$in:roomIds}}, {sort: {lastActive: -1}}).fetch();
-      otherRooms = Chatter.Room.find({"_id": {$nin:roomIds}}).fetch();
+      //otherRooms = Chatter.Room.find({"_id": {$nin:roomIds}}).fetch();
+      otherRooms = [];
+
     }
 
     return {
       joinedRooms,
       otherRooms,
-      subsReady
+      subsReady,
+      chatterUsers,
+      chatterUser
     }
   },
 
@@ -50,7 +79,7 @@ const ChatterApp = React.createClass({
       view: 'room',
       header: roomName
     });
-    Meteor.call("userroom.build", roomName);
+    //Meteor.call("userroom.build", roomName);
   },
 
   setView(view) {
@@ -84,24 +113,20 @@ const ChatterApp = React.createClass({
 
   getView() {
     const views = {
-      roomList: <RoomList subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms}  setView={this.setView} />,
-      room: <Room roomId={this.state.roomId} />,
-      settings: <Settings roomId={this.state.roomId} />,
-      newRoom: <NewRoom goToRoom={this.goToRoom} />,
+      roomList: <RoomList chatterUser={this.data.chatterUser} subsReady={this.data.subsReady} goToRoom={this.goToRoom} joinedRooms={this.data.joinedRooms} otherRooms={this.data.otherRooms}  setView={this.setView} />,
+      room: <Room chatterUser={this.data.chatterUser} roomId={this.state.roomId} />,
+      settings: <Settings chatterUser={this.data.chatterUser} roomId={this.state.roomId} />,
+      newRoom: <NewRoom chatterUser={this.data.chatterUser} goToRoom={this.goToRoom} />,
       widget: <Widget />
     };
     return views[this.state.view]
   },
 
   render() {
-    let chatHTML = (
-      <div className="ui right vertical wide visible sidebar chatter" id="chatter">
-          <Nav view={this.state.view}  setView={this.setView} chatState={this.state.chatState} roomId={this.state.roomId} header={this.state.header}/>
-          {this.getView()}
-      </div>
-    );
+
+    let chatHTML = getChatHTML(this);
+
     return this.state.chatState === "minimized" ? <Widget toggleChatState={this.toggleChatState} /> : chatHTML;
-    return (<div>hello!</div>);
   }
 });
 
