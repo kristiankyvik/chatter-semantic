@@ -14,8 +14,9 @@ const Room = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData () {
+    const { roomId } = this.props;
     const messagesHandle = Meteor.subscribe("chatterMessages", {
-      roomId: this.props.roomId,
+      roomId: roomId,
       messageLimit: 30
     });
 
@@ -25,7 +26,7 @@ const Room = React.createClass({
     let messages = [];
 
     if (subsReady) {
-      messages = Chatter.Message.find({"roomId": this.props.roomId}).fetch();
+      messages = Chatter.Message.find({"roomId": roomId}).fetch();
     }
 
     return {
@@ -78,7 +79,6 @@ const Room = React.createClass({
 
   render() {
     const getNickname = userIdToNick(this.props.chatterUsers);
-    console.log(getNickname);
     const loader =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
