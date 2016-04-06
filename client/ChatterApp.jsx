@@ -56,12 +56,11 @@ const ChatterApp = React.createClass({
     if (subsReady) {
       chatterUser = Chatter.User.findOne({userId: Meteor.userId()});
       chatterUsers = Chatter.User.find().fetch();
-      const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id});
-      const roomIds = userRooms.map(function(userRoom) { return userRoom.roomId });
+      const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
+      const roomIds = _.pluck(userRooms, "roomId");
       subscribedRooms = Chatter.Room.find({"_id": {$in:roomIds}}, {sort: {lastActive: -1}}).fetch();
       //otherRooms = Chatter.Room.find({"_id": {$nin:roomIds}}).fetch();
       otherRooms = [];
-
     }
 
     return {
@@ -79,7 +78,6 @@ const ChatterApp = React.createClass({
       view: 'room',
       header: roomName
     });
-    //Meteor.call("userroom.build", roomName);
   },
 
   setView(view) {
