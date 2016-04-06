@@ -27,11 +27,23 @@ const RoomList = React.createClass({
     );
 
     const subscribedRoomsHTML = subscribedRooms.map(room => {
-      return <RoomListItem key={room._id} goToRoom={this.goToRoom} chatterUser={this.props.chatterUser} goToNewRoom={this.goToNewRoom} room={room} />;
+      return <RoomListItem
+              key={room._id}
+              goToRoom={this.goToRoom}
+              chatterUser={this.props.chatterUser}
+              goToNewRoom={this.goToNewRoom}
+              room={room}
+            />;
     });
 
     const otherRoomsHTML = otherRooms.map(room => {
-      return <RoomListItem key={room._id} goToRoom={this.goToRoom} chatterUser={this.props.chatterUser} goToNewRoom={this.goToNewRoom} room={room} />;
+      return <RoomListItem
+              key={room._id}
+              goToRoom={this.goToRoom}
+              chatterUser={this.props.chatterUser}
+              goToNewRoom={this.goToNewRoom}
+              room={room}
+            />;
     });
 
     return (
