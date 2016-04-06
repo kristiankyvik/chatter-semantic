@@ -1,5 +1,24 @@
 import React from 'react';
 
+const rightIconSettings = {
+  roomList: {
+    icon: "",
+    nextView: "home"
+  },
+  room: {
+    icon: "chevron left icon",
+    nextView: "home"
+  },
+  settings: {
+    icon: "close icon",
+    nextView: "room"
+  },
+  newRoom: {
+    icon: "chevron left icon",
+    nextView: "home"
+  }
+};
+
 const Nav = React.createClass({
 
   setView(view) {
@@ -7,24 +26,6 @@ const Nav = React.createClass({
   },
 
   render() {
-    const rightIconSettings = {
-      roomList: {
-        icon: "",
-        nextView: "home"
-      },
-      room: {
-        icon: "chevron left icon",
-        nextView: "home"
-      },
-      settings: {
-        icon: "close icon",
-        nextView: "room"
-      },
-      newRoom: {
-        icon: "chevron left icon",
-        nextView: "home"
-      }
-    };
 
     const rightIconHTML = (
       <a className="icon item" onClick={() => this.setView(rightIconSettings[this.props.view].nextView)}>
