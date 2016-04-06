@@ -145,10 +145,9 @@ const ChatterApp = React.createClass({
   },
 
   render() {
-
     let chatHTML = getChatHTML(this);
-
-    return this.state.chatState === "minimized" ? <Widget toggleChatState={this.toggleChatState} /> : chatHTML;
+    const isMinimized = this.state.chatState === "minimized";
+    return isMinimized ? <Widget toggleChatState={this.toggleChatState} /> : chatHTML;
   }
 });
 
