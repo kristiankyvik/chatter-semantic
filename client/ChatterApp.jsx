@@ -82,11 +82,13 @@ const ChatterApp = React.createClass({
     if (subsReady) {
       chatterUser = Chatter.User.findOne({userId: Meteor.userId()});
       chatterUsers = Chatter.User.find().fetch();
-      const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
-      const roomIds = _.pluck(userRooms, "roomId");
-      subscribedRooms = Chatter.Room.find({"_id": {$in:roomIds}}, {sort: {lastActive: -1}}).fetch();
-      //otherRooms = Chatter.Room.find({"_id": {$nin:roomIds}}).fetch();
-      otherRooms = [];
+      if (chatterUsers.length > 0) {
+        const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
+        const roomIds = _.pluck(userRooms, "roomId");
+        subscribedRooms = Chatter.Room.find({"_id": {$in:roomIds}}, {sort: {lastActive: -1}}).fetch();
+        //otherRooms = Chatter.Room.find({"_id": {$nin:roomIds}}).fetch();
+        otherRooms = [];
+      }
     }
 
     return {
@@ -126,21 +128,21 @@ const ChatterApp = React.createClass({
                   otherRooms={this.data.otherRooms}
                   setView={this.setView}
                 />,
-      room: <Room
-              chatterUser={this.data.chatterUser}
-              chatterUsers={this.data.chatterUsers}
-              chatterUser={this.data.chatterUser}
-              roomId={this.state.roomId}
-            />,
-      settings: <Settings
+      room:     <Room
+                  chatterUser={this.data.chatterUser}
+                  chatterUsers={this.data.chatterUsers}
                   chatterUser={this.data.chatterUser}
                   roomId={this.state.roomId}
                 />,
-      newRoom: <NewRoom
-                chatterUser={this.data.chatterUser}
-                goToRoom={this.goToRoom}
-              />,
-      widget: <Widget />
+      settings: <Settings
+                  chatterUser={this.data.chatterUser}
+                  room={Chatter.Room.findOne({_id: this.state.roomId})}
+                />,
+      newRoom:  <NewRoom
+                  chatterUser={this.data.chatterUser}
+                  goToRoom={this.goToRoom}
+                />,
+      widget:   <Widget />
     };
     return views[this.state.view]
   },
