@@ -17,7 +17,7 @@ const RoomList = React.createClass({
   },
 
   render() {
-    const { subsReady, otherRooms, subscribedRooms } = this.props;
+    const { subsReady, archivedRooms, activeRooms } = this.props;
     const loaderHTML =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
@@ -26,7 +26,7 @@ const RoomList = React.createClass({
       </div>
     );
 
-    const subscribedRoomsHTML = subscribedRooms.map(room => {
+    const activeRoomsHTML = activeRooms.map(room => {
       return <RoomListItem
               key={room._id}
               goToRoom={this.goToRoom}
@@ -36,7 +36,7 @@ const RoomList = React.createClass({
             />;
     });
 
-    const otherRoomsHTML = otherRooms.map(room => {
+    const archivedRoomsHTML = archivedRooms.map(room => {
       return <RoomListItem
               key={room._id}
               goToRoom={this.goToRoom}
@@ -54,12 +54,25 @@ const RoomList = React.createClass({
               <div className="title active">
                 <div className="ui header">
                   <i className="dropdown icon"></i>
-                  Subscribed channels <span>({subscribedRooms.length})</span>
+                  Active channels <span>({activeRooms.length})</span>
                 </div>
               </div>
               <div className="content active">
                 <div className="ui selection middle aligned list celled">
-                  { subsReady ? subscribedRoomsHTML : loaderHTML}
+                  { subsReady ? activeRoomsHTML : loaderHTML}
+                </div>
+              </div>
+            </div>
+            <div className="ui accordion">
+              <div className="title">
+                <div className="ui header">
+                  <i className="dropdown icon"></i>
+                  Archived channels <span>({archivedRooms.length})</span>
+                </div>
+              </div>
+              <div className="content">
+                <div className="ui selection middle aligned list celled">
+                  { subsReady ? archivedRoomsHTML : loaderHTML}
                 </div>
               </div>
             </div>

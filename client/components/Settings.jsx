@@ -32,7 +32,6 @@ const Settings = React.createClass({
   },
 
   render() {
-    console.log(this.state.archived);
     const users = [];
     this.state.users.forEach(function(user) {
       users.push(
@@ -55,6 +54,12 @@ const Settings = React.createClass({
         <div className="ui header">
           Settings
         </div>
+        <div className="ui item">
+          <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
+            <input type="checkbox" value={this.state.archived} name="public" tabIndex="0" className="hidden"/>
+            <label>Archive Chat</label>
+          </div>
+        </div>
         <div className="ui accordion">
           <div className="title">
             <i className="dropdown icon"></i>
@@ -64,15 +69,6 @@ const Settings = React.createClass({
             <div className="ui list relaxed">
               {users}
             </div>
-          </div>
-        </div>
-        <div className="ui item">
-          <div className="h4 ui header">
-            Archive Room
-          </div>
-          <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
-            <input type="checkbox" value={this.state.archived} name="public" tabIndex="0" className="hidden"/>
-            <label>Archive Chat</label>
           </div>
         </div>
       </div>

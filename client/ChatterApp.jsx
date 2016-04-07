@@ -63,8 +63,8 @@ const ChatterApp = React.createClass({
       roomId: null,
       header: "Chatter",
       view: "roomList",
-      subscribedRooms: [],
-      otherRooms: []
+      activeRooms: [],
+      archivedRooms: []
     };
    },
 
@@ -74,8 +74,8 @@ const ChatterApp = React.createClass({
     const userRoomsHandle = Meteor.subscribe("chatterUserRooms");
     const subsReady = roomsHandle.ready() && userRoomsHandle.ready() && chatterUsersHandle.ready();
 
-    let subscribedRooms = [];
-    let otherRooms = [];
+    let activeRooms = [];
+    let archivedRooms = [];
     let chatterUsers = [];
     let chatterUser = null;
 
@@ -85,15 +85,14 @@ const ChatterApp = React.createClass({
       if (chatterUsers.length > 0) {
         const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
         const roomIds = _.pluck(userRooms, "roomId");
-        subscribedRooms = Chatter.Room.find({"_id": {$in:roomIds}}, {sort: {lastActive: -1}}).fetch();
-        //otherRooms = Chatter.Room.find({"_id": {$nin:roomIds}}).fetch();
-        otherRooms = [];
+        activeRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": true}, {sort: {lastActive: -1}}).fetch();
+        archivedRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": false}).fetch();
       }
     }
 
     return {
-      subscribedRooms,
-      otherRooms,
+      activeRooms,
+      archivedRooms,
       subsReady,
       chatterUsers,
       chatterUser
@@ -124,8 +123,8 @@ const ChatterApp = React.createClass({
                   chatterUser={this.data.chatterUser}
                   subsReady={this.data.subsReady}
                   goToRoom={this.goToRoom}
-                  subscribedRooms={this.data.subscribedRooms}
-                  otherRooms={this.data.otherRooms}
+                  activeRooms={this.data.activeRooms}
+                  archivedRooms={this.data.archivedRooms}
                   setView={this.setView}
                 />,
       room:     <Room
