@@ -17,9 +17,8 @@ const Room = React.createClass({
     const { roomId } = this.props;
     const messagesHandle = Meteor.subscribe("chatterMessages", {
       roomId: roomId,
-      messageLimit: 30
+      messageLimit: Chatter.options.messageLimit
     });
-
 
     const subsReady = messagesHandle.ready();
 
@@ -65,8 +64,8 @@ const Room = React.createClass({
     const roomId = this.props.roomId;
     const params = {
         message: text,
-        roomId: roomId,
-        userId: this.props.chatterUser._id
+        userId: this.props.chatterUser._id,
+        roomId
     };
 
     Meteor.call("message.build", params, function(error, result) {

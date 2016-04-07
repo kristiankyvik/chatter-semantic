@@ -8,6 +8,26 @@ import Widget from "./components/Widget.jsx";
 import NewRoom from "./components/NewRoom.jsx";
 import Nav from "./components/Nav.jsx";
 
+const actions = {
+  home: {
+    header: "Chatter",
+    view: "roomList"
+  },
+  minimize: {
+    chatState: "minimized"
+  },
+  settings: {
+    view: "settings"
+  },
+  room: {
+    view: "room"
+  },
+  newRoom: {
+    header: "New room",
+    view: "newRoom"
+  }
+};
+
 const isChatterUser = function(chatterUsers) {
   const chatterUserIds = chatterUsers.map(function(user) {
     return user.userId;
@@ -87,25 +107,6 @@ const ChatterApp = React.createClass({
   },
 
   setView(view) {
-    const actions = {
-      home: {
-        header: "Chatter",
-        view: "roomList"
-      },
-      minimize: {
-        chatState: "minimized"
-      },
-      settings: {
-        view: "settings"
-      },
-      room: {
-        view: "room"
-      },
-      newRoom: {
-        header: "New room",
-        view: "newRoom"
-      }
-    };
     this.setState(actions[view]);
   },
 
