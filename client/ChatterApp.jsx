@@ -85,8 +85,8 @@ const ChatterApp = React.createClass({
       if (chatterUsers.length > 0) {
         const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
         const roomIds = _.pluck(userRooms, "roomId");
-        activeRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": true}, {sort: {lastActive: -1}}).fetch();
-        archivedRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": false}).fetch();
+        activeRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": false}, {sort: {lastActive: -1}}).fetch();
+        archivedRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": true}).fetch();
       }
     }
 
@@ -139,6 +139,7 @@ const ChatterApp = React.createClass({
                 />,
       newRoom:  <NewRoom
                   chatterUser={this.data.chatterUser}
+                  chatterUsers={this.data.chatterUsers}
                   goToRoom={this.goToRoom}
                 />,
       widget:   <Widget />

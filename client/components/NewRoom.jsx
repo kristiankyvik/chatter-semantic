@@ -7,17 +7,31 @@ const NewRoom = React.createClass({
     e.preventDefault();
     form = {};
     form.name = ReactDOM.findDOMNode(this.refs.channelName).value.trim();
-    form.roomType = "public";
 
-    var that = this;
+    const inviteesString = $("#multi-select").dropdown("get value");
+    form.invitees  = (inviteesString.length === 0) ? [] : inviteesString.split(",");
+    form.invitees.push(this.props.chatterUser._id);
+
+    const that = this;
     Meteor.call("room.build", form, function(error, result){
-      var roomId = result;
-      Meteor.call("userroom.build", form.name);
+      Meteor.call("userroom.build", form);
       that.props.goToRoom(result, form.name);
     });
   },
 
+  componentDidMount() {
+    $("#multi-select").dropdown();
+  },
+
   render() {
+    const users = this.props.chatterUsers.map(function(user) {
+      return (
+        <div className="item" data-value={user._id} key={user._id}>
+          <i className="af flag"></i><span>{user.nickname}</span>
+        </div>
+      );
+    });
+
     return (
       <div className="newRoom">
         <div className="padded">
@@ -28,6 +42,17 @@ const NewRoom = React.createClass({
               </label>
               <input type="text" name="name" placeholder="Enter channel name"  ref="channelName"></input>
             </div>
+            <field>
+              <div id="multi-select" className="ui fluid multiple search selection dropdown">
+                <input type="hidden" name="country"/>
+                <i className="dropdown icon"></i>
+                <input className="search" autoComplete="off" tabIndex="0"/>
+                <div className="default text">Select users</div>
+                <div className="menu" tabIndex="-1">
+                  {users}
+                </div>
+              </div>
+            </field>
             <button className="ui button primary" type="submit" >
               Create channel
             </button>
