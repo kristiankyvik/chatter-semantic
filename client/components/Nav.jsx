@@ -3,7 +3,7 @@ import addons from 'react/addons'
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
-const rightIconSettings = {
+const leftIconConfig = {
   roomList: {
     icon: "",
     nextView: "home",
@@ -29,28 +29,26 @@ const rightIconSettings = {
 const Nav = React.createClass({
 
   setView() {
-    const settings = rightIconSettings[this.props.view];
+    const settings = leftIconConfig[this.props.view];
     this.props.setView(settings.nextView);
     this.props.setTransitionType(settings.transitionType);
   },
 
   render() {
 
-    const rightIconHTML = (
+    const leftIconHTML = (
       <a className="icon item" onClick={() => this.setView()}>
-        <i className={rightIconSettings[this.props.view].icon}></i>
+        <i className={leftIconConfig[this.props.view].icon}></i>
       </a>
     );
 
-    const settingsIconHTML = (
-      <a className="icon item" onClick={()=>{ this.props.setView("settings"); this.props.setTransitionType("reversePageVerticalSlider") }}>
-        <i className="setting icon"></i>
-      </a>
-    );
+    const settingsIconHTML =  <i className="setting icon"></i>;
 
     return (
       <div className="ui secondary pointing menu">
-        {rightIconHTML}
+        <div className="left menu">
+          {leftIconHTML}
+        </div>
         <div className="header item">
           <div className="status">
             <ReactCSSTransitionGroup
@@ -63,10 +61,12 @@ const Nav = React.createClass({
           </div>
         </div>
         <div className="right menu">
+          <a className="icon item" onClick={()=>{ this.props.setView("settings"); this.props.setTransitionType("reversePageVerticalSlider") }}>
+            {this.props.view == "room" ? settingsIconHTML : null }
+          </a>
           <a className="icon item" onClick={() => this.props.setView("minimize")}>
             <i className="minus icon"></i>
           </a>
-          {this.props.view == "roomList" ? null : settingsIconHTML }
         </div>
       </div>
     );
