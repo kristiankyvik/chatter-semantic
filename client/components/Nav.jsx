@@ -3,38 +3,44 @@ import React from 'react';
 const rightIconSettings = {
   roomList: {
     icon: "",
-    nextView: "home"
+    nextView: "home",
+    "transitionType": "pageSlider"
   },
   room: {
     icon: "chevron left icon",
-    nextView: "home"
+    nextView: "home",
+    "transitionType": "reversePageSlider"
   },
   settings: {
     icon: "close icon",
-    nextView: "room"
+    nextView: "room",
+    "transitionType": "pageVerticalSlider"
   },
   newRoom: {
     icon: "chevron left icon",
-    nextView: "home"
+    nextView: "home",
+    "transitionType": "reversePageVerticalSlider"
   }
 };
 
 const Nav = React.createClass({
 
-  setView(view) {
-    this.props.setView(view);
+  setView() {
+    const settings = rightIconSettings[this.props.view];
+    this.props.setView(settings.nextView);
+    this.props.setTransitionType(settings.transitionType);
   },
 
   render() {
 
     const rightIconHTML = (
-      <a className="icon item" onClick={() => this.setView(rightIconSettings[this.props.view].nextView)}>
+      <a className="icon item" onClick={() => this.setView()}>
         <i className={rightIconSettings[this.props.view].icon}></i>
       </a>
     );
 
     const settingsIconHTML = (
-      <a className="icon item" onClick={() => this.setView("settings")}>
+      <a className="icon item" onClick={()=>{ this.props.setView("settings"); this.props.setTransitionType("reversePageVerticalSlider") }}>
         <i className="setting icon"></i>
       </a>
     );
@@ -48,7 +54,7 @@ const Nav = React.createClass({
           </div>
         </div>
         <div className="right menu">
-          <a className="icon item" onClick={() => this.setView("minimize")}>
+          <a className="icon item" onClick={() => this.props.setView("minimize")}>
             <i className="minus icon"></i>
           </a>
           {this.props.view == "roomList" ? null : settingsIconHTML }

@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import addons from 'react/addons'
+
 
 import RoomList from "./components/RoomList.jsx";
 import Settings from "./components/Settings.jsx"
@@ -8,6 +10,8 @@ import Widget from "./components/Widget.jsx";
 import NewRoom from "./components/NewRoom.jsx";
 import Nav from "./components/Nav.jsx";
 
+
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const actions = {
   home: {
@@ -47,8 +51,15 @@ const getChatHTML = function(data) {
             chatState={data.state.chatState}
             roomId={data.state.roomId}
             header={data.state.header}
+            setTransitionType={data.setTransitionType}
           />
-          {data.getView()}
+          <ReactCSSTransitionGroup
+            transitionName={data.state.transitionType}
+            transitionEnterTimeout={300}
+            transitionLeaveTimeout={300}
+            className="transition-group">
+              {data.getView()}
+          </ReactCSSTransitionGroup>
       </div>
     );
   };
@@ -65,7 +76,8 @@ const ChatterApp = React.createClass({
       header: "Chatter",
       view: "roomList",
       activeRooms: [],
-      archivedRooms: []
+      archivedRooms: [],
+      transitionType: "pageSlider"
     };
    },
 
@@ -104,7 +116,8 @@ const ChatterApp = React.createClass({
     this.setState({
       roomId: roomId,
       view: 'room',
-      header: roomName
+      header: roomName,
+      transitionType: "pageSlider"
     });
   },
 
@@ -118,33 +131,47 @@ const ChatterApp = React.createClass({
     });
   },
 
+  setTransitionType(type) {
+    this.setState({
+      transitionType: type
+    });
+  },
+
   getView() {
     const views = {
       roomList: <RoomList
+                  className="rl-trans"
+                  key={1}
                   chatterUser={this.data.chatterUser}
                   subsReady={this.data.subsReady}
                   goToRoom={this.goToRoom}
                   activeRooms={this.data.activeRooms}
                   archivedRooms={this.data.archivedRooms}
                   setView={this.setView}
+                  setTransitionType={this.setTransitionType}
                 />,
       room:     <Room
+                  className="r-trans"
+                  key={2}
                   chatterUser={this.data.chatterUser}
                   chatterUsers={this.data.chatterUsers}
                   chatterUser={this.data.chatterUser}
                   roomId={this.state.roomId}
                 />,
       settings: <Settings
+                  key={3}
                   chatterUser={this.data.chatterUser}
                   room={Chatter.Room.findOne({_id: this.state.roomId})}
                 />,
       newRoom:  <NewRoom
+                  key={4}
                   chatterUser={this.data.chatterUser}
                   chatterUsers={this.data.chatterUsers}
                   goToRoom={this.goToRoom}
                 />,
       widget:   <Widget />
     };
+
     return views[this.state.view]
   },
 
@@ -158,3 +185,4 @@ const ChatterApp = React.createClass({
 });
 
 export default ChatterApp;
+

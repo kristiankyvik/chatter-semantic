@@ -123,6 +123,3 @@ const Room = React.createClass({
 });
 
 export default Room;
-
-
-

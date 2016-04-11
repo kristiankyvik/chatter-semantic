@@ -10,6 +10,7 @@ const RoomList = React.createClass({
 
   goToNewRoom() {
     this.props.setView("newRoom");
+    this.props.setTransitionType("pageVerticalSlider");
   },
 
   componentDidMount() {
