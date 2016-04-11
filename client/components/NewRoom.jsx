@@ -7,6 +7,7 @@ const NewRoom = React.createClass({
     e.preventDefault();
     form = {};
     form.name = ReactDOM.findDOMNode(this.refs.channelName).value.trim();
+    if (form.name.length === 0) return;
 
     const inviteesString = $("#multi-select").dropdown("get value");
     form.invitees  = (inviteesString.length === 0) ? [] : inviteesString.split(",");
@@ -20,6 +21,20 @@ const NewRoom = React.createClass({
   },
 
   componentDidMount() {
+    $('.ui.form')
+      .form({
+        fields: {
+          name: {
+            identifier: 'name',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter a valid name'
+              }
+            ]
+          }
+        }
+      });
     $("#multi-select").dropdown();
   },
 
@@ -57,6 +72,7 @@ const NewRoom = React.createClass({
             <button className="ui button primary" type="submit" >
               Create channel
             </button>
+            <div className="ui error message"></div>
           </form>
         </div>
       </div>
@@ -65,3 +81,4 @@ const NewRoom = React.createClass({
 });
 
 export default NewRoom;
+

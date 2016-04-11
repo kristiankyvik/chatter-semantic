@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import addons from 'react/addons'
+
 
 import RoomList from "./components/RoomList.jsx";
 import Settings from "./components/Settings.jsx"
@@ -7,6 +9,7 @@ import Room from "./components/Room.jsx";
 import Widget from "./components/Widget.jsx";
 import NewRoom from "./components/NewRoom.jsx";
 import Nav from "./components/Nav.jsx";
+
 
 const actions = {
   home: {
@@ -150,7 +153,9 @@ const ChatterApp = React.createClass({
   render() {
     let chatHTML = getChatHTML(this);
     const isMinimized = this.state.chatState === "minimized";
-    return isMinimized ? <Widget toggleChatState={this.toggleChatState} /> : chatHTML;
+    return (
+      isMinimized ? <Widget toggleChatState={this.toggleChatState} /> : chatHTML
+    )
   }
 });
 
