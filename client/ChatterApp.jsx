@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import addons from 'react/addons'
-
 
 import RoomList from "./components/RoomList.jsx";
 import Settings from "./components/Settings.jsx"
