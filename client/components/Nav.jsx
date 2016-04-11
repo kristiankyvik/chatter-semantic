@@ -61,10 +61,16 @@ const Nav = React.createClass({
           </div>
         </div>
         <div className="right menu">
-          <a className="icon item" onClick={()=>{ this.props.setView("settings"); this.props.setTransitionType("reversePageVerticalSlider") }}>
+          <a
+            className="icon item"
+            onClick={()=>{ this.props.setView("settings"); this.props.setTransitionType("reversePageVerticalSlider") }}
+          >
             {this.props.view == "room" ? settingsIconHTML : null }
           </a>
-          <a className="icon item" onClick={() => this.props.setView("minimize")}>
+          <a
+            className="icon item"
+            onClick={() => this.props.setView("minimize")}
+          >
             <i className="minus icon"></i>
           </a>
         </div>

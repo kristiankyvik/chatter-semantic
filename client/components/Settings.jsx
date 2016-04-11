@@ -50,7 +50,7 @@ const Settings = React.createClass({
     });
 
     return (
-      <div className="padded">
+      <div className="padded settings">
         <div className="ui header">
           Settings
         </div>
