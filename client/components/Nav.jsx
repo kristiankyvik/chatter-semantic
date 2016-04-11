@@ -1,4 +1,7 @@
 import React from 'react';
+import addons from 'react/addons'
+
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const rightIconSettings = {
   roomList: {
@@ -50,7 +53,13 @@ const Nav = React.createClass({
         {rightIconHTML}
         <div className="header item">
           <div className="status">
-            {this.props.header}
+            <ReactCSSTransitionGroup
+              transitionName="navbar"
+              transitionEnterTimeout={300}
+              transitionLeaveTimeout={100}
+              className="transition-group">
+                <span key={this.props.header}>{this.props.header}</span>
+            </ReactCSSTransitionGroup>
           </div>
         </div>
         <div className="right menu">

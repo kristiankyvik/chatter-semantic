@@ -34,7 +34,7 @@ chatter-blue = #2185d0
         top: 40px
         bottom: 0
         background-color: chatter-light-blue !important
-        padding-bottom: 50px;
+        padding-bottom: 50px
         .ui.list .item
             padding-top: 16px
             padding-bottom: 16px
@@ -73,7 +73,7 @@ chatter-blue = #2185d0
         &.ui.comments .comment
             text-align: left
             >.content
-                max-width: 257px;
+                max-width: 257px
                 padding: 5px
                 background-color: chatter-light-gray
                 border-radius: 5px
@@ -185,9 +185,24 @@ chatter-blue = #2185d0
     transition: all 100ms
     opacity: 1
 
-
 .reversePageVerticalSlider-leave.reversePageVerticalSlider-leave-active
     transform: translate3d(0, +100%, 0)
     transition: all 100ms
     opacity: 0
+
+.navbar-enter
+  opacity: 0
+
+
+.navbar-enter.navbar-enter-active
+  opacity: 1
+  transition: opacity 300ms ease-in
+
+
+.navbar-leave
+  opacity: 1
+
+
+.navbar-leave.navbar-leave-active
+  opacity: 0
 
