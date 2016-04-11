@@ -27,7 +27,8 @@ const NewRoom = React.createClass({
     const users = this.props.chatterUsers.map(function(user) {
       return (
         <div className="item" data-value={user._id} key={user._id}>
-          <i className="af flag"></i><span>{user.nickname}</span>
+           <img className="ui avatar image" src={user.avatar} />
+          <span>{user.nickname}</span>
         </div>
       );
     });

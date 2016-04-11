@@ -2,12 +2,15 @@ import React from 'react';
 
 import Writer from "../components/Writer.jsx"
 
-const userIdToNick = function(chatterUsers) {
-  const idToNick = {};
+const userIdToProfile = function(chatterUsers) {
+  const idToProfile = {};
   chatterUsers.forEach( (user) => {
-    idToNick[user._id] = user.nickname;
+    idToProfile[user._id] = {
+      nickname: user.nickname,
+      avatar: user.avatar
+    };
   });
-  return idToNick;
+  return idToProfile;
 };
 
 const Room = React.createClass({
@@ -77,7 +80,7 @@ const Room = React.createClass({
   },
 
   render() {
-    const getNickname = userIdToNick(this.props.chatterUsers);
+    const getUserProfile = userIdToProfile(this.props.chatterUsers);
     const loader =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
@@ -88,13 +91,14 @@ const Room = React.createClass({
 
     const messages = (
       this.data.messages.map((message) => {
+        const userProfile = getUserProfile[message.userId]
         return (
           <div key={message._id} className={ this.props.chatterUser._id === message.userId ? "comment yours" : "comment"}>
             <a className="avatar">
-              <img src={ message.userAvatar } />
+              <img src={userProfile.avatar} />
             </a>
             <div className="content">
-              <a className="author">{getNickname[message.userId]}</a>
+              <a className="author">{userProfile.nickname}</a>
               <a className="metadata">
                 <span className="date"> {message.timeAgo()} </span>
               </a>

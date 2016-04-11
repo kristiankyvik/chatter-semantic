@@ -29,7 +29,7 @@ const RoomListItem = React.createClass({
       if (typeof lastMessage != 'undefined') {
         message = lastMessage.message;
         timeAgo = lastMessage.timeAgo();
-        avatar = lastMessage.userAvatar;
+        avatar = "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg";
       }
     }
 
