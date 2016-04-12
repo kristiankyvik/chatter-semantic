@@ -5,12 +5,17 @@ import ReactDOM from 'react-dom';
 const Writer = React.createClass({
 
   handleSubmit(event) {
+    const input = document.getElementById("message");
     if(event.keyCode === 13) {
-      var input = document.getElementById("message")
-      var text = input.value;
+      const text = input.value;
       input.value = "";
+      $("#message").val('');
       this.props.pushMessage(text);
     }
+    while($(input).outerHeight() < input.scrollHeight + parseFloat($(input).css("borderTopWidth")) + parseFloat($(input).css("borderBottomWidth"))) {
+        $(input).height($(input).height()+1);
+    };
+
   },
 
   componentDidMount(){
