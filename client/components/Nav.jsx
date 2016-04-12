@@ -16,6 +16,10 @@ const leftIconConfig = {
   newRoom: {
     icon: "chevron left icon",
     nextView: "home"
+  },
+  addUsers: {
+    icon: "chevron left icon",
+    nextView: "settings"
   }
 };
 

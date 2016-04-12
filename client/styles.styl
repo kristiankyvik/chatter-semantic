@@ -7,6 +7,10 @@ chatter-blue = #2185d0
 .chatter
     background-color: chatter-light-blue !important
 
+    p.gray-text
+        color: chatter-trans-gray
+        font-style: italic
+
     .padded
         padding: 14px 14px 0
 
@@ -122,6 +126,19 @@ chatter-blue = #2185d0
             max-height: 250px
             min-height: 41px
             border-size: 2px
+
+    .settings
+        .ui.list
+            > .item > i.icon
+                padding-right: 0
+                font-size: 1.7em
+            .ui.divider
+                margin: 0.2rem 0rem
+        .addUserItem
+            cursor: pointer
+        .inviter
+            .ui.button.primary
+                margin-top: 10px
 
 .chatter-open.ui.button
     font-size: 2.2em

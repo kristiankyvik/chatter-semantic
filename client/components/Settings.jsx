@@ -1,19 +1,46 @@
 import React from 'react';
+import AddUsers from "./AddUsers.jsx";
 
 const Settings = React.createClass({
+  mixins: [ReactMeteorData],
+
+  getMeteorData () {
+    const userRoomsHandle = Meteor.subscribe("chatterUserRooms");
+    const subsReady = userRoomsHandle.ready();
+
+    let roomUsers = [];
+    let otherUsers = [];
+    let allUsers = [];
+
+    if (subsReady) {
+      const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": this.props.room._id}).fetch(), "userId");
+      _.each(this.props.chatterUsers, function(user) {
+        if (roomUsersIds.indexOf(user._id) < 0) {
+          user.added = false;
+          otherUsers.push(user);
+        } else {
+          user.added = true;
+          roomUsers.push(user);
+        }
+      });
+      allUsers = otherUsers.concat(roomUsers);
+    }
+
+    return {
+      roomUsers,
+      otherUsers,
+      allUsers
+    }
+  },
 
   getInitialState: function() {
     return {
-      users: [],
-      archived: this.props.room.archived
+      archived: this.props.room ? this.props.room.archived : null,
+      addUsers: false
     };
    },
 
   componentDidMount() {
-    const that = this;
-    Meteor.call("room.users", this.props.room._id , function(error, result) {
-      that.setState({users: result});
-    });
     $(".ui.accordion")
       .accordion()
     ;
@@ -32,11 +59,14 @@ const Settings = React.createClass({
   },
 
   render() {
-    const users = [];
-    this.state.users.forEach(function(user) {
-      users.push(
+    const roomUsersHTML = [];
+    this.data.roomUsers.forEach(function(user) {
+      roomUsersHTML.push(
         <div className="item" key={user._id}>
-          <img className="ui avatar image" src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg"/>
+          <img
+            className="ui avatar image"
+            src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg"
+          />
           <div className="content">
             <a className="header">
               {user.nickname}
@@ -52,30 +82,55 @@ const Settings = React.createClass({
     return (
       <div className="padded settings">
         <div className="ui header">
-          Settings
+          Channel description
         </div>
-        <div className="ui item">
-          <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
-            <input type="checkbox" value={this.state.archived} name="public" tabIndex="0" className="hidden"/>
-            <label>Archive Chat</label>
-          </div>
+        <p>
+          This channel was set up with the objective of connecting students with professors.
+        </p>
+        <p className="gray-text">
+          This channel was created by Roald Dahl the 12th January of 2015.
+        </p>
+        <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
+          <label>
+            <span className="ui header">Archive Chat</span>
+          </label>
+          <input
+            type="checkbox"
+            value={this.state.archived}
+            name="public"
+            tabIndex="0"
+            className="hidden"
+          />
         </div>
+        <p>
+          Archived chats will store the conversation and stop notifications from bothering you in the future.
+        </p>
         <div className="ui accordion">
-          <div className="title">
+          <div className="title active">
             <i className="dropdown icon"></i>
-            Users
+            <span className="ui header">
+              Channel members ({this.data.roomUsers.length})
+            </span>
           </div>
-          <div className="content">
+          <div className="content active">
             <div className="ui list relaxed">
-              {users}
+              <div className="item addUserItem" onClick={() => this.setState({addUsers: !this.state.addUsers})}>
+                <i className="add user icon"></i>
+                <div className="content">
+                  <a className="header">
+                    Add participant...
+                  </a>
+                </div>
+              </div>
+              <div className="ui divider"></div>
+              {roomUsersHTML}
             </div>
           </div>
         </div>
+        {this.state.addUsers ? <AddUsers allUsers={this.data.allUsers}/> : null}
       </div>
     );
   }
 });
 
 export default Settings;
-
-

@@ -15,6 +15,7 @@ const NewRoom = React.createClass({
 
     const that = this;
     Meteor.call("room.build", form, function(error, result){
+      form.roomId = result;
       Meteor.call("userroom.build", form);
       that.props.goToRoom(result, form.name);
     });

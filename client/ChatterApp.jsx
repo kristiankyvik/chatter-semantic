@@ -9,6 +9,7 @@ import Room from "./components/Room.jsx";
 import Widget from "./components/Widget.jsx";
 import NewRoom from "./components/NewRoom.jsx";
 import Nav from "./components/Nav.jsx";
+import AddUsers from "./components/AddUsers.jsx";
 
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -22,14 +23,19 @@ const actions = {
     chatState: "minimized"
   },
   settings: {
+    header: "Channel settings",
     view: "settings"
   },
   room: {
     view: "room"
   },
   newRoom: {
-    header: "New room",
+    header: "New channel",
     view: "newRoom"
+  },
+  addUsers: {
+    header: "Add users",
+    view: "addUsers"
   }
 };
 
@@ -125,8 +131,6 @@ const ChatterApp = React.createClass({
   getView() {
     const views = {
       roomList: <RoomList
-                  className="rl-trans"
-                  key={1}
                   chatterUser={this.data.chatterUser}
                   subsReady={this.data.subsReady}
                   goToRoom={this.goToRoom}
@@ -135,20 +139,22 @@ const ChatterApp = React.createClass({
                   setView={this.setView}
                 />,
       room:     <Room
-                  className="r-trans"
-                  key={2}
                   chatterUser={this.data.chatterUser}
                   chatterUsers={this.data.chatterUsers}
-                  chatterUser={this.data.chatterUser}
                   roomId={this.state.roomId}
                 />,
       settings: <Settings
-                  key={3}
+                  chatterUsers={this.data.chatterUsers}
                   chatterUser={this.data.chatterUser}
                   room={Chatter.Room.findOne({_id: this.state.roomId})}
+                  setView={this.setView}
                 />,
       newRoom:  <NewRoom
-                  key={4}
+                  chatterUser={this.data.chatterUser}
+                  chatterUsers={this.data.chatterUsers}
+                  goToRoom={this.goToRoom}
+                />,
+      addUsers:  <AddUsers
                   chatterUser={this.data.chatterUser}
                   chatterUsers={this.data.chatterUsers}
                   goToRoom={this.goToRoom}
