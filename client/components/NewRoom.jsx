@@ -21,6 +21,8 @@ const NewRoom = React.createClass({
   },
 
   componentDidMount() {
+    ReactDOM.findDOMNode(this.refs.channelName).focus();
+
     $('.ui.form')
       .form({
         fields: {
