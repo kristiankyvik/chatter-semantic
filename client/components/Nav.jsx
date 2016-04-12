@@ -51,13 +51,7 @@ const Nav = React.createClass({
         </div>
         <div className="header item">
           <div className="status">
-            <ReactCSSTransitionGroup
-              transitionName="navbar"
-              transitionEnterTimeout={300}
-              transitionLeaveTimeout={100}
-              className="transition-group">
-                <span key={this.props.header}>{this.props.header}</span>
-            </ReactCSSTransitionGroup>
+            <span key={this.props.header}>{this.props.header}</span>
           </div>
         </div>
         <div className="right menu">

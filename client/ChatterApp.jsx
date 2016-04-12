@@ -53,13 +53,7 @@ const getChatHTML = function(data) {
             header={data.state.header}
             setTransitionType={data.setTransitionType}
           />
-          <ReactCSSTransitionGroup
-            transitionName={data.state.transitionType}
-            transitionEnterTimeout={300}
-            transitionLeaveTimeout={300}
-          >
             {data.getView()}
-          </ReactCSSTransitionGroup>
       </div>
     );
   };

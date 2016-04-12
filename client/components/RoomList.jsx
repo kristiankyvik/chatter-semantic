@@ -87,7 +87,9 @@ const RoomList = React.createClass({
             </div>
           </div>
         </div>
-        {newRoomBtn}
+        <div className="btn-wrapper">
+          {newRoomBtn}
+        </div>
       </div>
     );
   }
