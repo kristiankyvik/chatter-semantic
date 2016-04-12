@@ -51,7 +51,6 @@ const getChatHTML = function(data) {
             chatState={data.state.chatState}
             roomId={data.state.roomId}
             header={data.state.header}
-            setTransitionType={data.setTransitionType}
           />
             {data.getView()}
       </div>
@@ -70,8 +69,7 @@ const ChatterApp = React.createClass({
       header: "Chatter",
       view: "roomList",
       activeRooms: [],
-      archivedRooms: [],
-      transitionType: "pageSlider"
+      archivedRooms: []
     };
    },
 
@@ -110,8 +108,7 @@ const ChatterApp = React.createClass({
     this.setState({
       roomId: roomId,
       view: 'room',
-      header: roomName,
-      transitionType: "pageSlider"
+      header: roomName
     });
   },
 
@@ -122,12 +119,6 @@ const ChatterApp = React.createClass({
   toggleChatState() {
     this.setState({
       chatState: !this.state.chatOpen
-    });
-  },
-
-  setTransitionType(type) {
-    this.setState({
-      transitionType: type
     });
   },
 
@@ -142,7 +133,6 @@ const ChatterApp = React.createClass({
                   activeRooms={this.data.activeRooms}
                   archivedRooms={this.data.archivedRooms}
                   setView={this.setView}
-                  setTransitionType={this.setTransitionType}
                 />,
       room:     <Room
                   className="r-trans"

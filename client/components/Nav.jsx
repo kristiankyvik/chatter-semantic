@@ -1,28 +1,21 @@
 import React from 'react';
-import addons from 'react/addons'
-
-const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const leftIconConfig = {
   roomList: {
     icon: "",
-    nextView: "home",
-    "transitionType": "pageSlider"
+    nextView: "home"
   },
   room: {
     icon: "chevron left icon",
-    nextView: "home",
-    "transitionType": "reversePageSlider"
+    nextView: "home"
   },
   settings: {
     icon: "close icon",
-    nextView: "room",
-    "transitionType": "pageVerticalSlider"
+    nextView: "room"
   },
   newRoom: {
     icon: "chevron left icon",
-    nextView: "home",
-    "transitionType": "reversePageVerticalSlider"
+    nextView: "home"
   }
 };
 
@@ -31,7 +24,6 @@ const Nav = React.createClass({
   setView() {
     const settings = leftIconConfig[this.props.view];
     this.props.setView(settings.nextView);
-    this.props.setTransitionType(settings.transitionType);
   },
 
   render() {
@@ -57,7 +49,7 @@ const Nav = React.createClass({
         <div className="right menu">
           <a
             className="icon item"
-            onClick={()=>{ this.props.setView("settings"); this.props.setTransitionType("reversePageVerticalSlider") }}
+            onClick={()=> this.props.setView("settings")}
           >
             {this.props.view == "room" ? settingsIconHTML : null }
           </a>
