@@ -58,9 +58,12 @@ const NewRoom = React.createClass({
               </label>
               <input type="text" name="name" placeholder="Enter channel name"  ref="channelName"></input>
             </div>
-            <field>
+            <field className="field">
+              <label>
+                Invite users
+              </label>
               <div id="multi-select" className="ui fluid multiple search selection dropdown">
-                <input type="hidden" name="country"/>
+                <input type="hidden" />
                 <i className="dropdown icon"></i>
                 <input className="search" autoComplete="off" tabIndex="0"/>
                 <div className="default text">Select users</div>
