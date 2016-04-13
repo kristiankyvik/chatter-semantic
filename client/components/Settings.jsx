@@ -80,7 +80,7 @@ const Settings = React.createClass({
     });
 
     const settingsHTML = (
-      <div className="padded settings">
+      <div className="padded settings scrollable">
         <div className="ui header">
           Channel description
         </div>

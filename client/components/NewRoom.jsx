@@ -52,35 +52,33 @@ const NewRoom = React.createClass({
     });
 
     return (
-      <div className="newRoom">
-        <div className="padded">
-          <form className="ui form" onSubmit={this.handleSubmit} ref="form">
-            <div className="field">
-              <label>
-                Channel name
-              </label>
-              <input type="text" name="name" placeholder="Enter channel name"  ref="channelName"></input>
-            </div>
-            <field className="field">
-              <label>
-                Invite users
-              </label>
-              <div id="multi-select" className="ui fluid multiple search selection dropdown">
-                <input type="hidden" />
-                <i className="dropdown icon"></i>
-                <input className="search" autoComplete="off" tabIndex="0"/>
-                <div className="default text">Select users</div>
-                <div className="menu" tabIndex="-1">
-                  {users}
-                </div>
+      <div className="newRoom padded scrollable">
+        <form className="ui form" onSubmit={this.handleSubmit} ref="form">
+          <div className="field">
+            <label>
+              Channel name
+            </label>
+            <input type="text" name="name" placeholder="Enter channel name"  ref="channelName"></input>
+          </div>
+          <field className="field">
+            <label>
+              Invite users
+            </label>
+            <div id="multi-select" className="ui fluid multiple search selection dropdown">
+              <input type="hidden" />
+              <i className="dropdown icon"></i>
+              <input className="search" autoComplete="off" tabIndex="0"/>
+              <div className="default text">Select users</div>
+              <div className="menu" tabIndex="-1">
+                {users}
               </div>
-            </field>
-            <button className="ui button primary" type="submit" >
-              Create channel
-            </button>
-            <div className="ui error message"></div>
-          </form>
-        </div>
+            </div>
+          </field>
+          <button className="ui button primary" type="submit" >
+            Create channel
+          </button>
+          <div className="ui error message"></div>
+        </form>
       </div>
     );
   }

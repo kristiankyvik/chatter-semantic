@@ -73,15 +73,17 @@ const AddUsers = React.createClass({
     });
 
     return (
-      <div className="ui list relaxed">
-        <div className="item">
-          <div className="ui icon input transparent fluid">
-            <input type="text" placeholder="Search..." ref="query" onChange={this.handleChange}/>
-            <i className="search icon"></i>
+      <div className="padded addUsers scrollable">
+        <div className="ui list relaxed">
+          <div className="item">
+            <div className="ui icon input transparent fluid">
+              <input type="text" placeholder="Search..." ref="query" onChange={this.handleChange}/>
+              <i className="search icon"></i>
+            </div>
           </div>
+          <div className="ui divider"></div>
+          {users}
         </div>
-        <div className="ui divider"></div>
-        {users}
       </div>
     );
   }
