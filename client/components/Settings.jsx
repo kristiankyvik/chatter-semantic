@@ -79,7 +79,7 @@ const Settings = React.createClass({
       );
     });
 
-    return (
+    const settingsHTML = (
       <div className="padded settings">
         <div className="ui header">
           Channel description
@@ -127,7 +127,11 @@ const Settings = React.createClass({
             </div>
           </div>
         </div>
-        {this.state.addUsers ? <AddUsers allUsers={this.data.allUsers}/> : null}
+      </div>
+    );
+    return (
+      <div>
+        {this.state.addUsers ? <AddUsers allUsers={this.data.allUsers} room={this.props.room} /> : settingsHTML}
       </div>
     );
   }

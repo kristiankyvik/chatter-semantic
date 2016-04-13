@@ -24,16 +24,37 @@ const AddUsers = React.createClass({
   handleChange() {
     const query = ReactDOM.findDOMNode(this.refs.query).value.trim();
     this.setState({query: query});
-    console.log(query);
+  },
+
+  toggleUser(action, userId) {
+    const roomId = this.props.room._id;
+    const options = {
+      add: {
+        command: "userroom.build",
+        params: {
+          invitees: [userId],
+          roomId: roomId,
+          name: "name"
+        }
+      },
+      remove: {
+        command: "userroom.remove",
+        params: {
+          userId: userId,
+          roomId: roomId
+        }
+      }
+    };
+    Meteor.call(options[action].command, options[action].params);
   },
 
   render() {
-    const users = this.props.allUsers.map(function(user) {
+    const users = this.props.allUsers.map( user => {
       if (user.nickname.indexOf(this.state.query) < 0) {return;};
       return (
         <div className="item" key={user._id}>
           <div className="right floated content">
-            {user.added ?  null: <div className="ui button">Add</div>}
+            {user.added ?  <div onClick={() => this.toggleUser("remove", user._id)} className="ui button">Remove</div> : <div className="ui button" onClick={() => this.toggleUser("add", user._id)}>Add</div>}
           </div>
           <img
             className="ui avatar image"
