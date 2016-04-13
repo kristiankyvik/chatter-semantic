@@ -58,7 +58,9 @@ const getChatHTML = function(data) {
             roomId={data.state.roomId}
             header={data.state.header}
           />
+          <div className="wrapper">
             {data.getView()}
+          </div>
       </div>
     );
   };

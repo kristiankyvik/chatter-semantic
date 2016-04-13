@@ -55,8 +55,8 @@ const RoomList = React.createClass({
     });
 
     return (
-      <div className="wrapper">
-        <div className="roomList">
+      <div>
+        <div className="roomList scrollable">
           <div className="padded">
             <div className="ui accordion">
               <div className="title active">

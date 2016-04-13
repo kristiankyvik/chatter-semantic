@@ -112,8 +112,8 @@ const Room = React.createClass({
     );
 
     return (
-      <div className="wrapper">
-        <div className="room ui comments basic padded" ref="scroller">
+      <div>
+        <div className="room scrollable ui comments basic padded" ref="scroller">
           {this.data.subsReady ? messages : loader}
         </div>
         <Writer pushMessage={this.pushMessage}/>
