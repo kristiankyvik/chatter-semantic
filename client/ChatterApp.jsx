@@ -2,42 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import addons from 'react/addons'
 
-
-import RoomList from "./components/RoomList.jsx";
-import Settings from "./components/Settings.jsx"
-import Room from "./components/Room.jsx";
-import Widget from "./components/Widget.jsx";
-import NewRoom from "./components/NewRoom.jsx";
 import Nav from "./components/Nav.jsx";
-import AddUsers from "./components/AddUsers.jsx";
+
+import router from "./template-helpers/router.jsx";
 
 
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
-const actions = {
-  home: {
-    header: "Chatter",
-    view: "roomList"
-  },
-  minimize: {
-    chatState: "minimized"
-  },
-  settings: {
-    header: "Channel settings",
-    view: "settings"
-  },
-  room: {
-    view: "room"
-  },
-  newRoom: {
-    header: "New channel",
-    view: "newRoom"
-  },
-  addUsers: {
-    header: "Add users",
-    view: "addUsers"
-  }
-};
 
 const isChatterUser = function(chatterUsers) {
   const chatterUserIds = chatterUsers.map(function(user) {
@@ -59,7 +29,7 @@ const getChatHTML = function(data) {
             header={data.state.header}
           />
           <div className="wrapper">
-            {data.getView()}
+            {router(data, data.state.view).component}
           </div>
       </div>
     );
@@ -94,7 +64,7 @@ const ChatterApp = React.createClass({
 
     if (subsReady) {
       chatterUser = Chatter.User.findOne({userId: Meteor.userId()});
-      chatterUsers = Chatter.User.find().fetch();
+      chatterUsers = Chatter.User.find({}, {sort: {nickname: 1}}).fetch();
       if (chatterUsers.length > 0) {
         const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
         const roomIds = _.pluck(userRooms, "roomId");
@@ -121,50 +91,13 @@ const ChatterApp = React.createClass({
   },
 
   setView(view) {
-    this.setState(actions[view]);
+    this.setState(router(this, view));
   },
 
   toggleChatState() {
     this.setState({
       chatState: !this.state.chatOpen
     });
-  },
-
-  getView() {
-    const views = {
-      roomList: <RoomList
-                  chatterUser={this.data.chatterUser}
-                  subsReady={this.data.subsReady}
-                  goToRoom={this.goToRoom}
-                  activeRooms={this.data.activeRooms}
-                  archivedRooms={this.data.archivedRooms}
-                  setView={this.setView}
-                />,
-      room:     <Room
-                  chatterUser={this.data.chatterUser}
-                  chatterUsers={this.data.chatterUsers}
-                  roomId={this.state.roomId}
-                />,
-      settings: <Settings
-                  chatterUsers={this.data.chatterUsers}
-                  chatterUser={this.data.chatterUser}
-                  room={Chatter.Room.findOne({_id: this.state.roomId})}
-                  setView={this.setView}
-                />,
-      newRoom:  <NewRoom
-                  chatterUser={this.data.chatterUser}
-                  chatterUsers={this.data.chatterUsers}
-                  goToRoom={this.goToRoom}
-                />,
-      addUsers:  <AddUsers
-                  chatterUser={this.data.chatterUser}
-                  chatterUsers={this.data.chatterUsers}
-                  goToRoom={this.goToRoom}
-                />,
-      widget:   <Widget />
-    };
-
-    return views[this.state.view]
   },
 
   render() {

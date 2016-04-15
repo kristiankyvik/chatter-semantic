@@ -3,19 +3,19 @@ import React from 'react';
 const leftIconConfig = {
   roomList: {
     icon: "",
-    nextView: "home"
+    nextView: "roomList"
   },
   room: {
     icon: "chevron left icon",
-    nextView: "home"
+    nextView: "roomList"
   },
   settings: {
     icon: "close icon",
-    nextView: "room"
+    nextView: "roomList"
   },
   newRoom: {
     icon: "chevron left icon",
-    nextView: "home"
+    nextView: "roomList"
   },
   addUsers: {
     icon: "chevron left icon",
