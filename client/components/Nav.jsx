@@ -47,7 +47,9 @@ const Nav = React.createClass({
         </div>
         <div className="header item">
           <div className="status">
-            <span key={this.props.header}>{this.props.header}</span>
+            <span key={this.props.header}>
+              {this.props.header}
+            </span>
           </div>
         </div>
         <div className="right menu">

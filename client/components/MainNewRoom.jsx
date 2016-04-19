@@ -7,6 +7,7 @@ const MainNewRoom = React.createClass({
     e.preventDefault();
     const form = {};
     form.name = ReactDOM.findDOMNode(this.refs.channelName).value.trim();
+    form.description = ReactDOM.findDOMNode(this.refs.channelDescription).value.trim();
     if (form.name.length === 0) return;
     Meteor.call("room.build", form, (error, result) => {
       Meteor.call("room.get", result, (error, result) => {
@@ -53,6 +54,12 @@ const MainNewRoom = React.createClass({
               Channel name
             </label>
             <input type="text" name="name" placeholder="Enter channel name"  ref="channelName"></input>
+          </div>
+          <div className="field">
+            <label>
+              Channel description
+            </label>
+            <input type="text" name="description" placeholder="Enter channel description"  ref="channelDescription"></input>
           </div>
           <button className="ui button primary" type="submit" >
             Add users

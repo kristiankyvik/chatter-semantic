@@ -93,6 +93,7 @@ const Room = React.createClass({
       this.data.messages.map((message) => {
         const userProfile = getUserProfile[message.userId];
         const messageClass = this.props.chatterUser._id === message.userId ? "comment yours" : "comment";
+
         return (
           <div key={message._id} className={messageClass}>
             <a className="avatar">

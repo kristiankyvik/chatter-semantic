@@ -5,7 +5,7 @@ const AddUsers = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData () {
-    const { roomId } = this.props;
+    const { room } = this.props;
     const userRoomHandle = Meteor.subscribe("chatterUserRooms");
 
     const subsReady = userRoomHandle.ready();
@@ -13,7 +13,7 @@ const AddUsers = React.createClass({
     let messages = [];
 
     if (subsReady) {
-     const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": this.props.roomId}).fetch(), "userId");
+     const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
      _.each(this.props.chatterUsers, function(user) {
        if (roomUsersIds.indexOf(user._id) < 0) {
          user.added = false;
@@ -39,7 +39,7 @@ const AddUsers = React.createClass({
   },
 
   toggleUser(action, userId) {
-    const roomId = this.props.roomId;
+    const roomId = this.props.room._id;
     const options = {
       add: {
         command: "userroom.build",
@@ -63,10 +63,17 @@ const AddUsers = React.createClass({
   render() {
     const users = this.props.chatterUsers.map( user => {
       if (user.nickname.indexOf(this.state.query) < 0) {return;};
+      let btnSetup = {
+        action: user.added ? "remove" : "add",
+        text: user.added ? "Remove" : "Add"
+      };
       return (
         <div className="item" key={user._id}>
           <div className="right floated content">
-            {user.added ?  <div onClick={() => this.toggleUser("remove", user._id)} className="ui button">Remove</div> : <div className="ui button" onClick={() => this.toggleUser("add", user._id)}>Add</div>}
+            <div
+              onClick={() => this.toggleUser(btnSetup.action, user._id)}
+              className="ui button">{btnSetup.text}
+            </div>
           </div>
           <img
             className="ui avatar image"

@@ -9,7 +9,6 @@ const Settings = React.createClass({
 
   getInitialState: function() {
     return {
-      archived: this.props.room ? this.props.room.archived : null,
       view: "main"
     };
    },
@@ -26,11 +25,6 @@ const Settings = React.createClass({
 
   setView(view) {
     this.setState(settingsRouter(this, view));
-  },
-
-  toggleArchivedState() {
-    Meteor.call("room.archive", this.props.room._id, !this.state.archived);
-    this.setState({archived: !this.state.archived});
   },
 
   render() {

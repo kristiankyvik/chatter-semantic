@@ -4,14 +4,24 @@ const MainSettings = React.createClass({
 
   getInitialState: function() {
     return {
-      roomUsers: []
+      roomUsers: [],
+      archived: this.props.room ? this.props.room.archived : null
     };
    },
 
   componentDidMount() {
-    Meteor.call("room.users", this.props.roomId, (error, result) => {
+    Meteor.call("room.users", this.props.room._id, (error, result) => {
       this.setState({roomUsers: result});
     });
+  },
+
+  componentWillUnmount() {
+    Meteor.call("room.archive", this.props.room._id, this.state.archived);
+  },
+
+  toggleArchivedState() {
+    Meteor.call("room.archive", this.props.room._id, !this.state.archived);
+    this.setState({archived: !this.state.archived});
   },
 
   render() {
@@ -40,12 +50,12 @@ const MainSettings = React.createClass({
           Channel description
         </div>
         <p>
-          This channel was set up with the objective of connecting students with professors.
+          {this.props.room.description}
         </p>
         <p className="gray-text">
           This channel was created by Roald Dahl the 12th January of 2015.
         </p>
-        <div className="ui toggle checkbox" onClick={this.props.toggleArchivedState} >
+        <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
           <label>
             <span className="ui header">Archive Chat</span>
           </label>
@@ -73,7 +83,7 @@ const MainSettings = React.createClass({
                 <i className="add user icon"></i>
                 <div className="content">
                   <a className="header">
-                    Add participant...
+                    Add or remove users...
                   </a>
                 </div>
               </div>
@@ -83,7 +93,6 @@ const MainSettings = React.createClass({
           </div>
         </div>
       </div>
-
     );
   }
 });
