@@ -15,10 +15,10 @@ const RoomListItem = React.createClass({
 
     const subsReady = messagesHandle.ready() && countHandle.ready();
 
-    let message = "no messages yet",
-        avatar = "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/default.jpg",
-        timeAgo = "",
-        count = 0;
+    let message = "no messages yet";
+    let avatar = "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/default.jpg";
+    let timeAgo = "";
+    let count = 0;
 
     if (subsReady) {
       const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: this.props.chatterUser._id});
