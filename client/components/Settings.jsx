@@ -8,7 +8,8 @@ const settingsRouter = function(scope, view) {
       view: "main",
       component: <MainSettings
                     archived={scope.state.archived}
-                    roomUsers={scope.data.roomUsers}
+                    roomId={scope.props.room._id}
+                    chatterUsers={scope.props.chatterUsers}
                     toggleArchivedState={scope.toggleArchivedState}
                     setView={scope.setView}
                   />
@@ -16,9 +17,11 @@ const settingsRouter = function(scope, view) {
     addUsers: {
       view: "addUsers",
       component: <AddUsers
-                  allUsers={scope.data.allUsers}
-                  room={scope.props.room}
+                  chatterUsers={scope.props.chatterUsers}
+                  roomId={scope.props.room._id}
                   setView={scope.setView}
+                  buttonMessage={"Back to settings"}
+                  buttonGoTo={() => scope.setView("main")}
                 />
     }
   };
@@ -26,36 +29,6 @@ const settingsRouter = function(scope, view) {
 };
 
 const Settings = React.createClass({
-  mixins: [ReactMeteorData],
-
-  getMeteorData () {
-    const userRoomsHandle = Meteor.subscribe("chatterUserRooms");
-    const subsReady = userRoomsHandle.ready();
-
-    let roomUsers = [];
-    let otherUsers = [];
-    let allUsers = [];
-
-    if (subsReady) {
-      const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": this.props.room._id}).fetch(), "userId");
-      _.each(this.props.chatterUsers, function(user) {
-        if (roomUsersIds.indexOf(user._id) < 0) {
-          user.added = false;
-          otherUsers.push(user);
-        } else {
-          user.added = true;
-          roomUsers.push(user);
-        }
-      });
-      allUsers = otherUsers.concat(roomUsers);
-    }
-
-    return {
-      roomUsers,
-      otherUsers,
-      allUsers
-    }
-  },
 
   getInitialState: function() {
     return {

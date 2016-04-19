@@ -2,36 +2,45 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const AddUsers = React.createClass({
+  mixins: [ReactMeteorData],
+
+  getMeteorData () {
+    const { roomId } = this.props;
+    const userRoomHandle = Meteor.subscribe("chatterUserRooms");
+
+    const subsReady = userRoomHandle.ready();
+
+    let messages = [];
+
+    if (subsReady) {
+     const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": this.props.roomId}).fetch(), "userId");
+     _.each(this.props.chatterUsers, function(user) {
+       if (roomUsersIds.indexOf(user._id) < 0) {
+         user.added = false;
+       } else {
+         user.added = true;
+       }
+     });
+    }
+
+    return {
+    }
+  },
+
   getInitialState: function() {
     return {
       query: ""
     };
    },
 
-  handleSubmit(e) {
-   e.preventDefault();
-
-   const form = {};
-   form.name = this.props.room.name;
-   form.roomId = this.props.room._id;
-
-   const inviteesString = $("#multi-select").dropdown("get value");
-   form.invitees  = (inviteesString.length === 0) ? [] : inviteesString.split(",");
-
-   Meteor.call("userroom.build", form);
-  },
-
   handleChange() {
     const query = ReactDOM.findDOMNode(this.refs.query).value.trim();
     this.setState({query: query});
   },
 
-  backTo(view) {
-    this.props.setView(view);
-  },
-
   toggleUser(action, userId) {
-    const roomId = this.props.room._id;
+    console.log(action, userId);
+    const roomId = this.props.roomId;
     const options = {
       add: {
         command: "userroom.build",
@@ -53,7 +62,8 @@ const AddUsers = React.createClass({
   },
 
   render() {
-    const users = this.props.allUsers.map( user => {
+    console.log(this.props);
+    const users = this.props.chatterUsers.map( user => {
       if (user.nickname.indexOf(this.state.query) < 0) {return;};
       return (
         <div className="item" key={user._id}>
@@ -98,9 +108,9 @@ const AddUsers = React.createClass({
         <div className="btn-wrapper">
           <div
             className="ui fluid button primary newroom-btn"
-            onClick={ () => this.backTo("main") }
+            onClick={this.props.buttonGoTo}
           >
-            Back to Settings
+            {this.props.buttonMessage}
           </div>
         </div>
       </div>

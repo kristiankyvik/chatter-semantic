@@ -50,6 +50,7 @@ const router = function(scope, view) {
                   chatterUser={scope.data.chatterUser}
                   chatterUsers={scope.data.chatterUsers}
                   goToRoom={scope.goToRoom}
+                  setView={scope.setView}
                 />
     }
   };

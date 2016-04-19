@@ -2,8 +2,21 @@ import React from 'react';
 
 const MainSettings = React.createClass({
 
+  getInitialState: function() {
+    return {
+      roomUsers: []
+    };
+   },
+
+  componentDidMount() {
+    const that = this;
+    Meteor.call("room.users", this.props.roomId, function(error, result) {
+      that.setState({roomUsers: result});
+    });
+  },
+
   render() {
-    const roomUsersHTML = this.props.roomUsers.map(function(user) {
+    const roomUsersHTML = this.state.roomUsers.map(function(user) {
       return (
         <div className="item" key={user._id}>
           <img
@@ -52,7 +65,7 @@ const MainSettings = React.createClass({
           <div className="title active">
             <i className="dropdown icon"></i>
             <span className="ui header">
-              Channel members ({this.props.roomUsers.length})
+              Channel members ({this.state.roomUsers.length})
             </span>
           </div>
           <div className="content active">
