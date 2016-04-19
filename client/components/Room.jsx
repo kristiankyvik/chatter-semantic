@@ -91,14 +91,17 @@ const Room = React.createClass({
 
     const messages = (
       this.data.messages.map((message) => {
-        const userProfile = getUserProfile[message.userId]
+        const userProfile = getUserProfile[message.userId];
+        const messageClass = this.props.chatterUser._id === message.userId ? "comment yours" : "comment";
         return (
-          <div key={message._id} className={ this.props.chatterUser._id === message.userId ? "comment yours" : "comment"}>
+          <div key={message._id} className={messageClass}>
             <a className="avatar">
               <img src={userProfile.avatar} />
             </a>
             <div className="content">
-              <a className="author">{userProfile.nickname}</a>
+              <a className="author">
+                {userProfile.nickname}
+              </a>
               <a className="metadata">
                 <span className="date"> {message.timeAgo()} </span>
               </a>
