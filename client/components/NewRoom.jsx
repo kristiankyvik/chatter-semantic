@@ -5,7 +5,7 @@ const NewRoom = React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
-    form = {};
+    const form = {};
     form.name = ReactDOM.findDOMNode(this.refs.channelName).value.trim();
     if (form.name.length === 0) return;
 
