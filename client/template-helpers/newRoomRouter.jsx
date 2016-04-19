@@ -10,7 +10,7 @@ const newRoomRouter = function(scope, view) {
       component: <MainNewRoom
                   chatterUsers={scope.props.chatterUsers}
                   setView={scope.setView}
-                  setRoomId={scope.setRoomId}
+                  setRoomInfo={scope.setRoomInfo}
                 />
     },
     addUsers: {
@@ -19,7 +19,7 @@ const newRoomRouter = function(scope, view) {
                   chatterUsers={scope.props.chatterUsers}
                   roomId={scope.state.roomId}
                   buttonMessage={"Go to room"}
-                  buttonGoTo={ () => scope.props.goToRoom(scope.state.roomId, 'roomName')}
+                  buttonGoTo={ () => scope.props.goToRoom(scope.state.roomId, scope.state.roomName)}
                 />
     }
   };

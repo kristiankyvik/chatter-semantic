@@ -5,7 +5,6 @@ import Settings from "../components/Settings.jsx"
 import Room from "../components/Room.jsx";
 import Widget from "../components/Widget.jsx";
 import NewRoom from "../components/NewRoom.jsx";
-import AddUsers from "../components/AddUsers.jsx";
 
 const router = function(scope, view) {
   const states = {

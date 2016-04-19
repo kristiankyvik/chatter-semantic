@@ -11,12 +11,16 @@ const NewRoom = React.createClass({
   getInitialState: function() {
     return {
       view: "main",
-      roomId: null
+      roomId: null,
+      roomName: null
     };
   },
 
-  setRoomId(roomId) {
-    this.setState({roomId: roomId});
+  setRoomInfo(roomId, roomName) {
+    this.setState({
+      roomId,
+      roomName
+    });
   },
 
   setView(view) {

@@ -9,8 +9,10 @@ const MainNewRoom = React.createClass({
     form.name = ReactDOM.findDOMNode(this.refs.channelName).value.trim();
     if (form.name.length === 0) return;
     Meteor.call("room.build", form, (error, result) => {
-      this.props.setRoomId(result)
-      this.props.setView('addUsers');
+      Meteor.call("room.get", result, (error, result) => {
+        this.props.setRoomInfo(result._id, result.name);
+        this.props.setView('addUsers');
+      });
     });
   },
 
