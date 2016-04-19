@@ -22,7 +22,7 @@ const Settings = React.createClass({
   },
 
   render() {
-    return settingsRouter(this, this.state.view).component;
+    return settingsRouter(this, this.state.view).component();
   }
 });
 

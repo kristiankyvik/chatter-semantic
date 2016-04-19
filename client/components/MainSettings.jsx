@@ -57,7 +57,7 @@ const MainSettings = React.createClass({
           {this.props.room.description}
         </p>
         <p className="gray-text">
-          This channel was created by Roald Dahl the 12th January of 2015.
+          This channel was created by {this.props.chatterUser.nickname} on the {this.props.room.createdAt.toISOString()}.
         </p>
         <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
           <label>

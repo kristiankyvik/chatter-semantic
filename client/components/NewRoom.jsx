@@ -11,15 +11,13 @@ const NewRoom = React.createClass({
   getInitialState: function() {
     return {
       view: "main",
-      roomId: null,
-      roomName: null
+      room: null
     };
   },
 
-  setRoomInfo(roomId, roomName) {
+  setRoom(room) {
     this.setState({
-      roomId,
-      roomName
+      room
     });
   },
 
@@ -28,7 +26,7 @@ const NewRoom = React.createClass({
   },
 
   render() {
-    return  newRoomRouter(this, this.state.view).component;
+    return  newRoomRouter(this, this.state.view).component();
   }
 });
 

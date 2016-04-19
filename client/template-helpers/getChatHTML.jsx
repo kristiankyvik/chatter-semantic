@@ -24,7 +24,7 @@ const getChatHTML = function(data) {
             header={data.state.header}
           />
           <div className="wrapper">
-            {router(data, data.state.view).component}
+            {router(data, data.state.view).component()}
           </div>
       </div>
     );

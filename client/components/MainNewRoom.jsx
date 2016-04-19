@@ -11,7 +11,7 @@ const MainNewRoom = React.createClass({
     if (form.name.length === 0) return;
     Meteor.call("room.build", form, (error, result) => {
       Meteor.call("room.get", result, (error, result) => {
-        this.props.setRoomInfo(result._id, result.name);
+        this.props.setRoom(result);
         this.props.setView('addUsers');
       });
     });

@@ -11,7 +11,7 @@ const router = function(scope, view) {
     roomList: {
       header: "Chatter",
       view: "roomList",
-      component: <RoomList
+      component: () => <RoomList
                   chatterUser={scope.data.chatterUser}
                   subsReady={scope.data.subsReady}
                   goToRoom={scope.goToRoom}
@@ -22,12 +22,12 @@ const router = function(scope, view) {
     },
     minimize: {
       chatState: "minimized",
-      component: <Widget />
+      component: () => <Widget />
     },
     settings: {
       header: "Channel settings",
       view: "settings",
-      component: <Settings
+      component: () => <Settings
                   chatterUsers={scope.data.chatterUsers}
                   chatterUser={scope.data.chatterUser}
                   room={Chatter.Room.findOne({_id: scope.state.roomId})}
@@ -36,7 +36,7 @@ const router = function(scope, view) {
     },
     room: {
       view: "room",
-      component: <Room
+      component: () => <Room
                   chatterUser={scope.data.chatterUser}
                   chatterUsers={scope.data.chatterUsers}
                   roomId={scope.state.roomId}
@@ -45,7 +45,7 @@ const router = function(scope, view) {
     newRoom: {
       header: "New channel",
       view: "newRoom",
-      component: <NewRoom
+      component: () => <NewRoom
                   chatterUser={scope.data.chatterUser}
                   chatterUsers={scope.data.chatterUsers}
                   goToRoom={scope.goToRoom}
