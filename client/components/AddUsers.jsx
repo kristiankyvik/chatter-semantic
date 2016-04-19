@@ -82,7 +82,12 @@ const AddUsers = React.createClass({
           <div className="ui list relaxed">
             <div className="item">
               <div className="ui icon input transparent fluid">
-                <input type="text" placeholder="Search..." ref="query" onChange={this.handleChange}/>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  ref="query"
+                  onChange={this.handleChange}
+                />
                 <i className="search icon"></i>
               </div>
             </div>
@@ -91,8 +96,11 @@ const AddUsers = React.createClass({
           </div>
         </div>
         <div className="btn-wrapper">
-          <div className="ui fluid button primary newroom-btn" onClick={ () => this.backTo("main") } >
-            <i className="write icon"></i> Back to Settings
+          <div
+            className="ui fluid button primary newroom-btn"
+            onClick={ () => this.backTo("main") }
+          >
+            Back to Settings
           </div>
         </div>
       </div>

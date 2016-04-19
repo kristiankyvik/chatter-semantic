@@ -42,16 +42,21 @@ const RoomListItem = React.createClass({
   },
 
   render() {
+    const {
+      goToRoom,
+      room
+    } = this.props;
+
     return (
       <div
         className="item transition visible"
-        onClick={() => this.props.goToRoom(this.props.room._id, this.props.room.name)}
+        onClick={() => goToRoom(room._id, room.name)}
       >
         <img className="ui avatar image" src={this.data.avatar} />
         <div className="content">
           <div className="header">
             <span>
-              {this.props.room.name}
+              {room.name}
             </span>
             <span>
               { this.data.count >= 0 ? <span> ({this.data.count}) </span> : "" }
