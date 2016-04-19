@@ -1,26 +1,152 @@
+chatter-light-blue = #FAFAFB
+chatter-light-gray = #E6EEF4
+chatter-white = #fff
+chatter-trans-gray = rgba(96,104,110,.8)
+chatter-blue = #2185d0
+
 .chatter
-    display: flex
-    flex-direction: column
-    
-    .menu
+    background-color: chatter-light-blue !important
+
+    p.gray-text
+        color: chatter-trans-gray
+        font-style: italic
+
+    .padded
+        padding: 14px 14px 0
+
+    .wrapper
+        position: absolute
+        height: 100%
+        width: 100%
+        top: 0
+        bottom: 0
+        z-index: -1
+
+        .scrollable
+            position: absolute
+            width: 100%
+            overflow: hidden
+            overflow-y: auto
+            top: 40px
+            bottom: 56px
+
+    .ui.divider
+        margin: 0.2rem 0rem
+
+    .ui.secondary.pointing.menu
+        background-color: chatter-white
         margin: 0 !important
-    
+        >.right, >.left
+            min-width: 90px
+            .icon.item
+                min-width: 45px
+        .header
+            flex-grow: 1
+            .status
+                text-align center
+                display: block
+                width: 100%
+
+    .roomList
+        .ui.list .item
+            padding-top: 16px
+            padding-bottom: 16px
+            .ui.avatar.image
+                width: 3em
+                height: 3em
+            .content
+                width: 86%
+                padding-left: 0.8em
+                .header, .description
+                    color: #60686e
+                    color: chatter-trans-gray
+                .header
+                    font-size: 1.1em
+                    .meta
+                        display: block
+                        float: right
+                        font-weight: 400
+                        font-size: 0.8em
+                .description
+                    overflow: hidden
+                    text-overflow: ellipsis
+                    white-space: nowrap
+                    padding-top: 8px
+    .btn-wrapper
+        position: absolute
+        bottom: 0
+        width: 100%
+        padding: 7px 14px 7px
+
     .room
-        overflow:hidden
-        overflow-y: auto
         margin: 0 !important
-        flex:1
-        
+
+        &.ui.comments .comment
+            text-align: left
+            >.content
+                max-width: 257px
+                padding: 5px
+                background-color: chatter-light-gray
+                border-radius: 5px
+                margin-left: 0.6em
+                display: inline-block
+            .avatar
+                width: 2em
+            &.yours
+                text-align: right
+                .author, .date, .content .text
+                    color: white
+
+                >.content
+                    text-align: left
+                    margin-right: 0.6em
+                    margin-left: 0
+                    display: inline-block
+                    background-color: chatter-blue
+                .avatar
+                    float: right
+
+            &:last-of-type
+                margin-bottom: 10px
+    .newRoom
+        #multi-select .ui.label img
+            height: 1.2em !important
+        .ui.button
+           display: block
+           margin: 20px auto
     .writer
-        border: none
-        border-top: 2px solid rgba(34, 36, 38, 0.15) !important
-        
+        position: absolute
+        width: 100%
+        bottom: 0
+        padding: 7px 14px 7px
+
         textarea
-            border-radius: 0 !important
-            border: none
-    
-.chatter-open
+            max-height: 250px
+            min-height: 41px
+            border-size: 2px
+
+    .settings
+        .ui.list
+            > .item > i.icon
+                padding-right: 0
+                font-size: 1.7em
+        .addUserItem
+            cursor: pointer
+        .inviter
+            .ui.button.primary
+                margin-top: 10px
+
+.chatter-open.ui.button
+    font-size: 2.2em
+    padding: 0.4em 0.5em
+    opacity: 1
     position: fixed
-    transform: rotate(-90deg)
-    right: -25px
-    top: 10%
+    bottom: 3%
+    right: 12px
+    box-shadow: 0 6px 13px 0 rgba(0,0,0,.23)
+    border-radius: 100px
+
+    i.icon
+        margin: 0
+        color: #fff
+

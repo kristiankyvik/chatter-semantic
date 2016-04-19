@@ -1,9 +1,0 @@
-template(name="chatter")
-    if state "open"
-        .ui.right.vertical.wide.visible.sidebar.chatter
-            +nav
-            
-            +Template.dynamic(template=view)
-    else if state "minimized"
-        .ui.button.teal.chatter-open
-            | Chat
