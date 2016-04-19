@@ -39,7 +39,6 @@ const AddUsers = React.createClass({
   },
 
   toggleUser(action, userId) {
-    console.log(action, userId);
     const roomId = this.props.roomId;
     const options = {
       add: {
@@ -62,7 +61,6 @@ const AddUsers = React.createClass({
   },
 
   render() {
-    console.log(this.props);
     const users = this.props.chatterUsers.map( user => {
       if (user.nickname.indexOf(this.state.query) < 0) {return;};
       return (

@@ -9,9 +9,8 @@ const MainSettings = React.createClass({
    },
 
   componentDidMount() {
-    const that = this;
-    Meteor.call("room.users", this.props.roomId, function(error, result) {
-      that.setState({roomUsers: result});
+    Meteor.call("room.users", this.props.roomId, (error, result) => {
+      this.setState({roomUsers: result});
     });
   },
 
