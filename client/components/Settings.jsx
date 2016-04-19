@@ -14,13 +14,7 @@ const Settings = React.createClass({
    },
 
   componentDidMount() {
-    $(".ui.accordion")
-      .accordion()
-    ;
-    $(".ui.toggle.checkbox").checkbox();
-    if (this.state.archived) {
-      $(".ui.toggle.checkbox").checkbox('check');
-    }
+    $(".ui.accordion").accordion();
   },
 
   setView(view) {

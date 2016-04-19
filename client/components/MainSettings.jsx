@@ -5,11 +5,15 @@ const MainSettings = React.createClass({
   getInitialState: function() {
     return {
       roomUsers: [],
-      archived: this.props.room ? this.props.room.archived : null
+      archived: this.props.room.archived
     };
    },
 
   componentDidMount() {
+    $(".ui.toggle.checkbox").checkbox();
+    if (this.state.archived) {
+      $(".ui.toggle.checkbox").checkbox('check');
+    }
     Meteor.call("room.users", this.props.room._id, (error, result) => {
       this.setState({roomUsers: result});
     });
