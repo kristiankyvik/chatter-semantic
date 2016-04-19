@@ -51,15 +51,6 @@ const router = function(scope, view) {
                   chatterUsers={scope.data.chatterUsers}
                   goToRoom={scope.goToRoom}
                 />
-    },
-    addUsers: {
-      header: "Add users",
-      view: "addUsers",
-      component: <AddUsers
-                  chatterUser={scope.data.chatterUser}
-                  chatterUsers={scope.data.chatterUsers}
-                  goToRoom={scope.goToRoom}
-                />
     }
   };
   return states[view];

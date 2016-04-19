@@ -2,40 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import addons from 'react/addons'
 
-import Nav from "./components/Nav.jsx";
-
+import getChatHTML from "./template-helpers/getChatHTML.jsx";
 import router from "./template-helpers/router.jsx";
 
-
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
-const isChatterUser = function(chatterUsers) {
-  const chatterUserIds = chatterUsers.map(function(user) {
-    return user.userId;
-  });
-  return (chatterUserIds.indexOf(Meteor.userId()) > -1) ;
-};
-
-const getChatHTML = function(data) {
-  let chatHTML = <div>Hei Man not useing chatter</div>;
-  if (isChatterUser(data.data.chatterUsers, Meteor.userId())) {
-    chatHTML = (
-      <div className="ui right vertical wide visible sidebar chatter" id="chatter">
-          <Nav
-            view={data.state.view}
-            setView={data.setView}
-            chatState={data.state.chatState}
-            roomId={data.state.roomId}
-            header={data.state.header}
-          />
-          <div className="wrapper">
-            {router(data, data.state.view).component}
-          </div>
-      </div>
-    );
-  };
-  return chatHTML;
-};
 
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],

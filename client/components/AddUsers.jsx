@@ -26,6 +26,10 @@ const AddUsers = React.createClass({
     this.setState({query: query});
   },
 
+  backTo(view) {
+    this.props.setView(view);
+  },
+
   toggleUser(action, userId) {
     const roomId = this.props.room._id;
     const options = {
@@ -73,16 +77,23 @@ const AddUsers = React.createClass({
     });
 
     return (
-      <div className="padded addUsers scrollable">
-        <div className="ui list relaxed">
-          <div className="item">
-            <div className="ui icon input transparent fluid">
-              <input type="text" placeholder="Search..." ref="query" onChange={this.handleChange}/>
-              <i className="search icon"></i>
+      <div>
+        <div className="padded addUsers scrollable">
+          <div className="ui list relaxed">
+            <div className="item">
+              <div className="ui icon input transparent fluid">
+                <input type="text" placeholder="Search..." ref="query" onChange={this.handleChange}/>
+                <i className="search icon"></i>
+              </div>
             </div>
+            <div className="ui divider"></div>
+            {users}
           </div>
-          <div className="ui divider"></div>
-          {users}
+        </div>
+        <div className="btn-wrapper">
+          <div className="ui fluid button primary newroom-btn" onClick={ () => this.backTo("main") } >
+            <i className="write icon"></i> Back to Settings
+          </div>
         </div>
       </div>
     );
