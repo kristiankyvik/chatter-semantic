@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import addons from 'react/addons'
 
 import getChatHTML from "./template-helpers/getChatHTML.jsx";
 import router from "./template-helpers/router.jsx";
-
-const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
