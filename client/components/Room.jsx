@@ -39,11 +39,11 @@ const Room = React.createClass({
 
   componentDidMount() {
     this.scrollDown()
-    Meteor.call("userroom.count.reset", this.props.chatterUser._id, this.props.roomId);
+    Meteor.call("userroom.count.reset", this.props.roomId);
   },
 
   componentWillUnmount() {
-    Meteor.call("userroom.count.reset", this.props.chatterUser._id, this.props.roomId);
+    Meteor.call("userroom.count.reset", this.props.roomId);
   },
 
   componentWillUpdate() {
@@ -63,18 +63,13 @@ const Room = React.createClass({
   },
 
   pushMessage(text) {
-    const user = Meteor.user();
     const roomId = this.props.roomId;
     const params = {
         message: text,
-        userId: this.props.chatterUser._id,
         roomId
     };
 
-    Meteor.call("message.build", params, function(error, result) {
-      Meteor.call("room.update", roomId);
-      Meteor.call("userroom.count.increase", params.userId, params.roomId);
-    });
+    Meteor.call("message.build", params);
 
     this.scrollDown();
   },
