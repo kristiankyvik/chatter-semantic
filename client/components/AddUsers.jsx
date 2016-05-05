@@ -45,8 +45,7 @@ const AddUsers = React.createClass({
         command: "userroom.build",
         params: {
           invitees: [userId],
-          roomId: roomId,
-          name: "name"
+          roomId: roomId
         }
       },
       remove: {
