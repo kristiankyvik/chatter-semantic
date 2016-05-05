@@ -11,7 +11,7 @@ const leftIconConfig = {
   },
   settings: {
     icon: "close icon",
-    nextView: "roomList"
+    nextView: "room"
   },
   newRoom: {
     icon: "close icon",
