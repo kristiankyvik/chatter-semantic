@@ -19,12 +19,12 @@ const MainSettings = React.createClass({
     });
   },
 
-  componentWillUnmount() {
-    Meteor.call("room.archive", this.props.room._id, this.state.archived);
-  },
-
   toggleArchivedState() {
-    Meteor.call("room.archive", this.props.room._id, !this.state.archived);
+    const params = {
+      archived: !this.state.archived,
+      roomId: this.props.room._id
+    };
+    Meteor.call("room.archive", params);
     this.setState({archived: !this.state.archived});
   },
 
