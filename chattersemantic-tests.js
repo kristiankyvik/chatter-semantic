@@ -1,5 +1,7 @@
-// Write your tests here!
-// Here is an example.
-Tinytest.add('chatter semantic test', function (test) {
-  test.equal(true, true);
+describe("Chatter Semantic Unit Tests", function () {
+  describe("ChatterApp component", function() {
+    it("first unit test!", function() {
+      chai.assert.equal(true, true);
+    });
+  });
 });

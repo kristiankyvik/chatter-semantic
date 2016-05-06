@@ -31,16 +31,16 @@ const MainSettings = React.createClass({
   render() {
     const roomUsersHTML = this.state.roomUsers.map(function(user) {
       return (
-        <div className="item" key={user._id}>
+        <div className="item room-user" key={user._id}>
           <img
             className="ui avatar image"
             src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg"
           />
           <div className="content">
-            <a className="header">
+            <a className="header nickname">
               {user.nickname}
             </a>
-            <div className="description">
+            <div className="description last-active">
               Last logged in just now.
             </div>
           </div>
@@ -53,7 +53,7 @@ const MainSettings = React.createClass({
         <div className="ui header">
           Channel description
         </div>
-        <p>
+        <p className="room-description">
           {this.props.room.description}
         </p>
         <p className="gray-text">
@@ -74,7 +74,7 @@ const MainSettings = React.createClass({
         <p>
           Archived chats will store the conversation and stop notifications from bothering you in the future.
         </p>
-        <div className="ui accordion">
+        <div className="ui accordion room-users">
           <div className="title active">
             <i className="dropdown icon"></i>
             <span className="ui header">

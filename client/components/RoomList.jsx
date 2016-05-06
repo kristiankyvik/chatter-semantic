@@ -58,11 +58,11 @@ const RoomList = React.createClass({
       <div>
         <div className="roomList scrollable">
           <div className="padded">
-            <div className="ui accordion">
+            <div className="ui accordion active-rooms">
               <div className="title active">
                 <div className="ui header">
                   <i className="dropdown icon"></i>
-                  Active channels <span>({activeRooms.length})</span>
+                  Active channels <span className="count">({activeRooms.length})</span>
                 </div>
               </div>
               <div className="content active">
@@ -71,11 +71,11 @@ const RoomList = React.createClass({
                 </div>
               </div>
             </div>
-            <div className="ui accordion">
+            <div className="ui accordion archived-rooms">
               <div className="title">
                 <div className="ui header">
                   <i className="dropdown icon"></i>
-                  Archived channels <span>({archivedRooms.length})</span>
+                  Archived channels <span className="count">({archivedRooms.length})</span>
                 </div>
               </div>
               <div className="content">

@@ -49,7 +49,7 @@ const RoomListItem = React.createClass({
 
     return (
       <div
-        className="item transition visible"
+        className="item transition visible roomListItem"
         onClick={() => goToRoom(room._id, room.name)}
       >
         <img className="ui avatar image" src={this.data.avatar} />

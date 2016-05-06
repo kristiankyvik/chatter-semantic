@@ -87,7 +87,7 @@ const Room = React.createClass({
     const messages = (
       this.data.messages.map((message) => {
         const userProfile = getUserProfile[message.userId];
-        const messageClass = this.props.chatterUser._id === message.userId ? "comment yours" : "comment";
+        const messageClass = this.props.chatterUser._id === message.userId ? "chatter-msg comment yours" : "chatter-msg comment";
 
         return (
           <div key={message._id} className={messageClass}>
