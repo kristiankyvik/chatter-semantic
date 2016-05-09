@@ -1,7 +1,6 @@
 import React from 'react';
-
-import Nav from "../components/Nav.jsx";
 import router from "./router.jsx";
+import Nav from "../components/Nav.jsx";
 
 const isChatterUser = function(chatterUsers) {
   const chatterUserIds = chatterUsers.map(function(user) {
@@ -12,7 +11,7 @@ const isChatterUser = function(chatterUsers) {
 
 
 const getChatHTML = function(data) {
-  let chatHTML = <div>Hei Man not useing chatter</div>;
+  let chatHTML = <div>Hei Man not using chatter</div>;
   if (isChatterUser(data.data.chatterUsers, Meteor.userId())) {
     chatHTML = (
       <div className="ui right vertical wide visible sidebar chatter" id="chatter">
@@ -22,6 +21,7 @@ const getChatHTML = function(data) {
             chatState={data.state.chatState}
             roomId={data.state.roomId}
             header={data.state.header}
+            toggleChatState={data.toggleChatState}
           />
           <div className="wrapper">
             {router(data, data.state.view).component()}

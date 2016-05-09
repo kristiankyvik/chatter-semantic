@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import getChatHTML from "./template-helpers/getChatHTML.jsx";
 import router from "./template-helpers/router.jsx";
+import Widget from "./components/Widget.jsx";
+
 
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
@@ -30,13 +32,16 @@ const ChatterApp = React.createClass({
     let chatterUser = null;
 
     if (subsReady) {
-      chatterUser = Chatter.User.findOne({userId: Meteor.userId()});
-      chatterUsers = Chatter.User.find({}, {sort: {nickname: 1}}).fetch();
-      if (chatterUsers.length > 0) {
-        const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
-        const roomIds = _.pluck(userRooms, "roomId");
-        activeRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": false}, {sort: {lastActive: -1}}).fetch();
-        archivedRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": true}).fetch();
+      const meteorUserId = Meteor.userId();
+      if (meteorUserId != undefined) {
+        chatterUser = Chatter.User.findOne({userId: meteorUserId});
+        chatterUsers = Chatter.User.find({}, {sort: {nickname: 1}}).fetch();
+        if (chatterUsers.length > 0) {
+          const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
+          const roomIds = _.pluck(userRooms, "roomId");
+          activeRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": false}, {sort: {lastActive: -1}}).fetch();
+          archivedRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": true}).fetch();
+        }
       }
     }
 
@@ -63,15 +68,14 @@ const ChatterApp = React.createClass({
 
   toggleChatState() {
     this.setState({
-      chatState: !this.state.chatOpen
+      chatOpen: !this.state.chatOpen
     });
   },
 
   render() {
-    let chatHTML = getChatHTML(this);
-    const isMinimized = this.state.chatState === "minimized";
+    let chatHTML = this.state.chatOpen ? getChatHTML(this) : <Widget toggleChatState={this.toggleChatState} />;
     return (
-      isMinimized ? <Widget toggleChatState={this.toggleChatState} /> : chatHTML
+      chatHTML
     )
   }
 });

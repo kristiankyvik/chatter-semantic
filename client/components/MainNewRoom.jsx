@@ -61,7 +61,7 @@ const MainNewRoom = React.createClass({
             </label>
             <input type="text" name="description" placeholder="Enter channel description"  ref="channelDescription"></input>
           </div>
-          <button className="ui button primary" type="submit" >
+          <button className="ui button primary addusers-btn" type="submit" >
             Add users
           </button>
           <div className="ui error message"></div>

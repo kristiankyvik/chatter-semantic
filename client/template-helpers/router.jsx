@@ -3,7 +3,6 @@ import React from 'react';
 import RoomList from "../components/RoomList.jsx";
 import Settings from "../components/Settings.jsx"
 import Room from "../components/Room.jsx";
-import Widget from "../components/Widget.jsx";
 import NewRoom from "../components/NewRoom.jsx";
 
 const router = function(scope, view) {
@@ -19,10 +18,6 @@ const router = function(scope, view) {
                   archivedRooms={scope.data.archivedRooms}
                   setView={scope.setView}
                 />
-    },
-    minimize: {
-      chatState: "minimized",
-      component: () => <Widget />
     },
     settings: {
       header: "Channel settings",

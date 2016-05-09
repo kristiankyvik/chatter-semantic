@@ -71,7 +71,7 @@ const AddUsers = React.createClass({
           <div className="right floated content">
             <div
               onClick={() => this.toggleUser(btnSetup.action, user._id)}
-              className="ui button">{btnSetup.text}
+              className="ui button adduser-btn">{btnSetup.text}
             </div>
           </div>
           <img

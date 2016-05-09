@@ -61,7 +61,7 @@ const Nav = React.createClass({
           </a>
           <a
             className="icon item"
-            onClick={() => this.props.setView("minimize")}
+            onClick={() => this.props.toggleChatState()}
           >
             <i className="minus icon"></i>
           </a>
