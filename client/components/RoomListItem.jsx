@@ -5,8 +5,7 @@ const RoomListItem = React.createClass({
 
   getMeteorData () {
     const messagesHandle = Meteor.subscribe("chatterMessages", {
-      roomId: this.props.room._id,
-      messageLimit: Chatter.options.messageLimit
+      roomId: this.props.room._id
     });
 
     const countHandle = Meteor.subscribe("chatterUserRooms", {

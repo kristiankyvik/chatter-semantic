@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 const AddUsers = React.createClass({
   mixins: [ReactMeteorData],
 
-  getMeteorData () {
+  getMeteorData() {
     const { room } = this.props;
     const userRoomHandle = Meteor.subscribe("chatterUserRooms");
 
@@ -42,14 +42,14 @@ const AddUsers = React.createClass({
     const roomId = this.props.room._id;
     const options = {
       add: {
-        command: "userroom.build",
+        command: "room.join",
         params: {
           invitees: [userId],
           roomId: roomId
         }
       },
       remove: {
-        command: "userroom.remove",
+        command: "room.leave",
         params: {
           userId: userId,
           roomId: roomId

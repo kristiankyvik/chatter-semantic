@@ -5,11 +5,11 @@ const MainNewRoom = React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
-    const form = {};
-    form.name = ReactDOM.findDOMNode(this.refs.channelName).value.trim();
-    form.description = ReactDOM.findDOMNode(this.refs.channelDescription).value.trim();
-    if (form.name.length === 0) return;
-    Meteor.call("room.build", form, (error, result) => {
+    const params = {};
+    params.name = ReactDOM.findDOMNode(this.refs.channelName).value.trim();
+    params.description = ReactDOM.findDOMNode(this.refs.channelDescription).value.trim();
+    if (params.name.length === 0) return;
+    Meteor.call("room.create", params, (error, result) => {
       Meteor.call("room.get", result, (error, result) => {
         this.props.setRoom(result);
         this.props.setView('addUsers');

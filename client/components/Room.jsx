@@ -19,8 +19,7 @@ const Room = React.createClass({
   getMeteorData () {
     const { roomId } = this.props;
     const messagesHandle = Meteor.subscribe("chatterMessages", {
-      roomId: roomId,
-      messageLimit: Chatter.options.messageLimit
+      roomId: roomId
     });
 
     const subsReady = messagesHandle.ready();
@@ -69,7 +68,7 @@ const Room = React.createClass({
         roomId
     };
 
-    Meteor.call("message.build", params);
+    Meteor.call("message.send", params);
 
     this.scrollDown();
   },

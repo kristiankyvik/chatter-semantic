@@ -25,7 +25,7 @@ const router = function(scope, view) {
       component: () => <Settings
                   chatterUsers={scope.data.chatterUsers}
                   chatterUser={scope.data.chatterUser}
-                  room={Chatter.Room.findOne({_id: scope.state.roomId})}
+                  room={Chatter.Room.findOne(scope.state.roomId)}
                   setView={scope.setView}
                 />
     },
