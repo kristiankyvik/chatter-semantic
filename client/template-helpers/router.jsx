@@ -17,6 +17,7 @@ const router = function(scope, view) {
                   activeRooms={scope.data.activeRooms}
                   archivedRooms={scope.data.archivedRooms}
                   setView={scope.setView}
+                  loadMoreRooms={scope.loadMoreRooms}
                 />
     },
     settings: {

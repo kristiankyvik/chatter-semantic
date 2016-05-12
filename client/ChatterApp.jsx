@@ -26,7 +26,8 @@ const ChatterApp = React.createClass({
       view: "roomList",
       activeRooms: [],
       archivedRooms: [],
-      publishedRoomLimit: 10 //eventually handle in session?
+      activeRoomLimit: 5, //eventually handle in session?
+      archivedRoomLimit: 5 //eventually handle in session?
     };
    },
 
@@ -43,7 +44,7 @@ const ChatterApp = React.createClass({
 
     if (subsReady) {
       const meteorUserId = Meteor.userId();
-      const publishedRoomLimit = this.state.publishedRoomLimit;
+      const {activeRoomLimit, archivedRoomLimit} = this.state;
       if (meteorUserId != undefined) {
         chatterUser = Chatter.User.findOne({userId: meteorUserId});
         chatterUsers = Chatter.User.find({}, {sort: {nickname: 1}}).fetch();
@@ -51,8 +52,8 @@ const ChatterApp = React.createClass({
           const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
           const roomIds = _.pluck(userRooms, "roomId");
 
-          const activeRoomQuery = latestRooms(publishedRoomLimit, roomIds, false);
-          const archivedRoomQuery = latestRooms(publishedRoomLimit, roomIds, true);
+          const activeRoomQuery = latestRooms(activeRoomLimit, roomIds, false);
+          const archivedRoomQuery = latestRooms(archivedRoomLimit, roomIds, true);
 
           activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
           archivedRooms = Chatter.Room.find(archivedRoomQuery.find, archivedRoomQuery.options).fetch();
@@ -75,6 +76,14 @@ const ChatterApp = React.createClass({
       view: 'room',
       header: roomName
     });
+  },
+
+  loadMoreRooms(type) {
+    const loadOptions = {
+      active: {activeRoomLimit: 100},
+      archived: {archivedRoomLimit: 100}
+    };
+    this.setState(loadOptions[type]);
   },
 
   setView(view) {

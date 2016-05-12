@@ -3,6 +3,12 @@ import React from 'react';
 import RoomListItem from "../components/RoomListItem.jsx";
 
 const RoomList = React.createClass({
+  getInitialState: function() {
+    return {
+      showMoreActive: false,
+      showMoreArchived: false
+    };
+   },
 
   goToRoom(roomId, roomName) {
     this.props.goToRoom(roomId, roomName);
@@ -14,6 +20,27 @@ const RoomList = React.createClass({
 
   componentDidMount() {
     $('.ui.accordion').accordion();
+  },
+
+  loadMoreRooms(type) {
+    const options = {
+      archived: {showMoreArchived: true},
+      active: {showMoreActive: true}
+    };
+    this.setState(options[type]);
+    this.props.loadMoreRooms(type);
+  },
+
+  getMoreRoomsBtn(type) {
+
+    return (
+      <div
+        className="roomListBtn"
+        onClick={() => this.loadMoreRooms(type)}
+      >
+        <span>Show more</span>
+      </div>
+    );
   },
 
   render() {
@@ -54,6 +81,8 @@ const RoomList = React.createClass({
             />;
     });
 
+    const {showMoreArchived, showMoreActive} = this.state;
+
     return (
       <div>
         <div className="roomList scrollable">
@@ -67,7 +96,8 @@ const RoomList = React.createClass({
               </div>
               <div className="content active">
                 <div className="ui selection middle aligned list celled">
-                  { subsReady ? activeRoomsHTML : loaderHTML}
+                  {subsReady ? activeRoomsHTML : loaderHTML}
+                  {showMoreActive ? null : this.getMoreRoomsBtn("active")}
                 </div>
               </div>
             </div>
@@ -80,7 +110,8 @@ const RoomList = React.createClass({
               </div>
               <div className="content">
                 <div className="ui selection middle aligned list celled">
-                  { subsReady ? archivedRoomsHTML : loaderHTML}
+                  {subsReady ? archivedRoomsHTML : loaderHTML}
+                  {showMoreArchived ? null : this.getMoreRoomsBtn("archived")}
                 </div>
               </div>
             </div>
