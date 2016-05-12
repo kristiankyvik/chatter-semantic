@@ -26,8 +26,8 @@ const ChatterApp = React.createClass({
       view: "roomList",
       activeRooms: [],
       archivedRooms: [],
-      activeRoomLimit: 5, //eventually handle in session?
-      archivedRoomLimit: 5 //eventually handle in session?
+      activeRoomLimit: Chatter.options.initialRoomLoad, //eventually handle in session?
+      archivedRoomLimit: Chatter.options.initialRoomLoad //eventually handle in session?
     };
    },
 
