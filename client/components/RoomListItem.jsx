@@ -17,12 +17,12 @@ const RoomListItem = React.createClass({
     let message = "no messages yet";
     let avatar = "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/default.jpg";
     let timeAgo = "";
-    let count = 0;
+    let unreadMsgCount = 0;
 
     if (subsReady) {
       const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: this.props.chatterUser._id});
 
-      count =  typeof checkCount === 'undefined' ? -1 : checkCount.count;
+      unreadMsgCount =  typeof checkCount === 'undefined' ? -1 : checkCount.unreadMsgCount;
 
       const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
       if (typeof lastMessage != 'undefined') {
@@ -36,7 +36,7 @@ const RoomListItem = React.createClass({
       message,
       avatar,
       timeAgo,
-      count
+      unreadMsgCount
     }
   },
 
@@ -54,12 +54,12 @@ const RoomListItem = React.createClass({
         <img className="ui avatar image" src={this.data.avatar} />
         <div className="content">
           <div className="header">
-            <span>
+            <div className="roomName">
               {room.name}
-            </span>
-            <span>
-              { this.data.count >= 0 ? <span> ({this.data.count}) </span> : "" }
-            </span>
+              <span>
+                { this.data.unreadMsgCount > 0 ? <span> ({this.data.unreadMsgCount}) </span> : "" }
+              </span>
+            </div>
             <div className="meta">
               {this.data.timeAgo}
             </div>
