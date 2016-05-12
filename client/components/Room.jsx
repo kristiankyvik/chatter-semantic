@@ -38,11 +38,11 @@ const Room = React.createClass({
 
   componentDidMount() {
     this.scrollDown()
-    Meteor.call("userroom.count.reset", this.props.roomId);
+    Meteor.call("room.counter.reset", this.props.roomId);
   },
 
   componentWillUnmount() {
-    Meteor.call("userroom.count.reset", this.props.roomId);
+    Meteor.call("room.counter.reset", this.props.roomId);
   },
 
   componentWillUpdate() {

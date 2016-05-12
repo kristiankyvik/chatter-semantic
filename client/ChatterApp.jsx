@@ -6,6 +6,15 @@ import router from "./template-helpers/router.jsx";
 import Widget from "./components/Widget.jsx";
 
 
+const latestRooms = function (limit, withIds, archived) {
+  return {
+    find: {"_id": {$in: withIds}, "archived": archived},
+    options: {sort: {lastActive: -1}, limit: limit}
+  };
+};
+
+
+
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -16,7 +25,8 @@ const ChatterApp = React.createClass({
       header: "Chatter",
       view: "roomList",
       activeRooms: [],
-      archivedRooms: []
+      archivedRooms: [],
+      publishedRoomLimit: 10 //eventually handle in session?
     };
    },
 
@@ -33,14 +43,19 @@ const ChatterApp = React.createClass({
 
     if (subsReady) {
       const meteorUserId = Meteor.userId();
+      const publishedRoomLimit = this.state.publishedRoomLimit;
       if (meteorUserId != undefined) {
         chatterUser = Chatter.User.findOne({userId: meteorUserId});
         chatterUsers = Chatter.User.find({}, {sort: {nickname: 1}}).fetch();
         if (chatterUsers.length > 0) {
           const userRooms = Chatter.UserRoom.find({"userId": chatterUser._id}).fetch();
           const roomIds = _.pluck(userRooms, "roomId");
-          activeRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": false}, {sort: {lastActive: -1}}).fetch();
-          archivedRooms = Chatter.Room.find({"_id": {$in:roomIds}, "archived": true}).fetch();
+
+          const activeRoomQuery = latestRooms(publishedRoomLimit, roomIds, false);
+          const archivedRoomQuery = latestRooms(publishedRoomLimit, roomIds, true);
+
+          activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
+          archivedRooms = Chatter.Room.find(archivedRoomQuery.find, archivedRoomQuery.options).fetch();
         }
       }
     }
