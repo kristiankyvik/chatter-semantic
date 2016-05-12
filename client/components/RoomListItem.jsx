@@ -56,7 +56,7 @@ const RoomListItem = React.createClass({
           <div className="header">
             <div className="roomName">
               {room.name}
-              <span>
+              <span className="unread">
                 { this.data.unreadMsgCount > 0 ? <span> ({this.data.unreadMsgCount}) </span> : "" }
               </span>
             </div>

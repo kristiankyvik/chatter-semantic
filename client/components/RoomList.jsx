@@ -5,8 +5,10 @@ import RoomListItem from "../components/RoomListItem.jsx";
 const RoomList = React.createClass({
   getInitialState: function() {
     return {
-      showMoreActive: false,
-      showMoreArchived: false
+      activeShowing: false,
+      archivedShowing: false,
+      archivedCount: 0,
+      activeCount: 0
     };
    },
 
@@ -20,27 +22,50 @@ const RoomList = React.createClass({
 
   componentDidMount() {
     $('.ui.accordion').accordion();
+    Meteor.call("get.room.counts", (error, response) => {
+      console.log("repojnse");
+      console.log(response);
+      this.setState(response);
+    })
   },
 
   loadMoreRooms(type) {
     const options = {
-      archived: {showMoreArchived: true},
-      active: {showMoreActive: true}
+      archived: {archivedShowing: true},
+      active: {activeShowing: true}
     };
+
+    console.log(options[type]);
     this.setState(options[type]);
     this.props.loadMoreRooms(type);
   },
 
   getMoreRoomsBtn(type) {
+    const roomOpts = {
+      archived: {
+        showing: this.state.archivedShowing,
+        count: this.state.archivedCount
+      },
+      active: {
+        showing: this.state.activeShowing,
+        count: this.state.activeCount
+      }
+    };
 
-    return (
-      <div
-        className="roomListBtn"
-        onClick={() => this.loadMoreRooms(type)}
-      >
-        <span>Show more</span>
-      </div>
-    );
+    const opts = roomOpts[type];
+    console.log(opts);
+
+    if ( (opts.count > Chatter.options.initialRoomLoad) && (!opts.showing)) {
+      return (
+        <div
+          className="roomListBtn"
+          onClick={() => this.loadMoreRooms(type)}
+        >
+          <span>Show more</span>
+        </div>
+      );
+    }
+   return null;
   },
 
   render() {
@@ -81,8 +106,6 @@ const RoomList = React.createClass({
             />;
     });
 
-    const {showMoreArchived, showMoreActive} = this.state;
-
     return (
       <div>
         <div className="roomList scrollable">
@@ -97,7 +120,7 @@ const RoomList = React.createClass({
               <div className="content active">
                 <div className="ui selection middle aligned list celled">
                   {subsReady ? activeRoomsHTML : loaderHTML}
-                  {showMoreActive ? null : this.getMoreRoomsBtn("active")}
+                  {this.getMoreRoomsBtn("active")}
                 </div>
               </div>
             </div>
@@ -111,7 +134,7 @@ const RoomList = React.createClass({
               <div className="content">
                 <div className="ui selection middle aligned list celled">
                   {subsReady ? archivedRoomsHTML : loaderHTML}
-                  {showMoreArchived ? null : this.getMoreRoomsBtn("archived")}
+                  {this.getMoreRoomsBtn("archived")}
                 </div>
               </div>
             </div>
