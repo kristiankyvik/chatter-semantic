@@ -15,7 +15,7 @@ const RoomListItem = React.createClass({
     const subsReady = messagesHandle.ready() && countHandle.ready();
 
     let message = "no messages yet";
-    let avatar = "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/default.jpg";
+    let avatar = "http://chatter-widget.meteorapp.com/packages/jorgeer_chatter-semantic/public/images/default.jpg";
     let timeAgo = "";
     let unreadMsgCount = 0;
 
@@ -28,7 +28,7 @@ const RoomListItem = React.createClass({
       if (typeof lastMessage != 'undefined') {
         message = lastMessage.message;
         timeAgo = lastMessage.timeAgo();
-        avatar = "http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg";
+        avatar = lastMessage.avatar;
       }
     }
 
@@ -65,7 +65,12 @@ const RoomListItem = React.createClass({
             </div>
           </div>
           <div className="description">
-            {this.data.message}
+            <div className="preview">
+              {this.data.message}
+            </div>
+            <div className="counter">
+                { this.data.unreadMsgCount > 0 ? <span> {this.data.unreadMsgCount} </span> : "" }
+            </div>
           </div>
         </div>
       </div>

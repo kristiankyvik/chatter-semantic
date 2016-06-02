@@ -6,15 +6,22 @@ const Writer = React.createClass({
 
   handleSubmit(event) {
     const input = document.getElementById("message");
+    $(input).on('focus', function() {
+         this.value = '';
+     });
+
     if(event.keyCode === 13) {
+      event.preventDefault();
       const text = input.value;
-      input.value = "";
-      $("#message").val('');
       this.props.pushMessage(text);
+      input.value = "";
+      $(input).attr("rows", "1").css("height",41);
     }
+
     while($(input).outerHeight() < input.scrollHeight + parseFloat($(input).css("borderTopWidth")) + parseFloat($(input).css("borderBottomWidth"))) {
         $(input).height($(input).height()+1);
     };
+
 
   },
 

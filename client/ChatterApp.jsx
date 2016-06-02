@@ -5,7 +5,6 @@ import getChatHTML from "./template-helpers/getChatHTML.jsx";
 import router from "./template-helpers/router.jsx";
 import Widget from "./components/Widget.jsx";
 
-
 const latestRooms = function (limit, withIds, archived) {
   return {
     find: {"_id": {$in: withIds}, "archived": archived},
@@ -20,7 +19,7 @@ const ChatterApp = React.createClass({
 
   getInitialState: function() {
     return {
-      chatOpen: true,
+      chatOpen: false,
       roomId: null,
       header: "Chatter",
       view: "roomList",
@@ -46,6 +45,7 @@ const ChatterApp = React.createClass({
       const meteorUserId = Meteor.userId();
       const {activeRoomLimit, archivedRoomLimit} = this.state;
       if (meteorUserId != undefined) {
+
         chatterUser = Chatter.User.findOne({userId: meteorUserId});
         chatterUsers = Chatter.User.find({}, {sort: {nickname: 1}}).fetch();
         if (chatterUsers.length > 0) {
@@ -90,8 +90,9 @@ const ChatterApp = React.createClass({
   },
 
   toggleChatState() {
+    const state = !this.state.chatOpen;
     this.setState({
-      chatOpen: !this.state.chatOpen
+      chatOpen: state
     });
   },
 

@@ -90,18 +90,17 @@ const Room = React.createClass({
 
         return (
           <div key={message._id} className={messageClass}>
-            <a className="avatar">
-              <img src={userProfile.avatar} />
-            </a>
-            <div className="content">
-              <a className="author">
-                {userProfile.nickname}
+            <div className="nickname">
+              {userProfile.nickname}
+            </div>
+            <div>
+              <a className="avatar">
+                <img src={userProfile.avatar} />
               </a>
-              <a className="metadata">
-                <span className="date"> {message.timeAgo()} </span>
-              </a>
-              <div className="text">
-               {message.message}
+              <div className="content">
+                <div className="text">
+                 {message.message}
+                </div>
               </div>
             </div>
           </div>

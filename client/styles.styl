@@ -1,8 +1,13 @@
-chatter-light-blue = #FAFAFB
-chatter-light-gray = #E6EEF4
+chatter-light-blue = #FBFAFD
+chatter-light-gray = #f1f0f3
 chatter-white = #fff
 chatter-trans-gray = rgba(96,104,110,.8)
-chatter-blue = #2185d0
+chatter-green = #D4F2FC
+chatter-pink = #ff009f
+chatter-meta-gray = #ccccd2
+
+body
+    background-color: transparent
 
 .chatter
     background-color: chatter-light-blue !important
@@ -55,12 +60,10 @@ chatter-blue = #2185d0
             padding-bottom: 10px
         .roomListBtn
             text-align: center
-            padding: 10px
-            span
-                color: chatter-trans-gray
-                font-style: underline
-                cursor: pointer
-
+            cursor: pointer
+            color: chatter-trans-gray
+            font-size: 10px
+            text-transform: uppercase
         .ui.list .item
             padding-top: 16px
             padding-bottom: 16px
@@ -68,7 +71,7 @@ chatter-blue = #2185d0
                 width: 3em
                 height: 3em
             .content
-                width: 86%
+                width: 85%
                 padding-left: 0.8em
                 .header, .description
                     color: chatter-trans-gray
@@ -85,13 +88,27 @@ chatter-blue = #2185d0
                         float: right
                         font-weight: 400
                         font-size: 0.8em
-                        line-height: 20px;
+                        line-height: 20px
                 .description
                     width: 100%
-                    overflow: hidden
-                    text-overflow: ellipsis
-                    white-space: nowrap
                     padding-top: 8px
+                    .preview
+                        display: inline-block
+                        width: 85%
+                        overflow: hidden
+                        text-overflow: ellipsis
+                        white-space: nowrap
+                    .counter
+                        display: inline-block
+                        width: 15%
+                        text-align: right
+                        font-size: 0.8em
+                        span
+                            border-radius: 1rem
+                            background-color: chatter-pink
+                            color: white
+                            padding: 2px 5px
+
     .btn-wrapper
         position: absolute
         bottom: 0
@@ -103,26 +120,37 @@ chatter-blue = #2185d0
 
         &.ui.comments .comment
             text-align: left
-            >.content
+            .nickname
+                padding-left: 3.6em
+                line-height: 17px
+                color: chatter-meta-gray
+                font-size: 0.8em
+            div .content
                 max-width: 257px
-                padding: 5px
+                padding: 5px 10px
                 background-color: chatter-light-gray
-                border-radius: 5px
+                border-radius: 1em
                 margin-left: 0.6em
                 display: inline-block
+                .text
+                    margin: 0.1em 0em 0.1em
             .avatar
                 width: 2em
+                img
+                    border-radius: 1rem
             &.yours
                 text-align: right
+                .nickname
+                    display: none
                 .author, .date, .content .text
-                    color: white
+                    color: rgba(0, 0, 0, 0.87)
 
-                >.content
+                 div .content
                     text-align: left
                     margin-right: 0.6em
                     margin-left: 0
                     display: inline-block
-                    background-color: chatter-blue
+                    background-color: chatter-green
                 .avatar
                     float: right
 
@@ -144,6 +172,10 @@ chatter-blue = #2185d0
             max-height: 250px
             min-height: 41px
             border-size: 2px
+            vertical-align: middle
+            resize: none
+            overflow-y: scroll
+
 
     .settings
         .ui.list

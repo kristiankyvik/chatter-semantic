@@ -34,7 +34,7 @@ const MainSettings = React.createClass({
         <div className="item room-user" key={user._id}>
           <img
             className="ui avatar image"
-            src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg"
+            src={user.avatar}
           />
           <div className="content">
             <a className="header nickname">

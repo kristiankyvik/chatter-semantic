@@ -76,7 +76,7 @@ const AddUsers = React.createClass({
           </div>
           <img
             className="ui avatar image"
-            src="http://localhost:3000/packages/jorgeer_chatter-semantic/public/images/avatar.jpg"
+            src={user.avatar}
           />
           <div className="content">
             <a className="header">

@@ -60,6 +60,7 @@ const Nav = React.createClass({
             {this.props.view == "room" ? settingsIconHTML : null }
           </a>
           <a
+            id="chatter-close"
             className="icon item"
             onClick={() => this.props.toggleChatState()}
           >

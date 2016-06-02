@@ -23,8 +23,6 @@ const RoomList = React.createClass({
   componentDidMount() {
     $('.ui.accordion').accordion();
     Meteor.call("get.room.counts", (error, response) => {
-      console.log("repojnse");
-      console.log(response);
       this.setState(response);
     })
   },
@@ -35,7 +33,6 @@ const RoomList = React.createClass({
       active: {activeShowing: true}
     };
 
-    console.log(options[type]);
     this.setState(options[type]);
     this.props.loadMoreRooms(type);
   },
@@ -53,7 +50,6 @@ const RoomList = React.createClass({
     };
 
     const opts = roomOpts[type];
-    console.log(opts);
 
     if ( (opts.count > Chatter.options.initialRoomLoad) && (!opts.showing)) {
       return (
@@ -61,6 +57,7 @@ const RoomList = React.createClass({
           className="roomListBtn"
           onClick={() => this.loadMoreRooms(type)}
         >
+          <i className="chevron down icon"></i>
           <span>Show more</span>
         </div>
       );
