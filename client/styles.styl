@@ -118,44 +118,68 @@ body
     .room
         margin: 0 !important
 
-        &.ui.comments .comment
-            text-align: left
-            .nickname
-                padding-left: 3.6em
-                line-height: 17px
-                color: chatter-meta-gray
-                font-size: 0.8em
-            div .content
-                max-width: 257px
-                padding: 5px 10px
-                background-color: chatter-light-gray
-                border-radius: 1em
-                margin-left: 0.6em
-                display: inline-block
-                .text
-                    margin: 0.1em 0em 0.1em
-            .avatar
-                width: 2em
-                img
-                    border-radius: 1rem
-            &.yours
-                text-align: right
+        &.ui.comments
+            .date-banner
+                width: 100%
+                height: 0.8em
+                border-bottom: 1px solid chatter-meta-gray
+                text-align: center
+                span
+                    background-color: chatter-light-blue
+                    padding: 0 10px
+                    font-weight: bold
+                    padding: 5px 13px
+                    font-size: 0.9em
+
+            .comment
+                text-align: left
+
                 .nickname
-                    display: none
-                .author, .date, .content .text
-                    color: rgba(0, 0, 0, 0.87)
-
-                 div .content
-                    text-align: left
-                    margin-right: 0.6em
-                    margin-left: 0
+                    padding-left: 3.6em
+                    line-height: 17px
+                    color: chatter-meta-gray
+                    font-size: 0.85em
+                div .content
+                    max-width: 257px
+                    padding: 5px 10px
+                    background-color: chatter-light-gray
+                    border-radius: 1em
+                    margin-left: 0.6em
                     display: inline-block
-                    background-color: chatter-green
+                    .text
+                        margin: 0.1em 0em 0.1em
                 .avatar
-                    float: right
+                    width: 2em
+                    img
+                        border-radius: 1rem
+                .time-ago
+                    line-height: 17px
+                    color: chatter-meta-gray
+                    font-size: 0.85em
+                    padding-left: 37px
 
-            &:last-of-type
-                margin-bottom: 10px
+                &.yours
+                    text-align: right
+                    .nickname
+                        display: none
+                    .author, .date, .content .text
+                        color: rgba(0, 0, 0, 0.87)
+
+                     div .content
+                        text-align: left
+                        margin-right: 0.6em
+                        margin-left: 0
+                        display: inline-block
+                        background-color: chatter-green
+                    .avatar
+                        float: right
+                    .time-ago
+                        padding-left: 0
+                        padding-right: 37px
+
+
+                &:last-of-type
+                    margin-bottom: 10px
     .newRoom
         #multi-select .ui.label img
             height: 1.2em !important
