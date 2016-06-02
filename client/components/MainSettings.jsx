@@ -48,6 +48,17 @@ const MainSettings = React.createClass({
       );
     });
 
+    const addUsersHTML = (
+      <div className="item addUserItem" onClick={ () => this.props.setView("addUsers")}>
+        <i className="add user icon"></i>
+        <div className="content">
+          <a className="header">
+            Add or remove users...
+          </a>
+        </div>
+      </div>
+    );
+
     return (
       <div className="padded settings scrollable">
         <div className="ui header">
@@ -83,14 +94,7 @@ const MainSettings = React.createClass({
           </div>
           <div className="content active">
             <div className="ui list relaxed">
-              <div className="item addUserItem" onClick={ () => this.props.setView("addUsers")}>
-                <i className="add user icon"></i>
-                <div className="content">
-                  <a className="header">
-                    Add or remove users...
-                  </a>
-                </div>
-              </div>
+              {this.props.chatterUser.userType == "admin" ? addUsersHTML : null}
               <div className="ui divider"></div>
               {roomUsersHTML}
             </div>
