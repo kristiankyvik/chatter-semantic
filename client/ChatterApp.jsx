@@ -18,6 +18,8 @@ const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
 
   getInitialState: function() {
+    Session.set("chatOpen", false);
+
     return {
       chatOpen: false,
       roomId: null,
@@ -90,14 +92,16 @@ const ChatterApp = React.createClass({
   },
 
   toggleChatState() {
-    const state = !this.state.chatOpen;
-    this.setState({
-      chatOpen: state
-    });
+    // removing for the purpose of the widget implementation
+    // console.log(chatterDispatcher);
+    // const state = !this.state.chatOpen;
+    // this.setState({
+    //   chatOpen: state
+    // });
   },
 
   render() {
-    let chatHTML = this.state.chatOpen ? getChatHTML(this) : <Widget toggleChatState={this.toggleChatState} />;
+    const chatHTML = getChatHTML(this);
     return (
       chatHTML
     )

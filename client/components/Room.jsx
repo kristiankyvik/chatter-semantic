@@ -92,19 +92,19 @@ const Room = React.createClass({
             </div>
           );
           avatar = message.avatar;
-        } else if (message.hoursAgo() > 24 && this.getMinutesBetween(this.data.messages[index - 1], message) > 1440) {
+        } else if (message.minutesAgo() > 1440 && this.getMinutesBetween(this.data.messages[index - 1], message) > 1440) {
           dateBanner = (
             <div className="date-banner">
               <span> {message.timestamp()} </span>
             </div>
           );
-        } else if ( index === this.data.messages.length - 1) {
+        } else if (index === this.data.messages.length - 1 ) {
           timeAgo = (
             <div className="time-ago">
               <span> {message.timeAgo()} </span>
             </div>
           );
-        } else if (message.hoursAgo() <= 24 && this.getMinutesBetween(message, this.data.messages[index + 1]) > 5) {
+        } else if (message.minutesAgo() <= 1440 && this.getMinutesBetween(message, this.data.messages[index + 1]) > 5) {
           timeAgo = (
             <div className="time-ago">
               <span> {message.timeAgo()} </span>

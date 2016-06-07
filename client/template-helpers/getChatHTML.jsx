@@ -1,6 +1,7 @@
 import React from 'react';
 import router from "./router.jsx";
 import Nav from "../components/Nav.jsx";
+import Widget from "../components/Widget.jsx";
 
 const isChatterUser = function(chatterUsers) {
   const chatterUserIds = chatterUsers.map(function(user) {
@@ -28,8 +29,10 @@ const getChatHTML = function(data) {
           </div>
       </div>
     );
-  };
-  return chatHTML;
+    return Session.get("chatOpen") ? chatHTML : <Widget toggleChatState={data.toggleChatState} />;
+  } else {
+    return null;
+  }
 };
 
 export default getChatHTML;
