@@ -27,7 +27,7 @@ const RoomListItem = React.createClass({
       const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
       if (typeof lastMessage != 'undefined') {
         message = lastMessage.message;
-        timeAgo = lastMessage.timeAgo();
+        timeAgo = lastMessage.getTimeAgo();
         avatar = lastMessage.avatar;
       }
     }

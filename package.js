@@ -32,7 +32,6 @@ Package.onUse(function(api) {
     'templating',
     'react-template-helper@0.2.7',
     'react-meteor-data',
-
     'mquandalle:stylus@1.0.10',
   ], 'client');
 

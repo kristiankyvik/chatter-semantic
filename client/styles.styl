@@ -3,11 +3,13 @@ chatter-light-gray = #f1f0f3
 chatter-white = #fff
 chatter-trans-gray = rgba(96,104,110,.8)
 chatter-green = #D4F2FC
-chatter-pink = #ff009f
+chatter-blue = #1b9dfc
 chatter-meta-gray = #ccccd2
 
 body
     background-color: transparent
+    #login-buttons
+        visibility: hidden
 
 .chatter
     background-color: chatter-light-blue !important
@@ -105,7 +107,7 @@ body
                         font-size: 0.8em
                         span
                             border-radius: 1rem
-                            background-color: chatter-pink
+                            background-color: chatter-blue
                             color: white
                             padding: 2px 5px
 
@@ -121,18 +123,14 @@ body
         &.ui.comments
             .date-banner
                 width: 100%
-                height: 0.8em
-                border-bottom: 1px solid chatter-meta-gray
                 text-align: center
-                span
-                    background-color: chatter-light-blue
-                    padding: 0 10px
-                    font-weight: bold
-                    padding: 5px 13px
-                    font-size: 0.9em
+                font-weight: bold
+                font-size: 0.9em
 
             .comment
                 text-align: left
+                margin: 0 0 3px
+                padding: 0
 
                 .nickname
                     padding-left: 3.6em
@@ -167,7 +165,6 @@ body
 
                      div .content
                         text-align: left
-                        margin-right: 0.6em
                         margin-left: 0
                         display: inline-block
                         background-color: chatter-green
@@ -176,11 +173,7 @@ body
                         display: none
                     .time-ago
                         padding-left: 0
-                        padding-right: 37px
-
-
-                &:last-of-type
-                    margin-bottom: 10px
+                        padding-right: 13px
     .newRoom
         #multi-select .ui.label img
             height: 1.2em !important

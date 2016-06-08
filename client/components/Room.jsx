@@ -2,6 +2,22 @@ import React from 'react';
 
 import Writer from "../components/Writer.jsx"
 
+const isFirstMessage = function(prevMsg, currentMsg) {
+  return prevMsg.userId != currentMsg.userId;
+};
+
+const timeSinceLastMsgGreaterThan = function(minutes, prevMsg, currentMsg) {
+  const difference = currentMsg.createdAt - prevMsg.createdAt;
+  const resultInMinutes = Math.round(difference / 60000);
+  return resultInMinutes > minutes;
+};
+
+const timestampShouldBeDisplayed = function(currentMsg, nextMsg) {
+  const veryRecentMessage = currentMsg.getMinutesAgo() <= 60;
+  const recentMessage = currentMsg.getMinutesAgo() <= 1440;
+  return veryRecentMessage && timeSinceLastMsgGreaterThan(2, currentMsg, nextMsg) || recentMessage && timeSinceLastMsgGreaterThan(60, currentMsg, nextMsg);
+}
+
 const Room = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -50,12 +66,6 @@ const Room = React.createClass({
     scroller.scrollTop = scroller.scrollHeight;
   },
 
-  getMinutesBetween(prevMsg, msg) {
-    const difference = msg.createdAt - prevMsg.createdAt;
-    const resultInMinutes = Math.round(difference / 60000);
-    return resultInMinutes;
-  },
-
   pushMessage(text) {
     const roomId = this.props.roomId;
     const params = {
@@ -76,84 +86,75 @@ const Room = React.createClass({
       </div>
     );
 
+    const numberOfMessages = this.data.messages.length;
 
-    let isNew = true;
     const messages = (
       this.data.messages.map((message, index) => {
-        let dateBanner = null;
-        let timeAgo = null;
-        let avatar = null;
-        let nickname = null;
 
-        if (index === 0) {
+        let dateBanner = timeAgo = avatar = nickname = null;
+        const prevMsg = this.data.messages[index - 1];
+        const nextMsg = this.data.messages[index + 1];
+
+
+        const isFirstMessageOfChat = index === 0,
+              isFirstMessageOfDay = index > 0 && prevMsg.getDate() != message.getDate(),
+              isLastMessageChat = index === numberOfMessages - 1;
+
+        // takes care of the display of dates and timestamps
+        if (isFirstMessageOfChat || isFirstMessageOfDay) {
           dateBanner = (
             <div className="date-banner">
-              <span> {message.timestamp()} </span>
+              <span> {message.getDate()} </span>
             </div>
           );
+        } else if (isLastMessageChat) {
+          if (message.getMinutesAgo() > 1) {
+            timeAgo = (
+              <div className="time-ago">
+                <span> {message.getTimeAgo()} </span>
+              </div>
+            );
+          }
+        } else if (timestampShouldBeDisplayed(message, nextMsg)) {
+          timeAgo = (
+            <div className="time-ago">
+              <span> {message.getTimeAgo()} </span>
+            </div>
+          );
+        } else {
+
+        }
+        // takes care of the display of avatars and nicknames
+        if (index === 0 ) {
           avatar = message.avatar;
-        } else if (message.minutesAgo() > 1440 && this.getMinutesBetween(this.data.messages[index - 1], message) > 1440) {
-          dateBanner = (
-            <div className="date-banner">
-              <span> {message.timestamp()} </span>
-            </div>
-          );
-        } else if (index === this.data.messages.length - 1 ) {
-          timeAgo = (
-            <div className="time-ago">
-              <span> {message.timeAgo()} </span>
-            </div>
-          );
-        } else if (message.minutesAgo() <= 1440 && this.getMinutesBetween(message, this.data.messages[index + 1]) > 5) {
-          timeAgo = (
-            <div className="time-ago">
-              <span> {message.timeAgo()} </span>
-            </div>
-          );
+          nickname = message.nickname;
         } else {
-
-        }
-
-       if (index === 0) {
-         avatar = message.avatar;
-         isNew = false;
-         nickname = message.nickname;
-       } else if (index === this.data.messages.length - 1 ) {
-          if (isNew){
+          if (isFirstMessage(this.data.messages[index - 1], message)) {
             avatar = message.avatar;
             nickname = message.nickname;
-
           }
-       } else if (message.userId == this.data.messages[index + 1].userId) {
-          if (isNew){
-            avatar = message.avatar;
-            nickname = message.nickname;
-            isNew = false;
-          }
-        } else {
-          isNew = true;
         }
-        const messageClass = this.props.chatterUser._id === message.userId ? "chatter-msg comment yours" : "chatter-msg comment";
+
+        const ownsMessage = this.props.chatterUser._id === message.userId;
+        const messageClass = ownsMessage ? "chatter-msg comment yours" : "chatter-msg comment";
 
         return (
-          <div key={message._id} >
+          <div key={message._id} className={messageClass}>
             {dateBanner}
-            <div className={messageClass}>
-              <div className="nickname">
-                {nickname}
-              </div>
-              <div>
-                <a className="avatar">
-                  <img src={avatar} />
-                </a>
-                <div className="content">
-                  <div className="text">
-                   {message.message}
-                  </div>
+            <div className="nickname">
+              {nickname}
+            </div>
+            <div>
+              <a className="avatar">
+                <img src={avatar} />
+              </a>
+              <div className="content">
+                <div className="text">
+                 {message.message}
                 </div>
               </div>
-              {timeAgo}
             </div>
+            {timeAgo}
           </div>
         );
       })

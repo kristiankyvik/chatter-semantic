@@ -12,8 +12,6 @@ const latestRooms = function (limit, withIds, archived) {
   };
 };
 
-
-
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -27,8 +25,8 @@ const ChatterApp = React.createClass({
       view: "roomList",
       activeRooms: [],
       archivedRooms: [],
-      activeRoomLimit: Chatter.options.initialRoomLoad, //eventually handle in session?
-      archivedRoomLimit: Chatter.options.initialRoomLoad //eventually handle in session?
+      activeRoomLimit: Chatter.options.initialRoomLoad,
+      archivedRoomLimit: Chatter.options.initialRoomLoad
     };
    },
 
