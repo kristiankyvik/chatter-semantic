@@ -27,7 +27,9 @@ const Room = React.createClass({
       roomId: roomId
     });
 
-    const subsReady = messagesHandle.ready();
+    const usersHandle = Meteor.subscribe("users");
+
+    const subsReady = messagesHandle.ready() && usersHandle.ready();
 
     let messages = [];
 
@@ -77,6 +79,12 @@ const Room = React.createClass({
     this.scrollDown();
   },
 
+  setUserProfile(userId) {
+    this.props.setUserProfile(userId);
+    this.props.setView("profile");
+  },
+
+
   render() {
    const loader =  (
       <div className="ui active inverted dimmer">
@@ -95,6 +103,7 @@ const Room = React.createClass({
         const prevMsg = this.data.messages[index - 1];
         const nextMsg = this.data.messages[index + 1];
 
+        const user = Meteor.users.findOne(message.userId);
 
         const isFirstMessageOfChat = index === 0,
               isFirstMessageOfDay = index > 0 && prevMsg.getDate() != message.getDate(),
@@ -126,12 +135,12 @@ const Room = React.createClass({
         }
         // takes care of the display of avatars and nicknames
         if (index === 0 ) {
-          avatar = message.avatar;
-          nickname = message.nickname;
+          avatar = user.profile.chatterAvatar;
+          nickname = user.profile.chatterNickname;
         } else {
           if (isFirstMessage(this.data.messages[index - 1], message)) {
-            avatar = message.avatar;
-            nickname = message.nickname;
+            avatar = user.profile.chatterAvatar;
+            nickname = user.profile.chatterNickname;
           }
         }
 
@@ -145,7 +154,10 @@ const Room = React.createClass({
               {nickname}
             </div>
             <div>
-              <a className="avatar">
+              <a
+                className="avatar"
+                onClick={() => this.setUserProfile(message.userId)}
+              >
                 <img src={avatar} />
               </a>
               <div className="content">

@@ -23,6 +23,7 @@ const getChatHTML = function(data) {
             roomId={data.state.roomId}
             header={data.state.header}
             toggleChatState={data.toggleChatState}
+            setUserProfile={data.setUserProfile}
           />
           <div className="wrapper">
             {router(data, data.state.view).component()}

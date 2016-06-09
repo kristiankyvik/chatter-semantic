@@ -1,8 +1,5 @@
 import React from 'react';
 
-import Avatar from "./Avatar.jsx";
-
-
 const RoomListItem = React.createClass({
   mixins: [ReactMeteorData],
 

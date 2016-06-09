@@ -24,7 +24,9 @@ const RoomList = React.createClass({
     $('.ui.accordion').accordion();
     Meteor.call("get.room.counts", (error, response) => {
       this.setState(response);
-    })
+    });
+
+    this.props.setUserProfile(Meteor.userId());
   },
 
   loadMoreRooms(type) {

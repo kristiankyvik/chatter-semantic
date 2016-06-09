@@ -21,6 +21,7 @@ const ChatterApp = React.createClass({
     return {
       chatOpen: false,
       roomId: null,
+      userProfile: Meteor.userId(),
       header: "Chatter",
       view: "roomList",
       activeRooms: [],
@@ -47,7 +48,6 @@ const ChatterApp = React.createClass({
         const roomIds = _.pluck(userRooms, "roomId");
         const activeRoomQuery = latestRooms(activeRoomLimit, roomIds, false);
         const archivedRoomQuery = latestRooms(archivedRoomLimit, roomIds, true);
-
         activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
         archivedRooms = Chatter.Room.find(archivedRoomQuery.find, archivedRoomQuery.options).fetch();
       }
@@ -65,6 +65,12 @@ const ChatterApp = React.createClass({
       roomId: roomId,
       view: 'room',
       header: roomName
+    });
+  },
+
+  setUserProfile(userId) {
+    this.setState({
+      userProfile: userId
     });
   },
 
