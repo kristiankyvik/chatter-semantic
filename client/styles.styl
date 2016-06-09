@@ -39,6 +39,19 @@ body
             top: 40px
             bottom: 56px
 
+    .user-status
+        position: absolute
+        width: 0.8em
+        height: 0.8em
+        border-radius: 0.8em
+        z-index: 1
+        &.none
+            display: none
+        &.offline
+            background-color: chatter-status-red
+        &.online
+            background-color: chatter-status-green
+
     .ui.divider
         margin: 0.2rem 0rem
 
@@ -71,19 +84,6 @@ body
         .ui.list .item
             padding-top: 16px
             padding-bottom: 16px
-            .status
-                position: absolute
-                width: 0.8em
-                height: 0.8em
-                border-radius: 0.8em
-                z-index: 1
-                &.none
-                    display: none
-                &.offline
-                    background-color: chatter-status-red
-                &.online
-                    background-color: chatter-status-green
-
             .ui.avatar.image
                 width: 3em
                 height: 3em

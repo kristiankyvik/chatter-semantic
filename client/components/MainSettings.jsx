@@ -30,10 +30,11 @@ const MainSettings = React.createClass({
 
   render() {
     const user = Meteor.user();
-    console.log(user);
     const roomUsersHTML = this.state.roomUsers.map(function(user) {
+    const statusClass = user.profile.online ? "user-status online" : "user-status offline";
       return (
         <div className="item room-user" key={user._id}>
+          <div className={statusClass}></div>
           <img
             className="ui avatar image"
             src={user.profile.chatterAvatar}

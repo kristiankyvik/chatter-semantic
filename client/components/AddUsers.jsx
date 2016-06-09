@@ -17,7 +17,6 @@ const AddUsers = React.createClass({
 
     if (subsReady && userHandle) {
      const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
-     console.log("roomuserdis", roomUsersIds);
      users = Meteor.users.find().fetch();
 
      _.each(users, function(user) {
@@ -67,13 +66,13 @@ const AddUsers = React.createClass({
   },
 
   render() {
-    console.log(this.data.users);
     const allUsers = this.data.users.map( user => {
       if (user.profile.chatterNickname.indexOf(this.state.query) < 0) {return;};
       let btnSetup = {
         action: user.added ? "remove" : "add",
         text: user.added ? "Remove" : "Add"
       };
+
       return (
         <div className="item" key={user._id}>
           <div className="right floated content">
@@ -81,6 +80,8 @@ const AddUsers = React.createClass({
               onClick={() => this.toggleUser(btnSetup.action, user._id)}
               className="ui button adduser-btn">{btnSetup.text}
             </div>
+          </div>
+          <div className={user.profile.online ? "user-status online" : "user-status offline"}>
           </div>
           <img
             className="ui avatar image"
