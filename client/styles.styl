@@ -5,6 +5,8 @@ chatter-trans-gray = rgba(96,104,110,.8)
 chatter-green = #D4F2FC
 chatter-blue = #1b9dfc
 chatter-meta-gray = #ccccd2
+chatter-status-green = #86BB71
+chatter-status-red = #E38968
 
 body
     background-color: transparent
@@ -69,6 +71,19 @@ body
         .ui.list .item
             padding-top: 16px
             padding-bottom: 16px
+            .status
+                position: absolute
+                width: 0.8em
+                height: 0.8em
+                border-radius: 0.8em
+                z-index: 1
+                &.none
+                    display: none
+                &.offline
+                    background-color: chatter-status-red
+                &.online
+                    background-color: chatter-status-green
+
             .ui.avatar.image
                 width: 3em
                 height: 3em

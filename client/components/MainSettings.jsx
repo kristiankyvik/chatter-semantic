@@ -29,16 +29,18 @@ const MainSettings = React.createClass({
   },
 
   render() {
+    const user = Meteor.user();
+    console.log(user);
     const roomUsersHTML = this.state.roomUsers.map(function(user) {
       return (
         <div className="item room-user" key={user._id}>
           <img
             className="ui avatar image"
-            src={user.avatar}
+            src={user.profile.chatterAvatar}
           />
           <div className="content">
             <a className="header nickname">
-              {user.nickname}
+              {user.profile.chatterNickname}
             </a>
             <div className="description last-active">
               Last logged in just now.
@@ -68,7 +70,7 @@ const MainSettings = React.createClass({
           {this.props.room.description}
         </p>
         <p className="gray-text">
-          This channel was created by {this.props.chatterUser.nickname} on the {this.props.room.createdAt.toISOString()}.
+          This channel was created by {this.props.room.createdBy} on the {this.props.room.createdAt.toISOString()}.
         </p>
         <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
           <label>
@@ -94,7 +96,7 @@ const MainSettings = React.createClass({
           </div>
           <div className="content active">
             <div className="ui list relaxed">
-              {this.props.chatterUser.userType == "admin" ? addUsersHTML : null}
+              {user.profile.isChatterAdmin ? addUsersHTML : null}
               <div className="ui divider"></div>
               {roomUsersHTML}
             </div>

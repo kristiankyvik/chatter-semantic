@@ -7,14 +7,20 @@ const AddUsers = React.createClass({
   getMeteorData() {
     const { room } = this.props;
     const userRoomHandle = Meteor.subscribe("chatterUserRooms");
+    const userHandle = Meteor.subscribe("users");
 
     const subsReady = userRoomHandle.ready();
 
     let messages = [];
+    let users = [];
 
-    if (subsReady) {
+
+    if (subsReady && userHandle) {
      const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
-     _.each(this.props.chatterUsers, function(user) {
+     console.log("roomuserdis", roomUsersIds);
+     users = Meteor.users.find().fetch();
+
+     _.each(users, function(user) {
        if (roomUsersIds.indexOf(user._id) < 0) {
          user.added = false;
        } else {
@@ -24,6 +30,7 @@ const AddUsers = React.createClass({
     }
 
     return {
+      users
     }
   },
 
@@ -60,8 +67,9 @@ const AddUsers = React.createClass({
   },
 
   render() {
-    const users = this.props.chatterUsers.map( user => {
-      if (user.nickname.indexOf(this.state.query) < 0) {return;};
+    console.log(this.data.users);
+    const allUsers = this.data.users.map( user => {
+      if (user.profile.chatterNickname.indexOf(this.state.query) < 0) {return;};
       let btnSetup = {
         action: user.added ? "remove" : "add",
         text: user.added ? "Remove" : "Add"
@@ -76,11 +84,11 @@ const AddUsers = React.createClass({
           </div>
           <img
             className="ui avatar image"
-            src={user.avatar}
+            src={user.profile.chatterAvatar}
           />
           <div className="content">
             <a className="header">
-              {user.nickname}
+              {user.profile.chatterNickname}
             </a>
             <div className="description">
               Last logged in just now.
@@ -106,7 +114,7 @@ const AddUsers = React.createClass({
               </div>
             </div>
             <div className="ui divider"></div>
-            {users}
+            {allUsers}
           </div>
         </div>
         <div className="btn-wrapper">

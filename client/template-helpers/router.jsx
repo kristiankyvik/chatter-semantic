@@ -11,7 +11,6 @@ const router = function(scope, view) {
       header: "Chatter",
       view: "roomList",
       component: () => <RoomList
-                  chatterUser={scope.data.chatterUser}
                   subsReady={scope.data.subsReady}
                   goToRoom={scope.goToRoom}
                   activeRooms={scope.data.activeRooms}
@@ -42,8 +41,6 @@ const router = function(scope, view) {
       header: "New channel",
       view: "newRoom",
       component: () => <NewRoom
-                  chatterUser={scope.data.chatterUser}
-                  chatterUsers={scope.data.chatterUsers}
                   goToRoom={scope.goToRoom}
                   setView={scope.setView}
                 />

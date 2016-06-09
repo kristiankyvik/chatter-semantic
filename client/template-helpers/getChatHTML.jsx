@@ -13,7 +13,7 @@ const isChatterUser = function(chatterUsers) {
 
 const getChatHTML = function(data) {
   let chatHTML = null;
-  if (isChatterUser(data.data.chatterUsers, Meteor.userId())) {
+  if (Meteor.userId()) {
     chatHTML = (
       <div className="ui right vertical wide visible sidebar chatter" id="chatter">
           <Nav

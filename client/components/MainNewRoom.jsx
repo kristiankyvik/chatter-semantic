@@ -37,14 +37,6 @@ const MainNewRoom = React.createClass({
   },
 
   render() {
-    const users = this.props.chatterUsers.map(function(user) {
-      return (
-        <div className="item" data-value={user._id} key={user._id}>
-           <img className="ui avatar image" src={user.avatar} />
-          <span>{user.nickname}</span>
-        </div>
-      );
-    });
 
     return (
       <div className="newRoom padded scrollable">

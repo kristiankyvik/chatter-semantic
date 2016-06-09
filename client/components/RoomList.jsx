@@ -66,7 +66,8 @@ const RoomList = React.createClass({
   },
 
   render() {
-    const { subsReady, archivedRooms, activeRooms, chatterUser } = this.props;
+    const user = Meteor.user();
+    const { subsReady, archivedRooms, activeRooms } = this.props;
     const loaderHTML =  (
       <div className="ui active inverted dimmer">
         <div className="ui text loader">
@@ -81,13 +82,12 @@ const RoomList = React.createClass({
       </div>
     );
 
-    const newRoomBtn = (chatterUser.userType === "admin") ? newRoomBtnHTML : null;
+    const newRoomBtn = (user.profile.isChatterAdmin) ? newRoomBtnHTML : null;
 
     const activeRoomsHTML = activeRooms.map(room => {
       return <RoomListItem
               key={room._id}
               goToRoom={this.goToRoom}
-              chatterUser={chatterUser}
               goToNewRoom={this.goToNewRoom}
               room={room}
             />;
@@ -97,7 +97,6 @@ const RoomList = React.createClass({
       return <RoomListItem
               key={room._id}
               goToRoom={this.goToRoom}
-              chatterUser={chatterUser}
               goToNewRoom={this.goToNewRoom}
               room={room}
             />;

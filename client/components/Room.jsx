@@ -135,7 +135,7 @@ const Room = React.createClass({
           }
         }
 
-        const ownsMessage = this.props.chatterUser._id === message.userId;
+        const ownsMessage = Meteor.userId() === message.userId;
         const messageClass = ownsMessage ? "chatter-msg comment yours" : "chatter-msg comment";
 
         return (

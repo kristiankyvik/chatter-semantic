@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Avatar from "./Avatar.jsx";
+
+
 const RoomListItem = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -12,15 +15,18 @@ const RoomListItem = React.createClass({
       roomId: this.props.room._id
     });
 
-    const subsReady = messagesHandle.ready() && countHandle.ready();
+    const usersHandle = Meteor.subscribe("users");
+
+    const subsReady = messagesHandle.ready() && countHandle.ready() && usersHandle.ready();
+    const userId = Meteor.userId();
 
     let message = "no messages yet";
-    let avatar = "http://chatter-widget.meteorapp.com/packages/jorgeer_chatter-semantic/public/images/default.jpg";
-    let timeAgo = "";
+    let timeAgo = this.props.room.getTimeAgo();
     let unreadMsgCount = 0;
+    let lastUser = null;
 
     if (subsReady) {
-      const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: this.props.chatterUser._id});
+      const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: userId});
 
       unreadMsgCount =  typeof checkCount === 'undefined' ? -1 : checkCount.unreadMsgCount;
 
@@ -28,15 +34,16 @@ const RoomListItem = React.createClass({
       if (typeof lastMessage != 'undefined') {
         message = lastMessage.message;
         timeAgo = lastMessage.getTimeAgo();
-        avatar = lastMessage.avatar;
+        lastUser = Meteor.users.findOne(lastMessage.userId);
       }
     }
 
     return {
       message,
-      avatar,
       timeAgo,
-      unreadMsgCount
+      unreadMsgCount,
+      lastUser,
+      avatar
     }
   },
 
@@ -46,12 +53,23 @@ const RoomListItem = React.createClass({
       room
     } = this.props;
 
+    const lastUser = this.data.lastUser;
+    let lastAvatar = "http://chatter-widget.meteorapp.com/packages/jorgeer_chatter-semantic/public/images/default.jpg";
+    let statusClass = "status none"
+
+    if (lastUser) {
+      statusClass = lastUser.profile.online ? "status online" : "status offline";
+      lastAvatar = lastUser.profile.chatterAvatar;
+    }
+
     return (
       <div
         className="item transition visible roomListItem"
         onClick={() => goToRoom(room._id, room.name)}
       >
-        <img className="ui avatar image" src={this.data.avatar} />
+        <div className={statusClass}></div>
+        <img className="ui avatar image" src={lastAvatar} />
+
         <div className="content">
           <div className="header">
             <div className="roomName">

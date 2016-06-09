@@ -8,7 +8,6 @@ const newRoomRouter = function(scope, view) {
     main: {
       view: "main",
       component: () => <MainNewRoom
-                  chatterUsers={scope.props.chatterUsers}
                   setView={scope.setView}
                   setRoom={scope.setRoom}
                 />
@@ -16,7 +15,6 @@ const newRoomRouter = function(scope, view) {
     addUsers: {
       view: "addUsers",
       component: () => <AddUsers
-                  chatterUsers={scope.props.chatterUsers}
                   room={scope.state.room}
                   buttonMessage={"Go to room"}
                   buttonGoTo={ () => scope.props.goToRoom(scope.state.room._id, scope.state.room.name)}
