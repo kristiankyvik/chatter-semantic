@@ -1,6 +1,7 @@
 import React from 'react';
 
 import RoomListItem from "../components/RoomListItem.jsx";
+import Loader from "../components/Loader.jsx"
 
 const RoomList = React.createClass({
   getInitialState: function() {
@@ -70,13 +71,6 @@ const RoomList = React.createClass({
   render() {
     const user = Meteor.user();
     const { subsReady, archivedRooms, activeRooms } = this.props;
-    const loaderHTML =  (
-      <div className="ui active inverted dimmer">
-        <div className="ui text loader">
-          Loading messages
-        </div>
-      </div>
-    );
 
     const newRoomBtnHTML = (
       <div className="ui fluid button primary newroom-btn" onClick={this.goToNewRoom} >
@@ -117,7 +111,7 @@ const RoomList = React.createClass({
               </div>
               <div className="content active">
                 <div className="ui selection middle aligned list celled">
-                  {subsReady ? activeRoomsHTML : loaderHTML}
+                  {subsReady ? activeRoomsHTML : <Loader/>}
                   {this.getMoreRoomsBtn("active")}
                 </div>
               </div>
@@ -131,7 +125,7 @@ const RoomList = React.createClass({
               </div>
               <div className="content">
                 <div className="ui selection middle aligned list celled">
-                  {subsReady ? archivedRoomsHTML : loaderHTML}
+                  {subsReady ? archivedRoomsHTML : <Loader/>}
                   {this.getMoreRoomsBtn("archived")}
                 </div>
               </div>

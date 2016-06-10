@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Loader from "../components/Loader.jsx"
 
 const Profile = React.createClass({
   mixins: [ReactMeteorData],
@@ -12,12 +13,13 @@ const Profile = React.createClass({
 
   getMeteorData () {
     const usersHandle = Meteor.subscribe("users");
+    let user = {};
 
-    let user = null;
     if (usersHandle.ready()) {
       user = Meteor.users.findOne(this.props.userProfile);
     }
     return {
+      usersHandle,
       user
     }
   },
@@ -34,7 +36,7 @@ const Profile = React.createClass({
   },
 
   componentDidMount() {
-    if (this.props.userProfile == Meteor.userId()) {
+    if (this.data.usersHandle.ready() && this.props.userProfile == Meteor.userId()) {
       ReactDOM.findDOMNode(this.refs.nickname).focus();
       $('.ui.form')
         .form({
@@ -54,6 +56,10 @@ const Profile = React.createClass({
   },
 
   render() {
+    if (!this.data.usersHandle.ready()) {
+      return <Loader/>;
+    }
+
     const user = this.data.user.profile;
     const headerText = `${user.chatterNickname}'s Profile`;
     const form = (
@@ -76,8 +82,10 @@ const Profile = React.createClass({
       </div>
     );
 
+
+
     return (
-      <div className="padded settings scrollable">
+      <div className="padded profile scrollable">
         <img className="ui small circular centered image" src={user.chatterAvatar}/>
         <div className="ui header centered">
           {headerText}

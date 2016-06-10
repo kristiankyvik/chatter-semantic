@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Writer from "../components/Writer.jsx"
+import Loader from "../components/Loader.jsx"
+
 
 const isFirstMessage = function(prevMsg, currentMsg) {
   return prevMsg.userId != currentMsg.userId;
@@ -86,12 +88,8 @@ const Room = React.createClass({
 
 
   render() {
-   const loader =  (
-      <div className="ui active inverted dimmer">
-        <div className="ui text loader">
-          Loading messages
-        </div>
-      </div>
+    const loader =  (
+      <Loader/>
     );
 
     const numberOfMessages = this.data.messages.length;
