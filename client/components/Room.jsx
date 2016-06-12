@@ -30,9 +30,7 @@ const Room = React.createClass({
     const messagesHandle = roomSubs.subscribe("chatterMessages", {
       roomId: roomId
     });
-
     const usersHandle = roomSubs.subscribe("users");
-
     const subsReady = messagesHandle.ready() && usersHandle.ready();
 
     let messages = [];
@@ -87,7 +85,6 @@ const Room = React.createClass({
     this.props.setUserProfile(userId);
     this.props.setView("profile");
   },
-
 
   render() {
     const loader =  (
