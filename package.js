@@ -32,6 +32,7 @@ Package.onUse(function(api) {
     'templating',
     'react-template-helper@0.2.7',
     'react-meteor-data',
+    'meteorhacks:subs-manager',
     'mquandalle:stylus@1.0.10',
   ], 'client');
 

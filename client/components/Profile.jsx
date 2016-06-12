@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Loader from "../components/Loader.jsx"
 
+const profileSubs = new SubsManager();
+
 const Profile = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -12,7 +14,7 @@ const Profile = React.createClass({
    },
 
   getMeteorData () {
-    const usersHandle = Meteor.subscribe("users");
+    const usersHandle = profileSubs.subscribe("users");
     let user = {};
 
     if (usersHandle.ready()) {

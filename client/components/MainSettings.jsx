@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from "../components/Loader.jsx"
 
 const MainSettings = React.createClass({
 
@@ -30,8 +31,21 @@ const MainSettings = React.createClass({
 
   render() {
     const user = Meteor.user();
-    const roomUsersHTML = this.state.roomUsers.map(function(user) {
-    const statusClass = user.profile.online ? "user-status online" : "user-status offline";
+
+    const addUsersHTML = (
+      <div className="item addUserItem" onClick={ () => this.props.setView("addUsers")}>
+        <i className="add user icon"></i>
+        <div className="content">
+          <a className="header">
+            Add or remove users...
+          </a>
+        </div>
+      </div>
+    );
+
+    const roomUsers = this.state.roomUsers;
+    const roomUsersHTML = roomUsers.map(function(user) {
+      const statusClass = user.profile.online ? "user-status online" : "user-status offline";
       return (
         <div className="item room-user" key={user._id}>
           <div className={statusClass}></div>
@@ -51,16 +65,6 @@ const MainSettings = React.createClass({
       );
     });
 
-    const addUsersHTML = (
-      <div className="item addUserItem" onClick={ () => this.props.setView("addUsers")}>
-        <i className="add user icon"></i>
-        <div className="content">
-          <a className="header">
-            Add or remove users...
-          </a>
-        </div>
-      </div>
-    );
 
     return (
       <div className="padded settings scrollable">
@@ -92,14 +96,14 @@ const MainSettings = React.createClass({
           <div className="title active">
             <i className="dropdown icon"></i>
             <span className="ui header">
-              Channel members ({this.state.roomUsers.length})
+              Channel members ({roomUsers.length})
             </span>
           </div>
           <div className="content active">
             <div className="ui list relaxed">
               {user.profile.isChatterAdmin ? addUsersHTML : null}
               <div className="ui divider"></div>
-              {roomUsersHTML}
+              {roomUsers.length > 0 ? roomUsersHTML : <Loader/>}
             </div>
           </div>
         </div>

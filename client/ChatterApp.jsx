@@ -12,6 +12,8 @@ const latestRooms = function (limit, withIds, archived) {
   };
 };
 
+const chatterSubs = new SubsManager();
+
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -33,8 +35,8 @@ const ChatterApp = React.createClass({
 
   getMeteorData () {
     const userId = Meteor.userId();
-    const roomsHandle = Meteor.subscribe("chatterRooms");
-    const userRoomsHandle = Meteor.subscribe("chatterUserRooms");
+    const roomsHandle = chatterSubs.subscribe("chatterRooms");
+    const userRoomsHandle = chatterSubs.subscribe("chatterUserRooms");
     const subsReady = roomsHandle.ready() && userRoomsHandle.ready();
 
     let activeRooms = [];
@@ -87,8 +89,7 @@ const ChatterApp = React.createClass({
   },
 
   toggleChatState() {
-    // removing for the purpose of the widget implementation
-    // console.log(chatterDispatcher);
+    // ATTENTION: removing for the purpose of the widget implementation which uses the global Session object instead
     // const state = !this.state.chatOpen;
     // this.setState({
     //   chatOpen: state

@@ -1,18 +1,20 @@
 import React from 'react';
 
+const roomListItemSubs = new SubsManager();
+
 const RoomListItem = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData () {
-    const messagesHandle = Meteor.subscribe("chatterMessages", {
+    const messagesHandle = roomListItemSubs.subscribe("chatterMessages", {
       roomId: this.props.room._id
     });
 
-    const countHandle = Meteor.subscribe("chatterUserRooms", {
+    const countHandle = roomListItemSubs.subscribe("chatterUserRooms", {
       roomId: this.props.room._id
     });
 
-    const usersHandle = Meteor.subscribe("users");
+    const usersHandle = roomListItemSubs.subscribe("users");
 
     const subsReady = messagesHandle.ready() && countHandle.ready() && usersHandle.ready();
     const userId = Meteor.userId();

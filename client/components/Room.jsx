@@ -20,16 +20,18 @@ const timestampShouldBeDisplayed = function(currentMsg, nextMsg) {
   return veryRecentMessage && timeSinceLastMsgGreaterThan(2, currentMsg, nextMsg) || recentMessage && timeSinceLastMsgGreaterThan(60, currentMsg, nextMsg);
 }
 
+const roomSubs = new SubsManager();
+
 const Room = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData () {
     const { roomId } = this.props;
-    const messagesHandle = Meteor.subscribe("chatterMessages", {
+    const messagesHandle = roomSubs.subscribe("chatterMessages", {
       roomId: roomId
     });
 
-    const usersHandle = Meteor.subscribe("users");
+    const usersHandle = roomSubs.subscribe("users");
 
     const subsReady = messagesHandle.ready() && usersHandle.ready();
 

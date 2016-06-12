@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 
 import MainNewRoom from "./MainNewRoom.jsx";
 import AddUsers from "./AddUsers.jsx";
-
 import newRoomRouter from "../template-helpers/newRoomRouter.jsx";
-
 
 const NewRoom = React.createClass({
   getInitialState: function() {
@@ -31,4 +29,3 @@ const NewRoom = React.createClass({
 });
 
 export default NewRoom;
-
