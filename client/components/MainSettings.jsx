@@ -25,7 +25,8 @@ const MainSettings = React.createClass({
 
    return {
      subsReady,
-     room
+     room,
+     user
    }
   },
 
@@ -47,45 +48,44 @@ const MainSettings = React.createClass({
 
   render() {
     if (this.data.subsReady) {
+      const user = this.data.user;
       $(".ui.toggle.checkbox").checkbox();
       if (this.data.room.archived) {
         $(".ui.toggle.checkbox").checkbox('check');
       }
-    }
-    const addUsersHTML = (
-      <div className="item addUserItem" onClick={ () => this.props.setView("addUsers")}>
-        <i className="add user icon"></i>
-        <div className="content">
-          <a className="header">
-            Add or remove users...
-          </a>
+      const addUsersHTML = (
+        <div className="item addUserItem" onClick={ () => this.props.setView("addUsers")}>
+          <i className="add user icon"></i>
+          <div className="content">
+            <a className="header">
+              Add or remove users...
+            </a>
+          </div>
         </div>
-      </div>
-    );
+      );
 
-    const roomUsers = this.state.roomUsers;
-    const roomUsersHTML = roomUsers.map(function(user) {
-      const statusClass = user.profile.online ? "user-status online" : "user-status offline";
-      return (
-          <div className="item room-user" key={user._id}>
-            <div className={statusClass}></div>
-            <img
-              className="ui avatar image"
-              src={user.profile.chatterAvatar}
-            />
-            <div className="content">
-              <a className="header nickname">
-                {user.profile.chatterNickname}
-              </a>
-              <div className="description last-active">
-                Last logged in just now.
+      const roomUsers = this.state.roomUsers;
+      const roomUsersHTML = roomUsers.map(function(user) {
+        const statusClass = user.profile.online ? "user-status online" : "user-status offline";
+        return (
+            <div className="item room-user" key={user._id}>
+              <div className={statusClass}></div>
+              <img
+                className="ui avatar image"
+                src={user.profile.chatterAvatar}
+              />
+              <div className="content">
+                <a className="header nickname">
+                  {user.profile.chatterNickname}
+                </a>
+                <div className="description last-active">
+                  Last logged in just now.
+                </div>
               </div>
             </div>
-          </div>
-        );
-      });
+          );
+        });
 
-    if (roomUsers.length > 0) {
       return (
         <div className="padded settings scrollable">
           <div className="ui header">
