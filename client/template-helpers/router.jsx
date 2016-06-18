@@ -26,8 +26,6 @@ const router = function(scope, view) {
       header: "Channel settings",
       view: "settings",
       component: () => <Settings
-                  chatterUsers={scope.data.chatterUsers}
-                  chatterUser={scope.data.chatterUser}
                   room={Chatter.Room.findOne(scope.state.roomId)}
                   setView={scope.setView}
                 />
@@ -35,8 +33,6 @@ const router = function(scope, view) {
     room: {
       view: "room",
       component: () => <Room
-                  chatterUser={scope.data.chatterUser}
-                  chatterUsers={scope.data.chatterUsers}
                   roomId={scope.state.roomId}
                   setUserProfile={scope.setUserProfile}
                   setView={scope.setView}

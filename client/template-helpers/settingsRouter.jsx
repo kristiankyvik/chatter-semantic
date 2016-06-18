@@ -11,15 +11,12 @@ const settingsRouter = function(scope, view) {
       component: () => <MainSettings
                     archived={scope.state.archived}
                     room={scope.props.room}
-                    chatterUsers={scope.props.chatterUsers}
-                    chatterUser={scope.props.chatterUser}
                     setView={scope.setView}
                   />
     },
     addUsers: {
       view: "addUsers",
       component: () => <AddUsers
-                  chatterUsers={scope.props.chatterUsers}
                   room={scope.props.room}
                   setView={scope.setView}
                   buttonMessage={"Back to settings"}

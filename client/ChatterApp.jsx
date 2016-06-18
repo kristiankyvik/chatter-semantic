@@ -5,9 +5,9 @@ import getChatHTML from "./template-helpers/getChatHTML.jsx";
 import router from "./template-helpers/router.jsx";
 import Widget from "./components/Widget.jsx";
 
-const latestRooms = function (limit, withIds, archived) {
+const latestRooms = function (limit, withIds) {
   return {
-    find: {"_id": {$in: withIds}, "archived": archived},
+    find: {"_id": {$in: withIds}},
     options: {sort: {lastActive: -1}, limit: limit}
   };
 };
@@ -46,10 +46,15 @@ const ChatterApp = React.createClass({
       const {activeRoomLimit, archivedRoomLimit} = this.state;
 
       if (userId) {
-        const userRooms = Chatter.UserRoom.find({userId}).fetch();
-        const roomIds = _.pluck(userRooms, "roomId");
-        const activeRoomQuery = latestRooms(activeRoomLimit, roomIds, false);
-        const archivedRoomQuery = latestRooms(archivedRoomLimit, roomIds, true);
+        const archivedUserRooms = Chatter.UserRoom.find({userId, archived: true}).fetch();
+        const unarchivedUserRooms = Chatter.UserRoom.find({userId, archived: false}).fetch();
+
+        const archivedRoomIds = _.pluck(archivedUserRooms, "roomId");
+        const unarchivedRoomIds = _.pluck(unarchivedUserRooms, "roomId");
+
+        const activeRoomQuery = latestRooms(activeRoomLimit, unarchivedRoomIds);
+        const archivedRoomQuery = latestRooms(archivedRoomLimit, archivedRoomIds);
+
         activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
         archivedRooms = Chatter.Room.find(archivedRoomQuery.find, archivedRoomQuery.options).fetch();
       }

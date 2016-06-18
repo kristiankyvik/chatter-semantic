@@ -81,6 +81,7 @@ const RoomList = React.createClass({
     const newRoomBtn = (user.profile.isChatterAdmin) ? newRoomBtnHTML : null;
 
     const activeRoomsHTML = activeRooms.map(room => {
+      room.archived = false;
       return <RoomListItem
               key={room._id}
               goToRoom={this.goToRoom}
@@ -90,6 +91,7 @@ const RoomList = React.createClass({
     });
 
     const archivedRoomsHTML = archivedRooms.map(room => {
+      room.archived = true;
       return <RoomListItem
               key={room._id}
               goToRoom={this.goToRoom}
