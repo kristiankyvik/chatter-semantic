@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Loader from "../components/Loader.jsx"
 
-const profileSubs = new SubsManager();
+const profileSubs = new SubsManager({
+  cacheLimit: 15,
+  expireIn: 5
+});
 
 const Profile = React.createClass({
   mixins: [ReactMeteorData],

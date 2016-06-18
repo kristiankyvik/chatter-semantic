@@ -1,6 +1,9 @@
 import React from 'react';
 
-const roomListItemSubs = new SubsManager();
+const roomListItemSubs = new SubsManager({
+  cacheLimit: 50,
+  expireIn: 5
+});
 
 const RoomListItem = React.createClass({
   mixins: [ReactMeteorData],

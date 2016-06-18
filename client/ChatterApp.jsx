@@ -12,7 +12,11 @@ const latestRooms = function (limit, withIds) {
   };
 };
 
-const chatterSubs = new SubsManager();
+
+const chatterSubs = new SubsManager({
+  cacheLimit: 10,
+  expireIn: 5
+});
 
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],

@@ -20,7 +20,10 @@ const timestampShouldBeDisplayed = function(currentMsg, nextMsg) {
   return veryRecentMessage && timeSinceLastMsgGreaterThan(2, currentMsg, nextMsg) || recentMessage && timeSinceLastMsgGreaterThan(60, currentMsg, nextMsg);
 }
 
-const roomSubs = new SubsManager();
+const roomSubs = new SubsManager({
+  cacheLimit: 50,
+  expireIn: 5
+});
 
 const Room = React.createClass({
   mixins: [ReactMeteorData],
