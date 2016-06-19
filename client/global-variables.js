@@ -1,0 +1,38 @@
+// Message Time Banner Settings (all in minutes)
+const VERY_RECENT_MSG = 60;
+const RECENT_MSG = 1440;
+const VERY_RECENT_MSG_INTERVAL = 2;
+const RECENT_MSG_INTERVAL = 60;
+
+// Subs Manager Settings
+
+// Room Sub Manger
+const ROOM_CACHE_LIMIT = 50;
+const ROOM_EXPIRE_IN = 5;
+
+// Chatter Sub Manger
+const CHATTER_CACHE_LIMIT = 10;
+const CHATTER_EXPIRE_IN = 5;
+
+// Profile Sub Manger
+const PROFILE_CACHE_LIMIT = 15;
+const PROFILE_EXPIRE_IN = 5;
+
+// Room List Sub Manger
+const ROOM_LIST_CACHE_LIMIT = 50;
+const ROOM_LIST_EXPIRE_IN = 5;
+
+export  {
+  VERY_RECENT_MSG,
+  RECENT_MSG,
+  VERY_RECENT_MSG_INTERVAL,
+  RECENT_MSG_INTERVAL,
+  ROOM_CACHE_LIMIT,
+  ROOM_EXPIRE_IN,
+  CHATTER_CACHE_LIMIT,
+  CHATTER_EXPIRE_IN,
+  PROFILE_CACHE_LIMIT,
+  PROFILE_EXPIRE_IN,
+  ROOM_LIST_CACHE_LIMIT,
+  ROOM_LIST_EXPIRE_IN
+};

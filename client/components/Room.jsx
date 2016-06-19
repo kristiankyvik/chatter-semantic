@@ -1,11 +1,19 @@
 import React from 'react';
 
-import Writer from "../components/Writer.jsx"
-import Loader from "../components/Loader.jsx"
+import Writer from "../components/Writer.jsx";
+import Loader from "../components/Loader.jsx";
 
+import {
+  VERY_RECENT_MSG,
+  RECENT_MSG,
+  VERY_RECENT_MSG_INTERVAL,
+  RECENT_MSG_INTERVAL,
+  ROOM_CACHE_LIMIT,
+  ROOM_EXPIRE_IN
+} from "../global-variables.js";
 
 const isFirstMessage = function(prevMsg, currentMsg) {
-  return prevMsg.userId != currentMsg.userId;
+  return prevMsg.userId !== currentMsg.userId;
 };
 
 const timeSinceLastMsgGreaterThan = function(minutes, prevMsg, currentMsg) {
@@ -15,14 +23,14 @@ const timeSinceLastMsgGreaterThan = function(minutes, prevMsg, currentMsg) {
 };
 
 const timestampShouldBeDisplayed = function(currentMsg, nextMsg) {
-  const veryRecentMessage = currentMsg.getMinutesAgo() <= 60;
-  const recentMessage = currentMsg.getMinutesAgo() <= 1440;
-  return veryRecentMessage && timeSinceLastMsgGreaterThan(2, currentMsg, nextMsg) || recentMessage && timeSinceLastMsgGreaterThan(60, currentMsg, nextMsg);
+  const veryRecentMessage = currentMsg.getMinutesAgo() <= VERY_RECENT_MSG;
+  const recentMessage = currentMsg.getMinutesAgo() <= RECENT_MSG;
+  return veryRecentMessage && timeSinceLastMsgGreaterThan(VERY_RECENT_MSG_INTERVAL, currentMsg, nextMsg) || recentMessage && timeSinceLastMsgGreaterThan(RECENT_MSG_INTERVAL, currentMsg, nextMsg);
 }
 
 const roomSubs = new SubsManager({
-  cacheLimit: 50,
-  expireIn: 5
+  cacheLimit: ROOM_CACHE_LIMIT,
+  expireIn: ROOM_EXPIRE_IN
 });
 
 const Room = React.createClass({
@@ -106,7 +114,7 @@ const Room = React.createClass({
         const user = Meteor.users.findOne(message.userId);
 
         const isFirstMessageOfChat = index === 0,
-              isFirstMessageOfDay = index > 0 && prevMsg.getDate() != message.getDate(),
+              isFirstMessageOfDay = index > 0 && prevMsg.getDate() !== message.getDate(),
               isLastMessageChat = index === numberOfMessages - 1;
 
         // takes care of the display of dates and timestamps

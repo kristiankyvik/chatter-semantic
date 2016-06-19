@@ -1,8 +1,13 @@
 import React from 'react';
 
+import {
+  ROOM_LIST_CACHE_LIMIT,
+  ROOM_LIST_EXPIRE_IN
+} from "../global-variables.js";
+
 const roomListItemSubs = new SubsManager({
-  cacheLimit: 50,
-  expireIn: 5
+  cacheLimit: ROOM_LIST_CACHE_LIMIT,
+  expireIn: ROOM_LIST_EXPIRE_IN
 });
 
 const RoomListItem = React.createClass({

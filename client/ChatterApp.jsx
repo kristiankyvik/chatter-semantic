@@ -5,6 +5,11 @@ import getChatHTML from "./template-helpers/getChatHTML.jsx";
 import router from "./template-helpers/router.jsx";
 import Widget from "./components/Widget.jsx";
 
+import {
+  CHATTER_CACHE_LIMIT,
+  CHATTER_EXPIRE_IN
+} from "./global-variables.js";
+
 const latestRooms = function (limit, withIds) {
   return {
     find: {"_id": {$in: withIds}},
@@ -14,8 +19,8 @@ const latestRooms = function (limit, withIds) {
 
 
 const chatterSubs = new SubsManager({
-  cacheLimit: 10,
-  expireIn: 5
+  cacheLimit: CHATTER_CACHE_LIMIT,
+  expireIn: CHATTER_EXPIRE_IN
 });
 
 const ChatterApp = React.createClass({

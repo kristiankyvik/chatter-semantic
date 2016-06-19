@@ -2,31 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Loader from "../components/Loader.jsx"
 
-const profileSubs = new SubsManager({
-  cacheLimit: 15,
-  expireIn: 5
-});
+import {
+  PROFILE_CACHE_LIMIT,
+  PROFILE_EXPIRE_IN
+} from "../global-variables.js";
 
-const initializeInput = function(input) {
-  if (input) {
-    input.focus();
-    $('.ui.form').form(
-      {
-        fields: {
-          nickname: {
-            identifier: 'nickname',
-            rules: [
-              {
-                type   : 'empty',
-                prompt : 'Please enter a valid nickname'
-              }
-            ]
-          }
-        }
-      }
-    );
-  }
-};
+const profileSubs = new SubsManager({
+  cacheLimit: PROFILE_CACHE_LIMIT,
+  expireIn: PROFILE_EXPIRE_IN
+});
 
 const Profile = React.createClass({
   mixins: [ReactMeteorData],
@@ -51,9 +35,31 @@ const Profile = React.createClass({
     }
   },
 
+  initializeInput(input) {
+    if (input) {
+      this.nicknameInput = input;
+      input.focus();
+      $('.ui.form').form(
+        {
+          fields: {
+            nickname: {
+              identifier: 'nickname',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter a valid nickname'
+                }
+              ]
+            }
+          }
+        }
+      );
+    }
+  },
+
   handleSubmit(e) {
     e.preventDefault();
-    const nickname = ReactDOM.findDOMNode(this.refs.nickname).value.trim();
+    const nickname = this.nicknameInput.value.trim();
     if (nickname.length === 0) return;
     Meteor.call("user.changeNickname", nickname, (error, result) => {
       if (!error) {
@@ -82,7 +88,7 @@ const Profile = React.createClass({
               type="text"
               name="nickname"
               placeholder={user.chatterNickname}
-              ref={initializeInput}
+              ref={this.initializeInput}
             />
           </div>
           <button className="ui button primary centered" type="submit" >
