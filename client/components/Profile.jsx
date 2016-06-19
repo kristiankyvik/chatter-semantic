@@ -7,6 +7,27 @@ const profileSubs = new SubsManager({
   expireIn: 5
 });
 
+const initializeInput = function(input) {
+  if (input) {
+    input.focus();
+    $('.ui.form').form(
+      {
+        fields: {
+          nickname: {
+            identifier: 'nickname',
+            rules: [
+              {
+                type   : 'empty',
+                prompt : 'Please enter a valid nickname'
+              }
+            ]
+          }
+        }
+      }
+    );
+  }
+};
+
 const Profile = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -18,14 +39,16 @@ const Profile = React.createClass({
 
   getMeteorData () {
     const usersHandle = profileSubs.subscribe("users");
-    let user = {};
+    const subsReady = usersHandle.ready();
+    let user = null;
 
-    if (usersHandle.ready()) {
+    if (subsReady) {
       user = Meteor.users.findOne(this.props.userProfile);
     }
     return {
       usersHandle,
-      user
+      user,
+      subsReady
     }
   },
 
@@ -40,33 +63,15 @@ const Profile = React.createClass({
     });
   },
 
-  componentDidMount() {
-    if (this.data.usersHandle.ready() && this.props.userProfile == Meteor.userId()) {
-      ReactDOM.findDOMNode(this.refs.nickname).focus();
-      $('.ui.form')
-        .form({
-          fields: {
-            nickname: {
-              identifier: 'nickname',
-              rules: [
-                {
-                  type   : 'empty',
-                  prompt : 'Please enter a valid nickname'
-                }
-              ]
-            }
-          }
-        });
-    }
-  },
-
   render() {
-    if (!this.data.usersHandle.ready()) {
+    if (!this.data.subsReady) {
       return <Loader/>;
     }
 
+    const userId = this.data.user._id;
     const user = this.data.user.profile;
     const headerText = `${user.chatterNickname}'s Profile`;
+
     const form = (
       <div>
         <form className={this.state.nicknameChanged ? "hidden" : "ui form"} onSubmit={this.handleSubmit} ref="form">
@@ -74,7 +79,12 @@ const Profile = React.createClass({
             <label>
               Nickname
             </label>
-            <input type="text" name="nickname" placeholder={user.chatterNickname}  ref="nickname"></input>
+            <input
+              type="text"
+              name="nickname"
+              placeholder={user.chatterNickname}
+              ref={initializeInput}
+            />
           </div>
           <button className="ui button primary centered" type="submit" >
             Change nickname
@@ -86,8 +96,6 @@ const Profile = React.createClass({
         </p>
       </div>
     );
-
-
 
     return (
       <div className="padded profile scrollable">
@@ -101,7 +109,7 @@ const Profile = React.createClass({
         <p className={user.online ? "success-msg" : "failure-msg"}>
           <span>{user.chatterNickname}</span> is currently {user.online ? "online" : "offline"}.
         </p>
-        {this.props.userProfile == Meteor.userId() ? form : null}
+        {this.props.userProfile === userId ? form : null}
       </div>
     );
   }
