@@ -46,7 +46,6 @@ const Profile = React.createClass({
       user = Meteor.users.findOne(this.props.userProfile);
     }
     return {
-      usersHandle,
       user,
       subsReady
     }
