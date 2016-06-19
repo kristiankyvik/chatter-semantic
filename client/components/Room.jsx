@@ -39,7 +39,7 @@ const Room = React.createClass({
   getMeteorData () {
     const { roomId } = this.props;
     const messagesHandle = roomSubs.subscribe("chatterMessages", {
-      roomId: roomId
+      roomId
     });
     const usersHandle = roomSubs.subscribe("users");
     const subsReady = messagesHandle.ready() && usersHandle.ready();
