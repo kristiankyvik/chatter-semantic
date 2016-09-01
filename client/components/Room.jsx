@@ -2,6 +2,8 @@ import React from 'react';
 
 import Writer from "../components/Writer.jsx";
 import Loader from "../components/Loader.jsx";
+import Message from "../components/Message.jsx";
+
 
 import {
   VERY_RECENT_MSG,
@@ -88,6 +90,8 @@ const Room = React.createClass({
         roomId
     };
 
+    this.data.messages.push("lol I am a temporal message!");
+
     Meteor.call("message.send", params);
     this.scrollDown();
   },
@@ -156,26 +160,16 @@ const Room = React.createClass({
         const messageClass = ownsMessage ? "chatter-msg comment yours" : "chatter-msg comment";
 
         return (
-          <div key={message._id} className={messageClass}>
-            {dateBanner}
-            <div className="nickname">
-              {nickname}
-            </div>
-            <div>
-              <a
-                className="avatar"
-                onClick={() => this.setUserProfile(message.userId)}
-              >
-                <img src={avatar} />
-              </a>
-              <div className="content">
-                <div className="text">
-                 {message.message}
-                </div>
-              </div>
-            </div>
-            {timeAgo}
-          </div>
+          <Message
+            key={message._id}
+            message={message}
+            messageClass={messageClass}
+            dateBanner={dateBanner}
+            nickname={nickname}
+            avatar={avatar}
+            setUserProfile={this.setUserProfile}
+            timeAgo={timeAgo}
+          />
         );
       })
     );
