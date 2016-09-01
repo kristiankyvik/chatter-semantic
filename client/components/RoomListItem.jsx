@@ -61,7 +61,7 @@ const RoomListItem = React.createClass({
     } = this.props;
 
     const lastUser = this.data.lastUser;
-    let lastAvatar = "http://chatter-widget.meteorapp.com/packages/jorgeer_chatter-semantic/public/images/default.jpg";
+    let lastAvatar = "/packages/jorgeer_chatter-semantic/public/images/default.jpg";
     let statusClass = "user-status none"
 
     if (lastUser) {
