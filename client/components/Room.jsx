@@ -90,8 +90,6 @@ const Room = React.createClass({
         roomId
     };
 
-    this.data.messages.push("lol I am a temporal message!");
-
     Meteor.call("message.send", params);
     this.scrollDown();
   },
@@ -128,7 +126,9 @@ const Room = React.createClass({
               <span> {message.getDate()} </span>
             </div>
           );
-        } else if (isLastMessageChat) {
+        }
+
+        if (isLastMessageChat) {
           if (message.getMinutesAgo() > 1) {
             timeAgo = (
               <div className="time-ago">
