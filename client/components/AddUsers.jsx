@@ -120,7 +120,7 @@ const AddUsers = React.createClass({
         </div>
         <div className="btn-wrapper">
           <div
-            className="ui fluid button primary newroom-btn"
+            className="ui fluid button primary"
             onClick={this.props.buttonGoTo}
           >
             {this.props.buttonMessage}

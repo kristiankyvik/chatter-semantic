@@ -12,6 +12,7 @@ const router = function(scope, view) {
     roomList: {
       header: "Chatter",
       view: "roomList",
+      roomId: null,
       component: () => <RoomList
                   subsReady={scope.data.subsReady}
                   goToRoom={scope.goToRoom}
@@ -20,6 +21,7 @@ const router = function(scope, view) {
                   setView={scope.setView}
                   loadMoreRooms={scope.loadMoreRooms}
                   setUserProfile={scope.setUserProfile}
+                  hasHelpRoom={scope.data.hasHelpRoom}
                 />
     },
     settings: {

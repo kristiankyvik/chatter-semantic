@@ -40,6 +40,15 @@ const RoomList = React.createClass({
     this.props.loadMoreRooms(type);
   },
 
+  createHelpRoom() {
+    if (this.props.hasHelpRoom) return;
+    Meteor.call("help.createRoom", (error, result) => {
+      if (!error) {
+        this.props.goToRoom(result, "Help");
+      }
+    });
+  },
+
   getMoreRoomsBtn(type) {
     const roomOpts = {
       archived: {
@@ -70,15 +79,24 @@ const RoomList = React.createClass({
 
   render() {
     const user = Meteor.user();
-    const { subsReady, archivedRooms, activeRooms } = this.props;
+    const { subsReady, archivedRooms, activeRooms, hasHelpRoom } = this.props;
+
+    const {helpButton, helpUser} = Chatter.options;
 
     const newRoomBtnHTML = (
-      <div className="ui fluid button primary newroom-btn" onClick={this.goToNewRoom} >
+      <div className="ui fluid button primary" onClick={this.goToNewRoom} >
         <i className="write icon"></i> New channel
       </div>
     );
 
+    const helpChatBtnHTML = (
+      <div className="ui fluid button primary" onClick={this.createHelpRoom} >
+        <i className="help icon"></i> Get Help
+      </div>
+    );
+
     const newRoomBtn = (user.profile.isChatterAdmin) ? newRoomBtnHTML : null;
+    const helpChatBtn = helpButton && (helpUser != user.username) && !hasHelpRoom ? helpChatBtnHTML : null;
 
     const activeRoomsHTML = activeRooms.map(room => {
       room.archived = false;
@@ -133,6 +151,9 @@ const RoomList = React.createClass({
               </div>
             </div>
           </div>
+        </div>
+        <div className="btn-wrapper">
+          {helpChatBtn}
         </div>
         <div className="btn-wrapper">
           {newRoomBtn}

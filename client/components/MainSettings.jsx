@@ -14,20 +14,20 @@ const MainSettings = React.createClass({
     const userId = Meteor.userId();
     const userRoomsHandle = Meteor.subscribe("chatterUserRooms");
     const subsReady = userRoomsHandle.ready();
-    let room = this.props.room;
+    let room = this.props.room ? this.props.room : {};
     let user = null;
 
-   if (subsReady) {
-      const ur = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId});
+    if (subsReady) {
       user = Meteor.user();
-      room.archived = ur.archived;
-   }
+      const ur = Chatter.UserRoom.findOne({roomId: room._id, userId});
+      room.archived = ur ? ur.archived : false;
+    }
 
-   return {
-     subsReady,
-     room,
-     user
-   }
+    return {
+      subsReady,
+      room,
+      user
+    }
   },
 
   componentDidMount() {
@@ -46,6 +46,14 @@ const MainSettings = React.createClass({
     Meteor.call("room.archive", params);
   },
 
+  deleteRoom() {
+    Meteor.call("room.delete", this.props.room._id, (error, result) => {
+      if (!error) {
+        this.props.setView("roomList");
+      }
+    });
+  },
+
   render() {
     if (this.data.subsReady) {
       const user = this.data.user;
@@ -54,7 +62,7 @@ const MainSettings = React.createClass({
         $(".ui.toggle.checkbox").checkbox('check');
       }
       const addUsersHTML = (
-        <div className="item addUserItem" onClick={ () => this.props.setView("addUsers")}>
+        <div className="item addUserItem" onClick={ () => this.props.setSettingsView("addUsers")}>
           <i className="add user icon"></i>
           <div className="content">
             <a className="header">
@@ -66,7 +74,7 @@ const MainSettings = React.createClass({
 
       const roomUsers = this.state.roomUsers;
       const roomUsersHTML = roomUsers.map(function(user) {
-        const statusClass = user.profile.online ? "user-status online" : "user-status offline";
+      const statusClass = user.profile.online ? "user-status online" : "user-status offline";
         return (
             <div className="item room-user" key={user._id}>
               <div className={statusClass}></div>
@@ -86,20 +94,39 @@ const MainSettings = React.createClass({
           );
         });
 
+      const deleteRoomHTML = (
+        <div>
+          <div className="ui header">
+            Delete Room
+          </div>
+          <p>
+            Keep in mind that once a room is deleted it cannot be recovered.
+          </p>
+          <div className="deleteBtnWrapper">
+            <button className="negative ui button" onClick={this.deleteRoom}>
+              Delete
+            </button>
+          </div>
+        </div>
+      );
+
       return (
         <div className="padded settings scrollable">
           <div className="ui header">
             Channel description
           </div>
           <p className="room-description">
-            {this.props.room.description}
+            {this.props.room.description ? this.props.room.description : null }
           </p>
           <p className="gray-text">
             This channel was created by {this.props.room.createdBy} on the {this.props.room.createdAt.toISOString()}.
           </p>
+
+          {user.profile.isChatterAdmin ? deleteRoomHTML : null}
+
           <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
             <label>
-              <span className="ui header">Archive Chat</span>
+              <span className="ui header">Archive Room</span>
             </label>
             <input
               type="checkbox"

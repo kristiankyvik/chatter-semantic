@@ -17,8 +17,12 @@ const Settings = React.createClass({
     $(".ui.accordion").accordion();
   },
 
-  setView(view) {
+  setSettingsView(view) {
     this.setState(settingsRouter(this, view));
+  },
+
+  setView(view) {
+    this.props.setView(view);
   },
 
   render() {

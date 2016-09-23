@@ -50,14 +50,17 @@ const ChatterApp = React.createClass({
 
     let activeRooms = [];
     let archivedRooms = [];
+    let hasHelpRoom = false;
 
     if (subsReady) {
       const {activeRoomLimit, archivedRoomLimit} = this.state;
 
       if (userId) {
+        const allRooms = Chatter.UserRoom.find({userId}).fetch();
         const archivedUserRooms = Chatter.UserRoom.find({userId, archived: true}).fetch();
         const unarchivedUserRooms = Chatter.UserRoom.find({userId, archived: false}).fetch();
 
+        const allRoomIds = _.pluck(allRooms, "roomId");
         const archivedRoomIds = _.pluck(archivedUserRooms, "roomId");
         const unarchivedRoomIds = _.pluck(unarchivedUserRooms, "roomId");
 
@@ -66,13 +69,18 @@ const ChatterApp = React.createClass({
 
         activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
         archivedRooms = Chatter.Room.find(archivedRoomQuery.find, archivedRoomQuery.options).fetch();
+        hasHelpRoom = Chatter.Room.findOne({
+            "_id": {$in: allRoomIds},
+            "roomType": "help"
+        });
       }
     }
 
     return {
       activeRooms,
       archivedRooms,
-      subsReady
+      subsReady,
+      hasHelpRoom
     }
   },
 

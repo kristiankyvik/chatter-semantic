@@ -64,6 +64,7 @@ const Room = React.createClass({
   },
 
   componentWillUnmount() {
+    if (!this.checkRoom()) return;
     Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
   },
 
@@ -99,7 +100,17 @@ const Room = React.createClass({
     this.props.setView("profile");
   },
 
+  checkRoom() {
+    Meteor.call("room.check", this.props.roomId , (error, result) => {
+      if (!result) {
+        this.props.setView("roomList");
+      }
+    });
+  },
+
   render() {
+    this.checkRoom();
+
     const loader =  (
       <Loader/>
     );
