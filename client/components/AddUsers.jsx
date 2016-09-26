@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
+
 const AddUsers = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -85,7 +87,7 @@ const AddUsers = React.createClass({
           </div>
           <img
             className="ui avatar image"
-            src={user.profile.chatterAvatar}
+            src={`data:image/png;base64,${getAvatarSvg(user.username)}`}
           />
           <div className="content">
             <a className="header">

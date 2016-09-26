@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
+
 import {
   ROOM_LIST_CACHE_LIMIT,
   ROOM_LIST_EXPIRE_IN
@@ -61,12 +63,12 @@ const RoomListItem = React.createClass({
     } = this.props;
 
     const lastUser = this.data.lastUser;
-    let lastAvatar = "/packages/jorgeer_chatter-semantic/public/images/default.jpg";
+    let lastAvatar = "default";
     let statusClass = "user-status none"
 
     if (lastUser) {
       statusClass = lastUser.profile.online ? "user-status online" : "user-status offline";
-      lastAvatar = lastUser.profile.chatterAvatar;
+      lastAvatar = lastUser.username;
     }
 
     return (
@@ -75,7 +77,10 @@ const RoomListItem = React.createClass({
         onClick={() => goToRoom(room._id, room.name)}
       >
         <div className={statusClass}></div>
-        <img className="ui avatar image" src={lastAvatar} />
+        <img
+          className="ui avatar image"
+          src={`data:image/png;base64,${getAvatarSvg(lastAvatar)}`}
+        />
 
         <div className="content">
           <div className="header">

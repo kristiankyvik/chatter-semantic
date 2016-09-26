@@ -1,6 +1,8 @@
 import React from 'react';
 import Loader from "../components/Loader.jsx"
 
+import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
+
 const MainSettings = React.createClass({
   mixins: [ReactMeteorData],
 
@@ -80,7 +82,7 @@ const MainSettings = React.createClass({
               <div className={statusClass}></div>
               <img
                 className="ui avatar image"
-                src={user.profile.chatterAvatar}
+                src={`data:image/png;base64,${getAvatarSvg(user.username)}`}
               />
               <div className="content">
                 <a className="header nickname">

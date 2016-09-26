@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
 
 const Message = React.createClass({
 
@@ -25,7 +26,10 @@ const Message = React.createClass({
             className="avatar"
             onClick={() => setUserProfile(message.userId)}
           >
-            <img src={avatar} />
+            <img
+              className="ui avatar image"
+              src={`data:image/png;base64,${getAvatarSvg(avatar)}`}
+            />
           </a>
           <div className="content">
             <div className="text">

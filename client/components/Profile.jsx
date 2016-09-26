@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Loader from "../components/Loader.jsx"
+import Loader from "../components/Loader.jsx";
+
+import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
 
 import {
   PROFILE_CACHE_LIMIT,
@@ -104,11 +106,14 @@ const Profile = React.createClass({
 
     return (
       <div className="padded profile scrollable">
-        <img className="ui small circular centered image" src={user.chatterAvatar}/>
+        <img
+          className="ui small circular centered image"
+          src={`data:image/png;base64,${getAvatarSvg(this.data.user.username)}`}
+        />
         <div className="ui header centered">
           {headerText}
         </div>
-        <div class="sub header">
+        <div className="sub header">
           <span>{user.chatterNickname}</span> is {user.isChatterAdmin ? "" : "not"} an <span>admin</span>.
         </div>
         <p className={user.online ? "success-msg" : "failure-msg"}>

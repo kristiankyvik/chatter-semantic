@@ -4,7 +4,6 @@ import Writer from "../components/Writer.jsx";
 import Loader from "../components/Loader.jsx";
 import Message from "../components/Message.jsx";
 
-
 import {
   VERY_RECENT_MSG,
   RECENT_MSG,
@@ -158,11 +157,11 @@ const Room = React.createClass({
         }
         // takes care of the display of avatars and nicknames
         if (index === 0 ) {
-          avatar = user.profile.chatterAvatar;
+          avatar = user.username;
           nickname = user.profile.chatterNickname;
         } else {
           if (isFirstMessage(this.data.messages[index - 1], message)) {
-            avatar = user.profile.chatterAvatar;
+            avatar = user.username;
             nickname = user.profile.chatterNickname;
           }
         }
