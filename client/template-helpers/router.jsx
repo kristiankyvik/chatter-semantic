@@ -6,6 +6,14 @@ import Room from "../components/Room.jsx";
 import NewRoom from "../components/NewRoom.jsx";
 import Profile from "../components/Profile.jsx";
 
+const getRoomName = function(roomId) {
+  let roomName = "";
+  if (roomId) {
+    roomName = Chatter.Room.findOne(roomId).name;
+  }
+  return roomName;
+};
+
 
 const router = function(scope, view) {
   const states = {
@@ -34,6 +42,7 @@ const router = function(scope, view) {
     },
     room: {
       view: "room",
+      header: getRoomName(scope.state.roomId),
       component: () => <Room
                   roomId={scope.state.roomId}
                   setUserProfile={scope.setUserProfile}
