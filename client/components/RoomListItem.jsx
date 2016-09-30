@@ -51,8 +51,7 @@ const RoomListItem = React.createClass({
       message,
       timeAgo,
       unreadMsgCount,
-      lastUser,
-      avatar
+      lastUser
     }
   },
 
@@ -86,9 +85,6 @@ const RoomListItem = React.createClass({
           <div className="header">
             <div className="roomName">
               {room.name}
-              <span className="unread">
-                { this.data.unreadMsgCount > 0 ? <span> ({this.data.unreadMsgCount}) </span> : "" }
-              </span>
             </div>
             <div className="meta">
               {this.data.timeAgo}

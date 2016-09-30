@@ -57,7 +57,7 @@ const MainSettings = React.createClass({
   },
 
   render() {
-    if (this.data.subsReady) {
+    if (this.data.subsReady && this.props.room) {
       const user = this.data.user;
       $(".ui.toggle.checkbox").checkbox();
       if (this.data.room.archived) {

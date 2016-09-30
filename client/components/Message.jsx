@@ -15,6 +15,15 @@ const Message = React.createClass({
       messageClass
     } = this.props;
 
+    const avatarImgHTML = (
+      <img
+        className="ui avatar image"
+        src={`data:image/png;base64,${getAvatarSvg(avatar)}`}
+      />
+    );
+
+    const avatarImg = avatar ? avatarImgHTML : null;
+
     return (
       <div key={message._id} className={messageClass}>
         {dateBanner}
@@ -26,10 +35,7 @@ const Message = React.createClass({
             className="avatar"
             onClick={() => setUserProfile(message.userId)}
           >
-            <img
-              className="ui avatar image"
-              src={`data:image/png;base64,${getAvatarSvg(avatar)}`}
-            />
+            {avatarImg}
           </a>
           <div className="content">
             <div className="text">

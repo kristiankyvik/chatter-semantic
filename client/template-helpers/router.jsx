@@ -8,7 +8,7 @@ import Profile from "../components/Profile.jsx";
 
 const getRoomName = function(roomId) {
   let roomName = "";
-  if (roomId) {
+  if (roomId && Chatter.Room.findOne(roomId)) {
     roomName = Chatter.Room.findOne(roomId).name;
   }
   return roomName;
