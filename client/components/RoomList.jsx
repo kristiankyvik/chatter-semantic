@@ -9,7 +9,8 @@ const RoomList = React.createClass({
       activeShowing: false,
       archivedShowing: false,
       archivedCount: 0,
-      activeCount: 0
+      activeCount: 0,
+      makingRequest: false
     };
    },
 
@@ -41,11 +42,13 @@ const RoomList = React.createClass({
   },
 
   createHelpRoom() {
-    if (this.props.hasHelpRoom) return;
+    if (this.props.hasHelpRoom || this.state.makingRequest ) return;
+    this.setState({makingRequest: true});
     Meteor.call("help.createRoom", (error, result) => {
       if (!error) {
         this.props.goToRoom(result, "Help");
       }
+      this.setState({makingRequest: false});
     });
   },
 
