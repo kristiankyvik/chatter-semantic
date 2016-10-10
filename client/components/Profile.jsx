@@ -78,6 +78,7 @@ const Profile = React.createClass({
     const userId = this.data.user._id;
     const user = this.data.user.profile;
     const headerText = `${user.chatterNickname}'s Profile`;
+    const canEditNickname = Chatter.options.editableNickname;
 
     const form = (
       <div>
@@ -119,7 +120,7 @@ const Profile = React.createClass({
         <p className={user.online ? "success-msg" : "failure-msg"}>
           <span>{user.chatterNickname}</span> is currently {user.online ? "online" : "offline"}.
         </p>
-        {this.props.userProfile === userId ? form : null}
+        {this.props.userProfile === userId && canEditNickname ? form : null}
       </div>
     );
   }
