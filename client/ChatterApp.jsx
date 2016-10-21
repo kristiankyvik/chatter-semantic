@@ -58,13 +58,15 @@ const ChatterApp = React.createClass({
       if (userId) {
         const allRooms = Chatter.UserRoom.find({userId}).fetch();
         const archivedUserRooms = Chatter.UserRoom.find({userId, archived: true}).fetch();
-        const unarchivedUserRooms = Chatter.UserRoom.find({userId, archived: false}).fetch();
+        const activeUserRooms = Chatter.UserRoom.find({userId, archived: false}).fetch();
 
         const allRoomIds = _.pluck(allRooms, "roomId");
-        const archivedRoomIds = _.pluck(archivedUserRooms, "roomId");
-        const unarchivedRoomIds = _.pluck(unarchivedUserRooms, "roomId");
 
-        const activeRoomQuery = latestRooms(activeRoomLimit, unarchivedRoomIds);
+        const archivedRoomIds = _.pluck(archivedUserRooms, "roomId");
+
+        const activeRoomIds = _.pluck(activeUserRooms, "roomId");
+
+        const activeRoomQuery = latestRooms(activeRoomLimit, activeRoomIds);
         const archivedRoomQuery = latestRooms(archivedRoomLimit, archivedRoomIds);
 
         activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
