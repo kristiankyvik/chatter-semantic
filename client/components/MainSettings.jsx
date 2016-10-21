@@ -124,7 +124,7 @@ const MainSettings = React.createClass({
             This channel was created by {this.props.room.createdBy} on the {this.props.room.createdAt.toISOString()}.
           </p>
 
-          {user.profile.isChatterAdmin ? deleteRoomHTML : null}
+          {user.profile.isChatterAdmin || this.props.room.roomType == "support" ? deleteRoomHTML : null}
 
           <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
             <label>
