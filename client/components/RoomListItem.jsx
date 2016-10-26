@@ -67,7 +67,7 @@ const RoomListItem = React.createClass({
 
     if (lastUser) {
       statusClass = lastUser.profile.online ? "user-status online" : "user-status offline";
-      lastAvatar = lastUser.username;
+      lastAvatar = lastUser._id;
     }
 
     return (

@@ -82,7 +82,7 @@ const MainSettings = React.createClass({
               <div className={statusClass}></div>
               <img
                 className="ui avatar image"
-                src={`data:image/png;base64,${getAvatarSvg(user.username)}`}
+                src={`data:image/png;base64,${getAvatarSvg(user._id)}`}
               />
               <div className="content">
                 <a className="header nickname">

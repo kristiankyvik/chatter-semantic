@@ -109,7 +109,7 @@ const Profile = React.createClass({
       <div className="padded profile scrollable">
         <img
           className="ui small circular centered image"
-          src={`data:image/png;base64,${getAvatarSvg(this.data.user.username)}`}
+          src={`data:image/png;base64,${getAvatarSvg(this.data.user._id)}`}
         />
         <div className="ui header centered">
           {headerText}

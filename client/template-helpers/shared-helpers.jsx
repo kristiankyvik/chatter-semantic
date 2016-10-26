@@ -1,8 +1,8 @@
 import Identicon from 'identicon.js';
 
-const getAvatarSvg = function(username) {
-  if (!username) return null;
-  return new Identicon(username).toString();
+const getAvatarSvg = function(userId) {
+  if (!userId) return null;
+  return new Identicon(userId).toString();
 };
 
 export {getAvatarSvg};
