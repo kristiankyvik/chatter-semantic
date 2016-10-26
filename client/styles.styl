@@ -10,16 +10,19 @@ chatter-blue-lighter = #1fb5ff
 chatter-meta-gray = #ccccd2
 chatter-status-green = #86BB71
 chatter-status-red = #E38968
+chatter-background = #f9f9f9
+chatter-highlighted-background = rgba(86, 181, 255, 0.05);
 
 body
     background-color: transparent
 
 .sidebar
     width: 400px !important
+    &.ui.sidebar.chatter
+        border-radius: 5px!important;
 
 .chatter
-    background-color: chatter-white !important
-    border-radius: 5px!important;
+    background-color: chatter-background !important
 
     .hidden
         display: none
@@ -111,6 +114,8 @@ body
         .ui.list .item
             padding-top: 16px
             padding-bottom: 16px
+            &.unread
+                background-color: chatter-highlighted-background !important;
             .ui.avatar.image
                 width: 3em
                 height: 3em
@@ -232,14 +237,19 @@ body
         position: absolute
         width: 100%
         bottom: 0
-        padding: 7px 14px 7px
 
         textarea
             max-height: 250px
             min-height: 41px
-            border-size: 2px
             vertical-align: middle
             resize: none
+            border-radius: 0 0 4px 4px
+            border: none;
+            overflow: auto;
+            outline: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
 
     .settings
         &.scrollable
