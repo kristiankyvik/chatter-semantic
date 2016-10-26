@@ -1,10 +1,12 @@
 chatter-light-blue = #FBFAFD
 chatter-light-gray = #f1f0f3
 chatter-white = #fff
-chatter-trans-gray = rgba(96,104,110,.95)
+chatter-trans-gray = rgba(96,104,110,.6)
+chatter-gray = rgba(96,104,110,.9)
 chatter-green = #bceaf9
 chatter-blue = #298ee8
 chatter-blue-darker = #288ade
+chatter-blue-lighter = #1fb5ff
 chatter-meta-gray = #ccccd2
 chatter-status-green = #86BB71
 chatter-status-red = #E38968
@@ -16,7 +18,8 @@ body
     width: 400px !important
 
 .chatter
-    background-color: chatter-light-blue !important
+    background-color: chatter-white !important
+    border-radius: 5px!important;
 
     .hidden
         display: none
@@ -114,8 +117,6 @@ body
             .content
                 width: 85%
                 padding-left: 0.8em
-                .header, .description
-                    color: chatter-trans-gray
                 .header
                     font-size: 1.1em
                     .roomName
@@ -124,7 +125,9 @@ body
                         text-overflow: ellipsis
                         white-space: nowrap
                         float: left
+                        color: chatter-gray
                     .meta
+                        color: chatter-trans-gray
                         display: block
                         float: right
                         font-weight: 400
@@ -133,6 +136,7 @@ body
                 .description
                     width: 100%
                     padding-top: 8px
+                    color: chatter-trans-gray
                     .preview
                         display: inline-block
                         width: 85%
@@ -143,10 +147,11 @@ body
                         display: inline-block
                         width: 15%
                         text-align: right
-                        font-size: 0.8em
+                        font-size: 0.7em
                         span
                             border-radius: 1rem
-                            background-color: chatter-blue
+                            background-color: chatter-blue-lighter
+                            border: 1px solid chatter-blue
                             color: white
                             padding: 2px 5px
 
