@@ -18,7 +18,7 @@ const getRoomName = function(roomId) {
 const router = function(scope, view) {
   const states = {
     roomList: {
-      header: "Chatter",
+      header: Chatter.options.chatName,
       view: "roomList",
       roomId: null,
       component: () => <RoomList

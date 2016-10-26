@@ -90,6 +90,8 @@ const Room = React.createClass({
         roomId
     };
 
+    if (!text) return;
+
     Meteor.call("message.send", params);
     this.scrollDown();
   },

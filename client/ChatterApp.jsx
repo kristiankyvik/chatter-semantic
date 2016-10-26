@@ -33,7 +33,7 @@ const ChatterApp = React.createClass({
       chatOpen: false,
       roomId: null,
       userProfile: Meteor.userId(),
-      header: "Chatter",
+      header: Chatter.options.chatName,
       view: "roomList",
       activeRooms: [],
       archivedRooms: [],
