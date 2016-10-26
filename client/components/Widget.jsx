@@ -6,7 +6,7 @@ const Widget = React.createClass({
 
     return (
       <div className="ui button primary chatter-open" id="chatter-open" onClick={this.props.toggleChatState}>
-        <i className="comments outline icon"></i>
+        <i className="comment icon"></i>
       </div>
     );
   }

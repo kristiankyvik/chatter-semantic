@@ -88,13 +88,13 @@ const RoomList = React.createClass({
     const {helpButton} = Chatter.options;
 
     const newRoomBtnHTML = (
-      <div className="ui button primary" onClick={this.goToNewRoom} >
-        <i className="write icon"></i> New channel
+      <div className="ui icon primary button" onClick={this.goToNewRoom} >
+        <i className="plus icon"></i> New channel
       </div>
     );
 
     const helpChatBtnHTML = (
-      <div className="ui button primary" onClick={this.createHelpRoom} >
+      <div className="ui icon primary button" onClick={this.createHelpRoom} >
         <i className="help icon"></i> Get Help
       </div>
     );

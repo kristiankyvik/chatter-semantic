@@ -1,15 +1,19 @@
 chatter-light-blue = #FBFAFD
 chatter-light-gray = #f1f0f3
 chatter-white = #fff
-chatter-trans-gray = rgba(96,104,110,.8)
+chatter-trans-gray = rgba(96,104,110,.95)
 chatter-green = #bceaf9
-chatter-blue = #1b9dfc
+chatter-blue = #298ee8
+chatter-blue-darker = #288ade
 chatter-meta-gray = #ccccd2
 chatter-status-green = #86BB71
 chatter-status-red = #E38968
 
 body
     background-color: transparent
+
+.sidebar
+    width: 400px !important
 
 .chatter
     background-color: chatter-light-blue !important
@@ -22,6 +26,11 @@ body
         color: chatter-status-green
     .failure-msg
         color: chatter-status-red
+
+    .ui.primary.button
+        background-color: chatter-blue !important
+        border: 1px solid chatter-blue-darker !important
+
     p.gray-text
         color: chatter-trans-gray
         font-style: italic
@@ -42,7 +51,7 @@ body
             width: 100%
             overflow: hidden
             overflow-y: auto
-            top: 40px
+            top: 50px
             bottom: 56px
 
     .user-status
@@ -63,14 +72,22 @@ body
         margin: 0.2rem 0rem
 
     .ui.secondary.pointing.menu
-        background-color: chatter-white
         margin: 0 !important
+        background-color: chatter-blue
+        border: 1px solid chatter-blue-darker
+        border-radius: 4px 4px 0 0
+        .item
+            padding-top: 1.4em;
+            padding-bottom: 1.4em;
         >.right, >.left
             min-width: 90px
             .icon.item
                 min-width: 45px
+                color: white
         .header
             flex-grow: 1
+            &.item
+                color: white !important
             .status
                 text-align center
                 display: block
@@ -142,6 +159,7 @@ body
 
     .room
         margin: 0 !important
+        background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMHB4IiB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgIDxkZWZzPgogICAgICAgIDxwb2x5Z29uIGlkPSJwYXRoLTEiIHBvaW50cz0iNzUuMDcxMzIwNCAyMi44OTQ4MzU3IDc3LjUyODY4ODQgMTguNDMyMTQ0NCA4Mi43MjcxMTc1IDE4LjQzMjE0NDQgODUuMjY1ODU4NyAyMi44OTQ4MzU3IDgyLjcyNzExNzUgMjcuMjA1MDg3IDc3LjUyODY4ODQgMjcuMjA1MDg3Ij48L3BvbHlnb24+CiAgICAgICAgPG1hc2sgaWQ9Im1hc2stMiIgbWFza0NvbnRlbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIG1hc2tVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHg9IjAiIHk9IjAiIHdpZHRoPSIxMC4xOTQ1MzgzIiBoZWlnaHQ9IjguNzcyOTQyNTQiIGZpbGw9IndoaXRlIj4KICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjcGF0aC0xIj48L3VzZT4KICAgICAgICA8L21hc2s+CiAgICAgICAgPHJlY3QgaWQ9InBhdGgtMyIgeD0iMTUyIiB5PSI1MCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIj48L3JlY3Q+CiAgICAgICAgPG1hc2sgaWQ9Im1hc2stNCIgbWFza0NvbnRlbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIG1hc2tVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHg9IjAiIHk9IjAiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgZmlsbD0id2hpdGUiPgogICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNwYXRoLTMiPjwvdXNlPgogICAgICAgIDwvbWFzaz4KICAgICAgICA8cG9seWdvbiBpZD0icGF0aC01IiBwb2ludHM9IjM5LjY2MjIxOTkgNTcuODkwNjExNCA0Ni4xMTE1NjU1IDUyLjkwMTgxMDMgNTMuMzMyNzY5NCA1Ny42MDczMTUzIDUwLjc2MTYyMzMgNjUuODYyMDA3NyA0Mi4wNDUzNTg2IDY1Ljg2MjAwNzciPjwvcG9seWdvbj4KICAgICAgICA8bWFzayBpZD0ibWFzay02IiBtYXNrQ29udGVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeD0iMCIgeT0iMCIgd2lkdGg9IjEzLjY3MDU0OTUiIGhlaWdodD0iMTIuOTYwMTk3NCIgZmlsbD0id2hpdGUiPgogICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNwYXRoLTUiPjwvdXNlPgogICAgICAgIDwvbWFzaz4KICAgICAgICA8cG9seWdvbiBpZD0icGF0aC03IiBwb2ludHM9IjEyNy4yMjU2OTggMS4wMDg5MDYwNiAxMzYuMzY2MTkzIDQuMzU1MzAyMSAxMjkuNjk3NzIgOS4wMTM1MzM1OSI+PC9wb2x5Z29uPgogICAgICAgIDxtYXNrIGlkPSJtYXNrLTgiIG1hc2tDb250ZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBtYXNrVW5pdHM9Im9iamVjdEJvdW5kaW5nQm94IiB4PSIwIiB5PSIwIiB3aWR0aD0iOS4xNDA0OTQ1MSIgaGVpZ2h0PSI4LjAwNDYyNzUzIiBmaWxsPSJ3aGl0ZSI+CiAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI3BhdGgtNyI+PC91c2U+CiAgICAgICAgPC9tYXNrPgogICAgICAgIDxwb2x5Z29uIGlkPSJwYXRoLTkiIHBvaW50cz0iNDQuMjI1Njk4MyA5Ni4wMDg5MDYxIDUzLjM2NjE5MjggOTkuMzU1MzAyMSA0Ni42OTc3MTk2IDEwNC4wMTM1MzQiPjwvcG9seWdvbj4KICAgICAgICA8bWFzayBpZD0ibWFzay0xMCIgbWFza0NvbnRlbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIG1hc2tVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHg9IjAiIHk9IjAiIHdpZHRoPSI5LjE0MDQ5NDUxIiBoZWlnaHQ9IjguMDA0NjI3NTMiIGZpbGw9IndoaXRlIj4KICAgICAgICAgICAgPHVzZSB4bGluazpocmVmPSIjcGF0aC05Ij48L3VzZT4KICAgICAgICA8L21hc2s+CiAgICAgICAgPHBvbHlnb24gaWQ9InBhdGgtMTEiIHBvaW50cz0iMi4wMjc3ODQxOSAxNjcuNTc4Njc1IDcuNzA1MTI4MTYgMTc4LjA1MTkwMiAwLjU1MDYwMjQwMiAxNzYuODUzMTE1Ij48L3BvbHlnb24+CiAgICAgICAgPG1hc2sgaWQ9Im1hc2stMTIiIG1hc2tDb250ZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBtYXNrVW5pdHM9Im9iamVjdEJvdW5kaW5nQm94IiB4PSIwIiB5PSIwIiB3aWR0aD0iNy4xNTQ1MjU3NiIgaGVpZ2h0PSIxMC40NzMyMjY1IiBmaWxsPSJ3aGl0ZSI+CiAgICAgICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI3BhdGgtMTEiPjwvdXNlPgogICAgICAgIDwvbWFzaz4KICAgIDwvZGVmcz4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIwLjA1OTk5OTk5ODciPgogICAgICAgIDxnIGlkPSJGbG93Ij4KICAgICAgICAgICAgPGcgaWQ9Ikdyb3VwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMi4wMDAwMDAsIDEwLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgPGNpcmNsZSBpZD0iT3ZhbCIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiIGN4PSIxNzUiIGN5PSI2IiByPSI1Ij48L2NpcmNsZT4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik00MC41LDAuNSBMNDcuNSw0LjUiIGlkPSJMaW5lIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSI+PC9wYXRoPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTEyLjUsOTMuNSBMOC43MDk1OTg5MiwxMDMuODc3MTU1IiBpZD0iTGluZSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiPjwvcGF0aD4KICAgICAgICAgICAgICAgIDxwb2x5bGluZSBpZD0iTGluZSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHBvaW50cz0iMjguMDM2ODEyOCAxMzEuNDAwMDA5IDMxLjE2NDgxMTcgMTMyLjU2ODQwNCAyOS4zMjk2MTcgMTM1LjcyMjQ0IDMyLjU1MDI4NTMgMTM2Ljk5MTEzOCAzMC40NjQ0NjIyIDE0MC4wNDQ4NzEiPjwvcG9seWxpbmU+CiAgICAgICAgICAgICAgICA8cG9seWxpbmUgaWQ9IkxpbmUiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNjcuNTIyMjY4LCAxNzEuODQxNDg5KSByb3RhdGUoLTExOS4wMDAwMDApIHRyYW5zbGF0ZSgtMTY3LjUyMjI2OCwgLTE3MS44NDE0ODkpICIgcG9pbnRzPSIxNjQuMjA0MjI0IDE2My40NTc3NDcgMTY5LjA3NTk5OSAxNjYuNjUyNzM0IDE2NS45MzU1NzQgMTcyLjI1MTIzMiAxNzAuODQwMzExIDE3NS4yNjY3ODEgMTY3Ljg1NTA2MSAxODAuMjI1MjMiPjwvcG9seWxpbmU+CiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMC41LDUwLjUgQzAuNSw1MC41IDIuMjE3OTIxMDIsNTIuMjk2ODc2NSAyLjQxODM5MDYzLDU0LjY0ODM0NTkgQzIuNjE4ODYwMjQsNTYuOTk5ODE1MyAxLjcxMjUzMjI4LDU4Ljc5NjY5MTkgMS43MTI1MzIyOCw1OC43OTY2OTE5IiBpZD0iTGluZSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiPjwvcGF0aD4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xMjIuNTUwOTg4LDkwIEMxMjIuNTUwOTg4LDkwIDExNy45MDQwOTQsOTAgMTE0LjAxNjk1Nyw5My44NjU0Mzk3IEMxMTAuMTI5ODE5LDk3LjczMDg3OTMgMTEwLjk5NzA3LDEwMS4zNjM5ODQgMTEwLjk5NzA3LDEwMS4zNjM5ODQiIGlkPSJMaW5lIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSI+PC9wYXRoPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTk2LjI4NTY1MzIsMTgxLjg1NjIxOSBDOTYuMjg1NjUzMiwxODEuODU2MjE5IDk0LjQ3ODQ0MTQsMTc3LjgwNTI3NCA4OC4xNDEzNjE0LDE3Ny44MDUyNzQgQzgxLjgwNDI4MTQsMTc3LjgwNTI3NCA3OS45OTcwNjk2LDE4MC4zNjM5ODQgNzkuOTk3MDY5NiwxODAuMzYzOTg0IiBpZD0iTGluZSIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiPjwvcGF0aD4KICAgICAgICAgICAgICAgIDx1c2UgaWQ9IlJlY3RhbmdsZSIgc3Ryb2tlPSIjMDAwMDAwIiBtYXNrPSJ1cmwoI21hc2stMikiIHN0cm9rZS13aWR0aD0iNCIgeGxpbms6aHJlZj0iI3BhdGgtMSI+PC91c2U+CiAgICAgICAgICAgICAgICA8dXNlIGlkPSJSZWN0YW5nbGUtMyIgc3Ryb2tlPSIjMDAwMDAwIiBtYXNrPSJ1cmwoI21hc2stNCkiIHN0cm9rZS13aWR0aD0iNCIgeGxpbms6aHJlZj0iI3BhdGgtMyI+PC91c2U+CiAgICAgICAgICAgICAgICA8Y2lyY2xlIGlkPSJPdmFsLTIiIGZpbGw9IiMwMDAwMDAiIGN4PSIxMTkuNSIgY3k9IjM5LjUiIHI9IjEuNSI+PC9jaXJjbGU+CiAgICAgICAgICAgICAgICA8Y2lyY2xlIGlkPSJPdmFsLTIiIGZpbGw9IiMwMDAwMDAiIGN4PSIxNjguNSIgY3k9IjkzLjUiIHI9IjEuNSI+PC9jaXJjbGU+CiAgICAgICAgICAgICAgICA8Y2lyY2xlIGlkPSJPdmFsLTIiIGZpbGw9IiMwMDAwMDAiIGN4PSI3OS41IiBjeT0iMTMyLjUiIHI9IjEuNSI+PC9jaXJjbGU+CiAgICAgICAgICAgICAgICA8Y2lyY2xlIGlkPSJPdmFsLTIiIGZpbGw9IiMwMDAwMDAiIGN4PSIxNi41IiBjeT0iMTkuNSIgcj0iMS41Ij48L2NpcmNsZT4KICAgICAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUtNCIgZmlsbD0iIzAwMDAwMCIgeD0iOTEiIHk9IjY5IiB3aWR0aD0iMyIgaGVpZ2h0PSIzIj48L3JlY3Q+CiAgICAgICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlLTQiIGZpbGw9IiMwMDAwMDAiIHg9IjEyNCIgeT0iMTUzIiB3aWR0aD0iMyIgaGVpZ2h0PSIzIj48L3JlY3Q+CiAgICAgICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlLTQiIGZpbGw9IiMwMDAwMDAiIHg9IjM5IiB5PSIxNzEiIHdpZHRoPSIzIiBoZWlnaHQ9IjMiPjwvcmVjdD4KICAgICAgICAgICAgICAgIDx1c2UgaWQ9IlJlY3RhbmdsZSIgc3Ryb2tlPSIjMDAwMDAwIiBtYXNrPSJ1cmwoI21hc2stNikiIHN0cm9rZS13aWR0aD0iNCIgeGxpbms6aHJlZj0iI3BhdGgtNSI+PC91c2U+CiAgICAgICAgICAgICAgICA8dXNlIGlkPSJSZWN0YW5nbGUtMiIgc3Ryb2tlPSIjMDAwMDAwIiBtYXNrPSJ1cmwoI21hc2stOCkiIHN0cm9rZS13aWR0aD0iNCIgeGxpbms6aHJlZj0iI3BhdGgtNyI+PC91c2U+CiAgICAgICAgICAgICAgICA8dXNlIGlkPSJSZWN0YW5nbGUtMiIgc3Ryb2tlPSIjMDAwMDAwIiBtYXNrPSJ1cmwoI21hc2stMTApIiBzdHJva2Utd2lkdGg9IjQiIHhsaW5rOmhyZWY9IiNwYXRoLTkiPjwvdXNlPgogICAgICAgICAgICAgICAgPHVzZSBpZD0iUmVjdGFuZ2xlLTIiIHN0cm9rZT0iIzAwMDAwMCIgbWFzaz0idXJsKCNtYXNrLTEyKSIgc3Ryb2tlLXdpZHRoPSI0IiB4bGluazpocmVmPSIjcGF0aC0xMSI+PC91c2U+CiAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMTQxLjMzODA0LDEyMy4yMTQ2NzEgQzE0MS4zMzgwNCwxMjMuMjE0NjcxIDE0MS4wNjUyMjEsMTI0LjM4MTQyOCAxNDEuODcwMDYsMTI1LjAxMzYxMiBDMTQyLjcwMzkzOSwxMjUuNjY4NjA1IDE0Ni40ODg0ODgsMTI0LjAwMDk1IDE0My45OTA0MDMsMTIwLjg1MjgyMSBDMTQyLjcyNDk0MSwxMTkuNTI4OTIgMTQwLjUxNjQyMiwxMTkuMTI4NjA4IDEzOS4wMDM4MjgsMTIwLjg1MjgyMSBDMTM2LjIyMDUxNywxMjQuMDI1NTMgMTM5LjAwMzgyOCwxMzAuMjEwNzA2IDE0NS4yMDg1NzUsMTI4LjE5MDg0MyBDMTUxLjg2NjkyMiwxMjQuODQ2NDg5IDE0OC4yMTkzNTEsMTE2LjYxNjg3NyAxNDIuNDk3NjgzLDExNi4wODM1NjMgQzEzOC45NjkwNDUsMTE1Ljc1OTQwOCAxMzQuOTkyMTAxLDExNy4wMjE5MTUgMTMzLjg2MjQ1LDEyMS41NzExMjMgQzEzMi45NDQwODQsMTI1LjI2OTQ2OCAxMzQuNzA5MTY2LDEzMC44NjMzNTggMTQwLjUxNjQyMiwxMzIuNTE0NzA4IEMxNDYuMzIzNjc5LDEzNC4xNjYwNTggMTUwLjg0Nzc1NSwxMzAuMjEwNzA2IDE1MC44NDc3NTUsMTMwLjIxMDcwNiIgaWQ9IkxpbmUiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIj48L3BhdGg+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=")
 
         &.ui.comments
             max-width: 100%
@@ -219,6 +237,9 @@ body
             resize: none
 
     .settings
+        &.scrollable
+            bottom: 0px
+
         .ui.list
             > .item > i.icon
                 padding-right: 0
@@ -233,15 +254,16 @@ body
 
 .chatter-open.ui.button
     font-size: 2.2em
-    padding: 0.4em 0.5em
+    padding: 0.40em 0.30em;
     opacity: 1
     position: fixed
-    bottom: 25px;
-    right: 50px;
-    box-shadow: 0 6px 13px 0 rgba(0,0,0,.23)
+    top: 0px;
     border-radius: 100px
+    border: 1px solid chatter-blue-darker
+    background-color: chatter-blue;
 
     i.icon
+        opacity: 1
         margin: 0
         color: #fff
 
