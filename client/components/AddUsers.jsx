@@ -37,7 +37,8 @@ const AddUsers = React.createClass({
 
   getInitialState: function() {
     return {
-      query: ""
+      query: "",
+      requestingUser: false
     };
    },
 
@@ -47,6 +48,10 @@ const AddUsers = React.createClass({
   },
 
   toggleUser(action, userId) {
+    if (this.state.requestingUser) return;
+
+    this.setState({requestingUser: userId});
+
     const roomId = this.props.room._id;
     const options = {
       add: {
@@ -64,7 +69,9 @@ const AddUsers = React.createClass({
         }
       }
     };
-    Meteor.call(options[action].command, options[action].params);
+    Meteor.call(options[action].command, options[action].params, (error, result) => {
+      this.setState({requestingUser: false});
+    });
   },
 
   render() {
@@ -75,12 +82,16 @@ const AddUsers = React.createClass({
         text: user.added ? "Remove" : "Add"
       };
 
+      const loading = (user._id == this.state.requestingUser);
+
       return (
         <div className="item" key={user._id}>
           <div className="right floated content">
             <div
               onClick={() => this.toggleUser(btnSetup.action, user._id)}
-              className="ui button adduser-btn">{btnSetup.text}
+              className={"ui button adduser-btn " + (loading ? "loading" : "")}
+            >
+              {btnSetup.text}
             </div>
           </div>
           <div className={user.profile.online ? "user-status online" : "user-status offline"}>
