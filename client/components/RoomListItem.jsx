@@ -15,7 +15,7 @@ const roomListItemSubs = new SubsManager({
 const RoomListItem = React.createClass({
   mixins: [ReactMeteorData],
 
-  getMeteorData () {
+  getMeteorData() {
     const messagesHandle = roomListItemSubs.subscribe("chatterMessages", {
       roomId: this.props.room._id
     });
@@ -37,7 +37,7 @@ const RoomListItem = React.createClass({
     if (subsReady) {
       const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: userId});
 
-      unreadMsgCount =  typeof checkCount === 'undefined' ? -1 : checkCount.unreadMsgCount;
+      unreadMsgCount = _.isUndefined(checkCount) ? -1 : checkCount.unreadMsgCount;
 
       const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
       if (typeof lastMessage != 'undefined') {
@@ -52,7 +52,7 @@ const RoomListItem = React.createClass({
       timeAgo,
       unreadMsgCount,
       lastUser
-    }
+    };
   },
 
   render() {
@@ -61,18 +61,22 @@ const RoomListItem = React.createClass({
       room
     } = this.props;
 
+    const unreadMsgCount = this.data.unreadMsgCount;
+
     const lastUser = this.data.lastUser;
     let lastAvatar = "default";
-    let statusClass = "user-status none"
+    let statusClass = "user-status none";
 
     if (lastUser) {
       statusClass = lastUser.profile.online ? "user-status online" : "user-status offline";
       lastAvatar = lastUser._id;
     }
 
+    const unread = unreadMsgCount ? "unread" : null;
+
     return (
       <div
-        className="item transition visible roomListItem"
+        className={"item transition visible roomListItem " + unread}
         onClick={() => goToRoom(room._id, room.name)}
       >
         <div className={statusClass}></div>
@@ -95,7 +99,7 @@ const RoomListItem = React.createClass({
               {this.data.message}
             </div>
             <div className="counter">
-                { this.data.unreadMsgCount > 0 ? <span> {this.data.unreadMsgCount} </span> : "" }
+                { unreadMsgCount > 0 ? <span> {unreadMsgCount} </span> : "" }
             </div>
           </div>
         </div>
