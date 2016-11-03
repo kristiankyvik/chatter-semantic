@@ -57,6 +57,24 @@ const Room = React.createClass({
     }
   },
 
+  pushMessage(text) {
+    const roomId = this.props.roomId;
+    const params = {
+        message: text,
+        roomId
+    };
+
+    if (!text) return;
+
+    Meteor.call("message.send", params);
+    this.scrollDown();
+  },
+
+  componentWillMount() {
+    // creates a throttled version of the pushMessage function per component
+    this.pushMessage = _.debounce(this.pushMessage, 100);
+  },
+
   componentDidMount() {
     this.scrollDown()
     Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
@@ -83,18 +101,7 @@ const Room = React.createClass({
     scroller.scrollTop = scroller.scrollHeight;
   },
 
-  pushMessage(text) {
-    const roomId = this.props.roomId;
-    const params = {
-        message: text,
-        roomId
-    };
 
-    if (!text) return;
-
-    Meteor.call("message.send", params);
-    this.scrollDown();
-  },
 
   setUserProfile(userId) {
     this.props.setUserProfile(userId);
