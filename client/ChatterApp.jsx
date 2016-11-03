@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom';
 
 import getChatHTML from "./template-helpers/getChatHTML.jsx";
 import router from "./template-helpers/router.jsx";
-import Widget from "./components/Widget.jsx";
 
 import {
   CHATTER_CACHE_LIMIT,
   CHATTER_EXPIRE_IN
 } from "./global-variables.js";
 
-const latestRooms = function (limit, withIds) {
+const latestRooms = function(limit, withIds) {
   return {
     find: {"_id": {$in: withIds}},
     options: {sort: {lastActive: -1}, limit: limit}
@@ -41,9 +40,9 @@ const ChatterApp = React.createClass({
       activeRoomLimit: Chatter.options.initialRoomLoad,
       archivedRoomLimit: Chatter.options.initialRoomLoad
     };
-   },
+  },
 
-  getMeteorData () {
+  getMeteorData() {
     const userId = Meteor.userId();
     const roomsHandle = chatterSubs.subscribe("chatterRooms");
     const userRoomsHandle = chatterSubs.subscribe("chatterUserRooms");
@@ -76,8 +75,8 @@ const ChatterApp = React.createClass({
         activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
         archivedRooms = Chatter.Room.find(archivedRoomQuery.find, archivedRoomQuery.options).fetch();
         hasSupportRoom = Chatter.Room.find({
-            "_id": {$in: allRoomIds},
-            "roomType": "support"
+          "_id": {$in: allRoomIds},
+          "roomType": "support"
         }).count();
       }
     }
@@ -88,7 +87,7 @@ const ChatterApp = React.createClass({
       subsReady,
       hasSupportRoom,
       msgNotif
-    }
+    };
   },
 
   goToRoom(roomId, roomName) {
@@ -129,7 +128,7 @@ const ChatterApp = React.createClass({
     const chatHTML = getChatHTML(this);
     return (
       chatHTML
-    )
+    );
   }
 });
 
