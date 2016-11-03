@@ -21,6 +21,7 @@ Package.onUse(function(api) {
     'client/chatter.html',
     'client/chatter.js',
 
+    'client/variables.styl',
     'client/styles.styl',
   ], ['client']);
 
