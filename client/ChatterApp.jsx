@@ -35,6 +35,7 @@ const ChatterApp = React.createClass({
       userProfile: Meteor.userId(),
       header: Chatter.options.chatName,
       view: "roomList",
+      msgNotif: 0,
       activeRooms: [],
       archivedRooms: [],
       activeRoomLimit: Chatter.options.initialRoomLoad,
@@ -51,6 +52,7 @@ const ChatterApp = React.createClass({
     let activeRooms = [];
     let archivedRooms = [];
     let hasSupportRoom = false;
+    let msgNotif = false;
 
     if (subsReady) {
       const {activeRoomLimit, archivedRoomLimit} = this.state;
@@ -69,6 +71,8 @@ const ChatterApp = React.createClass({
         const activeRoomQuery = latestRooms(activeRoomLimit, activeRoomIds);
         const archivedRoomQuery = latestRooms(archivedRoomLimit, archivedRoomIds);
 
+        msgNotif = Chatter.UserRoom.find({userId: userId, unreadMsgCount: { $gt: 0 }}).fetch().length;
+
         activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
         archivedRooms = Chatter.Room.find(archivedRoomQuery.find, archivedRoomQuery.options).fetch();
         hasSupportRoom = Chatter.Room.find({
@@ -82,7 +86,8 @@ const ChatterApp = React.createClass({
       activeRooms,
       archivedRooms,
       subsReady,
-      hasSupportRoom
+      hasSupportRoom,
+      msgNotif
     }
   },
 

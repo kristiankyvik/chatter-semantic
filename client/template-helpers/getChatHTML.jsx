@@ -30,7 +30,7 @@ const getChatHTML = function(data) {
           </div>
       </div>
     );
-    return Session.get("chatOpen") ? chatHTML : <Widget toggleChatState={data.toggleChatState} />;
+    return Session.get("chatOpen") ? chatHTML : <Widget toggleChatState={data.toggleChatState} msgNotif={data.data.msgNotif} />;
   } else {
     return null;
   }
