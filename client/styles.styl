@@ -11,7 +11,7 @@ chatter-meta-gray = #ccccd2
 chatter-status-green = #86BB71
 chatter-status-red = #E38968
 chatter-background = #f9f9f9
-chatter-highlighted-background = rgba(86, 181, 255, 0.05);
+chatter-highlighted-background = rgba(86, 181, 255, 0.05)
 
 body
     background-color: transparent
@@ -19,7 +19,7 @@ body
 .sidebar
     width: 400px !important
     &.ui.sidebar.chatter
-        border-radius: 5px!important;
+        border-radius: 5px!important
 
 .chatter
     background-color: chatter-background !important
@@ -57,8 +57,8 @@ body
             width: 100%
             overflow: hidden
             overflow-y: auto
-            top: 54px;
-            bottom: 45px;
+            top: 54px
+            bottom: 45px
 
     .user-status
         position: absolute
@@ -83,8 +83,8 @@ body
         border: 1px solid chatter-blue-darker
         border-radius: 4px 4px 0 0
         .item
-            padding-top: 1.4em;
-            padding-bottom: 1.4em;
+            padding-top: 1.4em
+            padding-bottom: 1.4em
         >.right, >.left
             min-width: 90px
             .icon.item
@@ -94,10 +94,16 @@ body
             flex-grow: 1
             &.item
                 color: white !important
+                max-width: 220px
             .status
                 text-align center
                 display: block
                 width: 100%
+                span
+                    overflow: hidden
+                    text-overflow: ellipsis
+                    white-space: nowrap
+                    display: block
 
     .roomList
         .count
@@ -115,7 +121,7 @@ body
             padding-top: 16px
             padding-bottom: 16px
             &.unread
-                background-color: chatter-highlighted-background !important;
+                background-color: chatter-highlighted-background !important
             .ui.avatar.image
                 width: 3em
                 height: 3em
@@ -244,12 +250,12 @@ body
             vertical-align: middle
             resize: none
             border-radius: 0 0 4px 4px
-            border: none;
-            overflow: auto;
-            outline: none;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            box-shadow: none;
+            border: none
+            overflow: auto
+            outline: none
+            -webkit-box-shadow: none
+            -moz-box-shadow: none
+            box-shadow: none
 
     .settings
         &.scrollable
@@ -269,13 +275,13 @@ body
 
 .chatter-open.ui.button
     font-size: 2.2em
-    padding: 0.40em 0.30em;
+    padding: 0.40em 0.30em
     opacity: 1
     position: fixed
-    top: 0px;
+    top: 0px
     border-radius: 100px
     border: 1px solid chatter-blue-darker
-    background-color: chatter-blue;
+    background-color: chatter-blue
 
     i.icon
         opacity: 1
@@ -283,13 +289,13 @@ body
         color: #fff
 
     .widget-msg-notif
-        position: absolute;
-        width: 17px;
-        height: 17px;
-        border-radius: 0.5em;
-        z-index: 1;
-        border: 1px solid #fbfafd;
-        top: 0px;
-        right: 1px;
-        background-color: orange;
+        position: absolute
+        width: 17px
+        height: 17px
+        border-radius: 0.5em
+        z-index: 1
+        border: 1px solid #fbfafd
+        top: 0px
+        right: 1px
+        background-color: orange
 

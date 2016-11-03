@@ -64,7 +64,7 @@ const Room = React.createClass({
         roomId
     };
 
-    if (!text) return;
+    if (!text || text.length > 1000) return;
 
     Meteor.call("message.send", params);
     this.scrollDown();
@@ -76,7 +76,7 @@ const Room = React.createClass({
   },
 
   componentDidMount() {
-    this.scrollDown()
+    this.scrollDown();
     Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
   },
 
@@ -101,15 +101,13 @@ const Room = React.createClass({
     scroller.scrollTop = scroller.scrollHeight;
   },
 
-
-
   setUserProfile(userId) {
     this.props.setUserProfile(userId);
     this.props.setView("profile");
   },
 
   checkRoom() {
-    Meteor.call("room.check", this.props.roomId , (error, result) => {
+    Meteor.call("room.check", this.props.roomId, (error, result) => {
       if (!result) {
         this.props.setView("roomList");
       }
@@ -127,7 +125,6 @@ const Room = React.createClass({
 
     const messages = (
       this.data.messages.map((message, index) => {
-
         let dateBanner = timeAgo = avatar = nickname = null;
         const prevMsg = this.data.messages[index - 1];
         const nextMsg = this.data.messages[index + 1];
@@ -162,7 +159,6 @@ const Room = React.createClass({
             </div>
           );
         } else {
-
         }
         // takes care of the display of avatars and nicknames
         if (index === 0 ) {
