@@ -18,6 +18,7 @@ const isFirstMessage = function(prevMsg, currentMsg) {
 };
 
 const timeSinceLastMsgGreaterThan = function(minutes, prevMsg, currentMsg) {
+  if (_.isUndefined(currentMsg)) return;
   const difference = currentMsg.createdAt - prevMsg.createdAt;
   const resultInMinutes = Math.round(difference / 60000);
   return resultInMinutes > minutes;
@@ -27,7 +28,7 @@ const timestampShouldBeDisplayed = function(currentMsg, nextMsg) {
   const veryRecentMessage = currentMsg.getMinutesAgo() <= VERY_RECENT_MSG;
   const recentMessage = currentMsg.getMinutesAgo() <= RECENT_MSG;
   return veryRecentMessage && timeSinceLastMsgGreaterThan(VERY_RECENT_MSG_INTERVAL, currentMsg, nextMsg) || recentMessage && timeSinceLastMsgGreaterThan(RECENT_MSG_INTERVAL, currentMsg, nextMsg);
-}
+};
 
 const roomSubs = new SubsManager({
   cacheLimit: ROOM_CACHE_LIMIT,
@@ -37,24 +38,23 @@ const roomSubs = new SubsManager({
 const Room = React.createClass({
   mixins: [ReactMeteorData],
 
-  getMeteorData () {
+  getMeteorData() {
     const { roomId } = this.props;
     const messagesHandle = roomSubs.subscribe("chatterMessages", {
-      roomId
+      roomId,
+      messageLimit: Session.get("messageLimit")
     });
+
     const usersHandle = roomSubs.subscribe("users");
     const subsReady = messagesHandle.ready() && usersHandle.ready();
 
-    let messages = [];
-
     if (subsReady) {
-      messages = Chatter.Message.find({"roomId": roomId}).fetch();
+      this.messages = Chatter.Message.find({"roomId": roomId}, {sort: {createdAt: 1}}).fetch();
     }
 
     return {
-      messages,
       subsReady
-    }
+    };
   },
 
   pushMessage(text) {
@@ -65,14 +65,15 @@ const Room = React.createClass({
     };
 
     if (!text || text.length > 1000) return;
-
     Meteor.call("message.send", params);
+    // Session.set("messageLimit", Session.get("messageLimit") + 1);
     this.scrollDown();
   },
 
   componentWillMount() {
     // creates a throttled version of the pushMessage function per component
     this.pushMessage = _.debounce(this.pushMessage, 100);
+    this.messages = [];
   },
 
   componentDidMount() {
@@ -114,21 +115,29 @@ const Room = React.createClass({
     });
   },
 
+  listenScrollEvent() {
+    // TODO: throttleeeeee
+    const scroller = this.refs.scroller;
+    if (scroller.scrollTop === 0) {
+      console.log("scrolled to the top!");
+      Session.set("messageLimit", Session.get("messageLimit") + 50);
+    }
+  },
+
   render() {
     this.checkRoom();
+    console.log(this.data.subsReady);
 
-    const loader =  (
+    const loader = (
       <Loader/>
     );
 
-    const numberOfMessages = this.data.messages.length;
-
+    const numberOfMessages = this.messages.length;
     const messages = (
-      this.data.messages.map((message, index) => {
+      this.messages.map((message, index) => {
         let dateBanner = timeAgo = avatar = nickname = null;
-        const prevMsg = this.data.messages[index - 1];
-        const nextMsg = this.data.messages[index + 1];
-
+        const prevMsg = this.messages[index - 1];
+        const nextMsg = this.messages[index + 1];
         const user = Meteor.users.findOne(message.userId);
 
         const isFirstMessageOfChat = index === 0,
@@ -165,7 +174,7 @@ const Room = React.createClass({
           avatar = user._id;
           nickname = user.profile.chatterNickname;
         } else {
-          if (isFirstMessage(this.data.messages[index - 1], message)) {
+          if (isFirstMessage(this.messages[index - 1], message)) {
             avatar = user._id;
             nickname = user.profile.chatterNickname;
           }
@@ -190,9 +199,10 @@ const Room = React.createClass({
     );
 
     return (
-      <div>
-        <div className="room scrollable ui comments basic padded" ref="scroller">
-          {this.data.subsReady ? messages : loader}
+      <div className="roomWrapper">
+        {this.data.subsReady ? null : loader}
+        <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
+          {messages}
         </div>
         <Writer pushMessage={this.pushMessage}/>
       </div>
