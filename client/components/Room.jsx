@@ -135,8 +135,10 @@ const Room = React.createClass({
     this.checkRoom();
 
     const loader = (
-      <Loader/>
+      <Loader />
     );
+
+    const roomWrapperClass = this.messages.length ? "messagesLoading" : "";
 
     const numberOfMessages = this.messages.length;
     const messages = (
@@ -146,9 +148,9 @@ const Room = React.createClass({
         const nextMsg = this.messages[index + 1];
         const user = Meteor.users.findOne(message.userId);
 
-        const isFirstMessageOfChat = index === 0,
-              isFirstMessageOfDay = index > 0 && prevMsg.getDate() !== message.getDate(),
-              isLastMessageChat = index === numberOfMessages - 1;
+        const isFirstMessageOfChat = index === 0;
+        const isFirstMessageOfDay = index > 0 && prevMsg.getDate() !== message.getDate();
+        const isLastMessageChat = index === numberOfMessages - 1;
 
         // takes care of the display of dates and timestamps
         if (isFirstMessageOfChat || isFirstMessageOfDay) {
@@ -173,8 +175,8 @@ const Room = React.createClass({
               <span> {message.getTimeAgo()} </span>
             </div>
           );
-        } else {
         }
+
         // takes care of the display of avatars and nicknames
         if (index === 0 ) {
           avatar = user._id;
@@ -205,7 +207,7 @@ const Room = React.createClass({
     );
 
     return (
-      <div className="roomWrapper">
+      <div className={"roomWrapper " + roomWrapperClass}>
         {this.data.subsReady ? null : loader}
         <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
           {messages}

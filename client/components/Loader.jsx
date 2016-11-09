@@ -6,8 +6,7 @@ const Loader = React.createClass({
 
     return (
       <div className="ui active inverted dimmer">
-        <div className="ui text loader">
-          Loading...
+        <div className="ui loader">
         </div>
       </div>
     );

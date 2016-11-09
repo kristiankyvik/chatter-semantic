@@ -161,11 +161,18 @@ body
         text-align: center
 
     .roomWrapper
-        .ui.active.inverted.dimmer
-            height: 86px;
-            top: 55px !important;
-            z-index: 0;
-            background-color: transparent;
+        &.messagesLoading
+            .ui.active.inverted.dimmer
+                height: 40px
+                top: 55px !important
+                z-index: 0
+                background-color: transparent
+                .text
+                    display: none
+
+        .padded
+            padding-top: 40px
+
     .room
         margin: 0 !important
         background-image: url(chatter-svg-bg)
