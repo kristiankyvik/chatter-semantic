@@ -66,14 +66,17 @@ const Room = React.createClass({
 
     if (!text || text.length > 1000) return;
     Meteor.call("message.send", params);
-    // Session.set("messageLimit", Session.get("messageLimit") + 1);
     this.scrollDown();
   },
 
   componentWillMount() {
-    // creates a throttled version of the pushMessage function per component
+    // creates a throttled version for both listeners
     this.pushMessage = _.debounce(this.pushMessage, 100);
-    this.messages = [];
+    this.listenScrollEvent = _.debounce(this.listenScrollEvent, 100);
+
+    if (_.isUndefined(this.messages)) {
+      this.messages = [];
+    }
   },
 
   componentDidMount() {
@@ -119,14 +122,17 @@ const Room = React.createClass({
     // TODO: throttleeeeee
     const scroller = this.refs.scroller;
     if (scroller.scrollTop === 0) {
-      console.log("scrolled to the top!");
-      Session.set("messageLimit", Session.get("messageLimit") + 50);
+      Meteor.call("message.count", this.props.roomId, (error, result) => {
+        const messageCount = result;
+        if (messageCount > this.messages.length) {
+          Session.set("messageLimit", Session.get("messageLimit") + 50);
+        }
+      });
     }
   },
 
   render() {
     this.checkRoom();
-    console.log(this.data.subsReady);
 
     const loader = (
       <Loader/>
