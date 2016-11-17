@@ -17,8 +17,7 @@ const RoomListItem = React.createClass({
 
   getMeteorData() {
     const messagesHandle = roomListItemSubs.subscribe("chatterMessages", {
-      roomId: this.props.room._id,
-      messageLimit: Session.get('messageLimit')
+      messageLimit: 1
     });
 
     const countHandle = roomListItemSubs.subscribe("chatterUserRooms", {

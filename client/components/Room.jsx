@@ -41,7 +41,6 @@ const Room = React.createClass({
   getMeteorData() {
     const { roomId } = this.props;
     const messagesHandle = roomSubs.subscribe("chatterMessages", {
-      roomId,
       messageLimit: Session.get("messageLimit")
     });
 

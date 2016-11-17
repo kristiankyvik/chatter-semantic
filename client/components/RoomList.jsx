@@ -81,11 +81,11 @@ const RoomList = React.createClass({
    return null;
   },
 
-  render() {
+  render () {
     const user = Meteor.user();
     const { subsReady, archivedRooms, activeRooms, hasSupportRoom } = this.props;
 
-    const {helpButton} = Chatter.options;
+    const helpButton = !_.isUndefined(user.profile.supportUser);
 
     const newRoomBtnHTML = (
       <div className="ui icon primary button" onClick={this.goToNewRoom} >
