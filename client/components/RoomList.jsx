@@ -24,7 +24,7 @@ const RoomList = React.createClass({
 
   componentDidMount() {
     $('.ui.accordion').accordion();
-    Meteor.call("get.room.unreadMsgCount", (error, response) => {
+    Meteor.call("room.getUnreadMsgCount", (error, response) => {
       this.setState(response);
     });
 

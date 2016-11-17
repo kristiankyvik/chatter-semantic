@@ -36,7 +36,7 @@ const router = function(scope, view) {
       header: "Channel settings",
       view: "settings",
       component: () => <Settings
-                  room={Chatter.Room.findOne(scope.state.roomId)}
+                  roomId={scope.state.roomId}
                   setView={scope.setView}
                 />
     },
