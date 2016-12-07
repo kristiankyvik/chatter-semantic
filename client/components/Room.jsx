@@ -18,7 +18,7 @@ const isFirstMessage = function(prevMsg, currentMsg) {
 };
 
 const timeSinceLastMsgGreaterThan = function(minutes, prevMsg, currentMsg) {
-  if (_.isUndefined(currentMsg)) return;
+  if (_.isEmpty(currentMsg)) return;
   const difference = currentMsg.createdAt - prevMsg.createdAt;
   const resultInMinutes = Math.round(difference / 60000);
   return resultInMinutes > minutes;
@@ -73,7 +73,7 @@ const Room = React.createClass({
     this.pushMessage = _.debounce(this.pushMessage, 100);
     this.listenScrollEvent = _.debounce(this.listenScrollEvent, 100);
 
-    if (_.isUndefined(this.messages)) {
+    if (_.isEmpty(this.messages)) {
       this.messages = [];
     }
   },

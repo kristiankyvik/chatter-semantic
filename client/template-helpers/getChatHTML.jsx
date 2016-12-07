@@ -3,15 +3,15 @@ import router from "./router.jsx";
 import Nav from "../components/Nav.jsx";
 import Widget from "../components/Widget.jsx";
 
-const isChatterUser = function(chatterUsers) {
-  const chatterUserIds = chatterUsers.map(function(user) {
+const isChatterUser = function (chatterUsers) {
+  const chatterUserIds = chatterUsers.map(function (user) {
     return user.userId;
   });
-  return (chatterUserIds.indexOf(Meteor.userId()) > -1) ;
+  return (chatterUserIds.indexOf(Meteor.userId()) > -1);
 };
 
 
-const getChatHTML = function(data) {
+const getChatHTML = function (data) {
   let chatHTML = null;
   if (Meteor.userId()) {
     chatHTML = (

@@ -4,7 +4,7 @@ import RoomListItem from "../components/RoomListItem.jsx";
 import Loader from "../components/Loader.jsx"
 
 const RoomList = React.createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       activeShowing: false,
       archivedShowing: false,
@@ -12,17 +12,17 @@ const RoomList = React.createClass({
       activeCount: 0,
       makingRequest: false
     };
-   },
+  },
 
-  goToRoom(roomId, roomName) {
+  goToRoom (roomId, roomName) {
     this.props.goToRoom(roomId, roomName);
   },
 
-  goToNewRoom() {
+  goToNewRoom () {
     this.props.setView("newRoom");
   },
 
-  componentDidMount() {
+  componentDidMount () {
     $('.ui.accordion').accordion();
     Meteor.call("room.getUnreadMsgCount", (error, response) => {
       this.setState(response);
@@ -31,7 +31,7 @@ const RoomList = React.createClass({
     this.props.setUserProfile(Meteor.userId());
   },
 
-  loadMoreRooms(type) {
+  loadMoreRooms (type) {
     const options = {
       archived: {archivedShowing: true},
       active: {activeShowing: true}
@@ -41,7 +41,7 @@ const RoomList = React.createClass({
     this.props.loadMoreRooms(type);
   },
 
-  createHelpRoom() {
+  createHelpRoom () {
     if (this.props.hasSupportRoom || this.state.makingRequest ) return;
 
     this.setState({makingRequest: true});
@@ -53,7 +53,7 @@ const RoomList = React.createClass({
     });
   },
 
-  getMoreRoomsBtn(type) {
+  getMoreRoomsBtn (type) {
     const roomOpts = {
       archived: {
         showing: this.state.archivedShowing,
@@ -78,14 +78,13 @@ const RoomList = React.createClass({
         </div>
       );
     }
-   return null;
+    return null;
   },
 
   render () {
     const user = Meteor.user();
     const { subsReady, archivedRooms, activeRooms, hasSupportRoom } = this.props;
-
-    const helpButton = !_.isUndefined(user.profile.supportUser);
+    const helpButton = !_.isEmpty(user.profile.supportUser);
 
     const newRoomBtnHTML = (
       <div className="ui icon primary button" onClick={this.goToNewRoom} >
@@ -100,7 +99,7 @@ const RoomList = React.createClass({
     );
 
     const newRoomBtn = (user.profile.isChatterAdmin) ? newRoomBtnHTML : null;
-    const helpChatBtn = helpButton && (user.username != "admin") && (!hasSupportRoom ) ? helpChatBtnHTML : null;
+    const helpChatBtn = helpButton && (user.username !== "admin") && (!hasSupportRoom ) ? helpChatBtnHTML : null;
 
     const activeRoomsHTML = activeRooms.map(room => {
       room.archived = false;

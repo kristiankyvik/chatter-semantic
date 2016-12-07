@@ -37,10 +37,10 @@ const RoomListItem = React.createClass({
     if (subsReady) {
       const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: userId});
 
-      unreadMsgCount = _.isUndefined(checkCount) ? -1 : checkCount.unreadMsgCount;
+      unreadMsgCount = _.isEmpty(checkCount) ? -1 : checkCount.unreadMsgCount;
 
       const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
-      if (typeof lastMessage != 'undefined') {
+      if (_.isEmpty(lastMessage)) {
         message = lastMessage.message;
         timeAgo = lastMessage.getTimeAgo();
         lastUser = Meteor.users.findOne(lastMessage.userId);

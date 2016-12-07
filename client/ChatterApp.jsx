@@ -9,7 +9,7 @@ import {
   CHATTER_EXPIRE_IN
 } from "./global-variables.js";
 
-const latestRooms = function(limit, withIds) {
+const latestRooms = function (limit, withIds) {
   return {
     find: {"_id": {$in: withIds}},
     options: {sort: {lastActive: -1}, limit: limit}
@@ -25,7 +25,7 @@ const chatterSubs = new SubsManager({
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
 
-  getInitialState: function() {
+  getInitialState: function () {
     Session.set("chatOpen", false);
     Session.setDefault('messageLimit', 100);
 
@@ -43,7 +43,7 @@ const ChatterApp = React.createClass({
     };
   },
 
-  getMeteorData() {
+  getMeteorData () {
     const userId = Meteor.userId();
     const roomsHandle = chatterSubs.subscribe("chatterRooms");
     const userRoomsHandle = chatterSubs.subscribe("chatterUserRooms");
@@ -91,7 +91,7 @@ const ChatterApp = React.createClass({
     };
   },
 
-  goToRoom(roomId, roomName) {
+  goToRoom (roomId, roomName) {
     this.setState({
       roomId: roomId,
       view: 'room',
@@ -99,13 +99,13 @@ const ChatterApp = React.createClass({
     });
   },
 
-  setUserProfile(userId) {
+  setUserProfile (userId) {
     this.setState({
       userProfile: userId
     });
   },
 
-  loadMoreRooms(type) {
+  loadMoreRooms (type) {
     const loadOptions = {
       active: {activeRoomLimit: 100},
       archived: {archivedRoomLimit: 100}
@@ -113,11 +113,11 @@ const ChatterApp = React.createClass({
     this.setState(loadOptions[type]);
   },
 
-  setView(view) {
+  setView (view) {
     this.setState(router(this, view));
   },
 
-  toggleChatState() {
+  toggleChatState () {
     // ATTENTION: removing for the purpose of the widget implementation which uses the global Session object instead
     // const state = !this.state.chatOpen;
     // this.setState({
@@ -125,7 +125,7 @@ const ChatterApp = React.createClass({
     // });
   },
 
-  render() {
+  render () {
     const chatHTML = getChatHTML(this);
     return (
       chatHTML
