@@ -15,7 +15,7 @@ const roomListItemSubs = new SubsManager({
 const RoomListItem = React.createClass({
   mixins: [ReactMeteorData],
 
-  getMeteorData() {
+  getMeteorData () {
     const messagesHandle = roomListItemSubs.subscribe("chatterMessages", {
       messageLimit: 1
     });
@@ -40,7 +40,7 @@ const RoomListItem = React.createClass({
       unreadMsgCount = _.isEmpty(checkCount) ? -1 : checkCount.unreadMsgCount;
 
       const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
-      if (_.isEmpty(lastMessage)) {
+      if (!_.isEmpty(lastMessage)) {
         message = lastMessage.message;
         timeAgo = lastMessage.getTimeAgo();
         lastUser = Meteor.users.findOne(lastMessage.userId);
@@ -55,7 +55,7 @@ const RoomListItem = React.createClass({
     };
   },
 
-  render() {
+  render () {
     const {
       goToRoom,
       room
