@@ -7,7 +7,7 @@ const MainSettings = React.createClass({
 
   toggleArchivedState () {
     const params = {
-      archived: !this.data.room.archived,
+      archived: !this.props.room.archived,
       roomId: this.props.room._id,
       userId: Meteor.userId()
     };
@@ -23,6 +23,12 @@ const MainSettings = React.createClass({
     });
   },
 
+  componentDidUpdate () {
+    if (this.props.room.archived) {
+      $(".ui.toggle.checkbox").checkbox('check');
+    }
+  },
+
   render () {
     if (!this.props.subsReady) {
       return <Loader/>;
@@ -32,9 +38,7 @@ const MainSettings = React.createClass({
 
     const users = this.props.users;
     $(".ui.toggle.checkbox").checkbox();
-    if (this.props.room.archived) {
-      $(".ui.toggle.checkbox").checkbox('check');
-    }
+
     const addUsersHTML = (
       <div className="item addUserItem" onClick={ () => this.props.setSettingsView("addUsers")}>
         <i className="add user icon"></i>
