@@ -17,11 +17,11 @@ const profileSubs = new SubsManager({
 const Profile = React.createClass({
   mixins: [ReactMeteorData],
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       nicknameChanged: false
     };
-   },
+  },
 
   getMeteorData () {
     const usersHandle = profileSubs.subscribe("users");
@@ -34,10 +34,10 @@ const Profile = React.createClass({
     return {
       user,
       subsReady
-    }
+    };
   },
 
-  initializeInput(input) {
+  initializeInput (input) {
     if (input) {
       this.nicknameInput = input;
       input.focus();
@@ -48,8 +48,8 @@ const Profile = React.createClass({
               identifier: 'nickname',
               rules: [
                 {
-                  type   : 'empty',
-                  prompt : 'Please enter a valid nickname'
+                  type: 'empty',
+                  prompt: 'Please enter a valid nickname'
                 }
               ]
             }
@@ -59,18 +59,18 @@ const Profile = React.createClass({
     }
   },
 
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.preventDefault();
     const nickname = this.nicknameInput.value.trim();
     if (nickname.length === 0) return;
     Meteor.call("user.changeNickname", nickname, (error, result) => {
       if (!error) {
-        this.setState({nicknameChanged: true})
+        this.setState({nicknameChanged: true});
       }
     });
   },
 
-  render() {
+  render () {
     if (!this.data.subsReady) {
       return <Loader/>;
     }

@@ -6,48 +6,46 @@ import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
 const AddUsers = React.createClass({
   mixins: [ReactMeteorData],
 
-  getMeteorData() {
+  getMeteorData () {
     const { room } = this.props;
     const userRoomHandle = Meteor.subscribe("chatterUserRooms");
     const userHandle = Meteor.subscribe("users");
 
     const subsReady = userRoomHandle.ready();
 
-    let messages = [];
     let users = [];
 
 
     if (subsReady && userHandle) {
-     const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
-     users = Meteor.users.find().fetch();
-
-     _.each(users, function(user) {
-       if (roomUsersIds.indexOf(user._id) < 0) {
-         user.added = false;
-       } else {
-         user.added = true;
-       }
-     });
+      const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
+      users = Meteor.users.find().fetch();
+      _.each(users, function (user) {
+        if (roomUsersIds.indexOf(user._id) < 0) {
+          user.added = false;
+        } else {
+          user.added = true;
+        }
+      });
     }
 
     return {
       users
-    }
+    };
   },
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       query: "",
       requestingUser: false
     };
-   },
+  },
 
-  handleChange() {
+  handleChange () {
     const query = ReactDOM.findDOMNode(this.refs.query).value.trim();
     this.setState({query: query});
   },
 
-  toggleUser(action, userId) {
+  toggleUser (action, userId) {
     if (this.state.requestingUser) return;
 
     this.setState({requestingUser: userId});
@@ -74,15 +72,15 @@ const AddUsers = React.createClass({
     });
   },
 
-  render() {
+  render () {
     const allUsers = this.data.users.map( user => {
-      if (user.profile.chatterNickname.indexOf(this.state.query) < 0) {return;};
+      if (user.profile.chatterNickname.indexOf(this.state.query) < 0) {return;}
       let btnSetup = {
         action: user.added ? "remove" : "add",
         text: user.added ? "Remove" : "Add"
       };
 
-      const loading = (user._id == this.state.requestingUser);
+      const loading = (user._id === this.state.requestingUser);
 
       return (
         <div className="item" key={user._id}>

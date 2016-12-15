@@ -4,7 +4,7 @@ import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
 
 const Message = React.createClass({
 
-  render() {
+  render () {
     const {
       message,
       dateBanner,
@@ -50,10 +50,3 @@ const Message = React.createClass({
 });
 
 export default Message;
-
-
-
-
-
-
-

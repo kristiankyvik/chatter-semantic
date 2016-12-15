@@ -13,18 +13,18 @@ import {
   ROOM_EXPIRE_IN
 } from "../global-variables.js";
 
-const isFirstMessage = function(prevMsg, currentMsg) {
+const isFirstMessage = function (prevMsg, currentMsg) {
   return prevMsg.userId !== currentMsg.userId;
 };
 
-const timeSinceLastMsgGreaterThan = function(minutes, prevMsg, currentMsg) {
+const timeSinceLastMsgGreaterThan = function (minutes, prevMsg, currentMsg) {
   if (_.isEmpty(currentMsg)) return;
   const difference = currentMsg.createdAt - prevMsg.createdAt;
   const resultInMinutes = Math.round(difference / 60000);
   return resultInMinutes > minutes;
 };
 
-const timestampShouldBeDisplayed = function(currentMsg, nextMsg) {
+const timestampShouldBeDisplayed = function (currentMsg, nextMsg) {
   const veryRecentMessage = currentMsg.getMinutesAgo() <= VERY_RECENT_MSG;
   const recentMessage = currentMsg.getMinutesAgo() <= RECENT_MSG;
   return veryRecentMessage && timeSinceLastMsgGreaterThan(VERY_RECENT_MSG_INTERVAL, currentMsg, nextMsg) || recentMessage && timeSinceLastMsgGreaterThan(RECENT_MSG_INTERVAL, currentMsg, nextMsg);
@@ -38,7 +38,7 @@ const roomSubs = new SubsManager({
 const Room = React.createClass({
   mixins: [ReactMeteorData],
 
-  getMeteorData() {
+  getMeteorData () {
     const { roomId } = this.props;
     const messagesHandle = roomSubs.subscribe("chatterMessages", {
       messageLimit: Session.get("messageLimit")
@@ -56,11 +56,11 @@ const Room = React.createClass({
     };
   },
 
-  pushMessage(text) {
+  pushMessage (text) {
     const roomId = this.props.roomId;
     const params = {
-        message: text,
-        roomId
+      message: text,
+      roomId
     };
 
     if (!text || text.length > 1000) return;
@@ -68,7 +68,7 @@ const Room = React.createClass({
     this.scrollDown();
   },
 
-  componentWillMount() {
+  componentWillMount () {
     // creates a throttled version for both listeners
     this.pushMessage = _.debounce(this.pushMessage, 100);
     this.listenScrollEvent = _.debounce(this.listenScrollEvent, 100);
@@ -78,38 +78,38 @@ const Room = React.createClass({
     }
   },
 
-  componentDidMount() {
+  componentDidMount () {
     this.scrollDown();
     Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
   },
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     if (!this.checkRoom()) return;
     Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
   },
 
-  componentWillUpdate() {
+  componentWillUpdate () {
     const scroller = this.refs.scroller;
     this.shouldScroll = scroller.scrollTop + scroller.offsetHeight === scroller.scrollHeight;
   },
 
-  componentDidUpdate() {
+  componentDidUpdate () {
     if (this.shouldScroll) {
       this.scrollDown();
     }
   },
 
-  scrollDown() {
+  scrollDown () {
     const scroller = this.refs.scroller;
     scroller.scrollTop = scroller.scrollHeight;
   },
 
-  setUserProfile(userId) {
+  setUserProfile (userId) {
     this.props.setUserProfile(userId);
     this.props.setView("profile");
   },
 
-  checkRoom() {
+  checkRoom () {
     Meteor.call("room.check", this.props.roomId, (error, result) => {
       if (!result) {
         this.props.setView("roomList");
@@ -117,7 +117,7 @@ const Room = React.createClass({
     });
   },
 
-  listenScrollEvent() {
+  listenScrollEvent () {
     // TODO: throttleeeeee
     const scroller = this.refs.scroller;
     if (scroller.scrollTop === 0) {
@@ -130,7 +130,7 @@ const Room = React.createClass({
     }
   },
 
-  render() {
+  render () {
     this.checkRoom();
 
     const loader = (

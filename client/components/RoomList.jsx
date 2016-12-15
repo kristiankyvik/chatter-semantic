@@ -1,7 +1,7 @@
 import React from 'react';
 
 import RoomListItem from "../components/RoomListItem.jsx";
-import Loader from "../components/Loader.jsx"
+import Loader from "../components/Loader.jsx";
 
 const RoomList = React.createClass({
   getInitialState: function () {

@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 
 const Writer = React.createClass({
 
-  handleSubmit(event) {
+  handleSubmit (event) {
     const input = document.getElementById("message");
-    $(input).on('focus', function() {
+    $(input).on('focus', function () {
       this.value = '';
     });
 
@@ -17,7 +17,6 @@ const Writer = React.createClass({
       input.value = "";
       $(input).attr("rows", "1").css("height", 41);
     }
-
 
     if ($(input).outerHeight() >= 250) {
       return;
@@ -32,11 +31,11 @@ const Writer = React.createClass({
     }
   },
 
-  componentDidMount() {
+  componentDidMount () {
     ReactDOM.findDOMNode(this.refs.writer).focus();
   },
 
-  render() {
+  render () {
     return (
       <div className="ui form writer">
         <div className="field">

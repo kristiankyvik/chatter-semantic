@@ -5,7 +5,7 @@ import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
 
 const MainSettings = React.createClass({
 
-  toggleArchivedState() {
+  toggleArchivedState () {
     const params = {
       archived: !this.data.room.archived,
       roomId: this.props.room._id,
@@ -15,7 +15,7 @@ const MainSettings = React.createClass({
     Meteor.call("room.archive", params);
   },
 
-  deleteRoom() {
+  deleteRoom () {
     Meteor.call("room.delete", this.props.room._id, (error, result) => {
       if (!error) {
         this.props.setView("roomList");
@@ -23,7 +23,7 @@ const MainSettings = React.createClass({
     });
   },
 
-  render() {
+  render () {
     if (!this.props.subsReady) {
       return <Loader/>;
     }
@@ -31,10 +31,10 @@ const MainSettings = React.createClass({
     const user = Meteor.user();
 
     const users = this.props.users;
-      $(".ui.toggle.checkbox").checkbox();
-      if (this.props.room.archived) {
-        $(".ui.toggle.checkbox").checkbox('check');
-      }
+    $(".ui.toggle.checkbox").checkbox();
+    if (this.props.room.archived) {
+      $(".ui.toggle.checkbox").checkbox('check');
+    }
     const addUsersHTML = (
       <div className="item addUserItem" onClick={ () => this.props.setSettingsView("addUsers")}>
         <i className="add user icon"></i>
@@ -46,26 +46,26 @@ const MainSettings = React.createClass({
       </div>
     );
 
-    const roomUsersHTML = users.map(function(user) {
-    const statusClass = user.profile.online ? "user-status online" : "user-status offline";
+    const roomUsersHTML = users.map(function (user) {
+      const statusClass = user.profile.online ? "user-status online" : "user-status offline";
       return (
-          <div className="item room-user" key={user._id}>
-            <div className={statusClass}></div>
-            <img
-              className="ui avatar image"
-              src={`data:image/png;base64,${getAvatarSvg(user._id)}`}
-            />
-            <div className="content">
-              <a className="header nickname">
-                {user.profile.chatterNickname}
-              </a>
-              <div className="description last-active">
-                Last logged in just now.
-              </div>
+        <div className="item room-user" key={user._id}>
+          <div className={statusClass}></div>
+          <img
+            className="ui avatar image"
+            src={`data:image/png;base64,${getAvatarSvg(user._id)}`}
+          />
+          <div className="content">
+            <a className="header nickname">
+              {user.profile.chatterNickname}
+            </a>
+            <div className="description last-active">
+              Last logged in just now.
             </div>
           </div>
-        );
-      });
+        </div>
+      );
+    });
 
     const deleteRoomHTML = (
       <div>
@@ -95,7 +95,7 @@ const MainSettings = React.createClass({
           This channel was created by {this.props.room.createdBy} on the {this.props.room.createdAt.toISOString()}.
         </p>
 
-        {user.profile.isChatterAdmin || this.props.room.roomType == "support" ? deleteRoomHTML : null}
+        {user.profile.isChatterAdmin || this.props.room.roomType === "support" ? deleteRoomHTML : null}
 
         <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
           <label>

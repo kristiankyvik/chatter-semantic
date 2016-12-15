@@ -29,16 +29,16 @@ const leftIconConfig = {
 
 const Nav = React.createClass({
 
-  setView() {
+  setView () {
     const settings = leftIconConfig[this.props.view];
     this.props.setView(settings.nextView);
   },
 
-  render() {
-    const isRoomView = this.props.view == "room";
-    const isRoomListView = this.props.view == "roomList";
+  render () {
+    const isRoomView = this.props.view === "room";
+    const isRoomListView = this.props.view === "roomList";
 
-    const nextView = isRoomView ? "settings" : "profile" ;
+    const nextView = isRoomView ? "settings" : "profile";
 
 
     const leftIconHTML = (
@@ -47,7 +47,7 @@ const Nav = React.createClass({
       </a>
     );
 
-    const settingsIconHTML =  <i className="setting icon"></i>;
+    const settingsIconHTML = <i className="setting icon"></i>;
 
     return (
       <div className="ui secondary pointing menu">

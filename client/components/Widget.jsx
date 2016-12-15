@@ -2,7 +2,7 @@ import React from 'react';
 
 const Widget = React.createClass({
 
-  render() {
+  render () {
     const msgNotif = this.props.msgNotif;
     const msgNotifHTML = (
       <div className="widget-msg-notif">

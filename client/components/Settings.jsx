@@ -13,7 +13,7 @@ const Settings = React.createClass({
     return {
       view: "main"
     };
-   },
+  },
 
   getMeteorData () {
     const userId = Meteor.userId();

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 const MainNewRoom = React.createClass({
 
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.preventDefault();
     const params = {};
     params.name = ReactDOM.findDOMNode(this.refs.channelName).value.trim();
@@ -17,7 +17,7 @@ const MainNewRoom = React.createClass({
     });
   },
 
-  componentDidMount() {
+  componentDidMount () {
     ReactDOM.findDOMNode(this.refs.channelName).focus();
 
     $('.ui.form')
@@ -27,8 +27,8 @@ const MainNewRoom = React.createClass({
             identifier: 'name',
             rules: [
               {
-                type   : 'empty',
-                prompt : 'Please enter a valid name'
+                type: 'empty',
+                prompt: 'Please enter a valid name'
               }
             ]
           }
@@ -36,8 +36,7 @@ const MainNewRoom = React.createClass({
       });
   },
 
-  render() {
-
+  render () {
     return (
       <div className="newRoom padded scrollable">
         <form className="ui form" onSubmit={this.handleSubmit} ref="form">
@@ -45,13 +44,13 @@ const MainNewRoom = React.createClass({
             <label>
               Channel name
             </label>
-            <input type="text" name="name" placeholder="Enter channel name"  ref="channelName"></input>
+            <input type="text" name="name" placeholder="Enter channel name" ref="channelName"></input>
           </div>
           <div className="field">
             <label>
               Channel description
             </label>
-            <input type="text" name="description" placeholder="Enter channel description"  ref="channelDescription"></input>
+            <input type="text" name="description" placeholder="Enter channel description" ref="channelDescription"></input>
           </div>
           <button className="ui button primary addusers-btn" type="submit" >
             Add users

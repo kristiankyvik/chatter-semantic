@@ -1,7 +1,7 @@
 import ChatterApp from "./ChatterApp.jsx";
 
 Template.chatter.helpers({
-  ChatterApp() {
+  ChatterApp () {
     return ChatterApp;
   }
 });

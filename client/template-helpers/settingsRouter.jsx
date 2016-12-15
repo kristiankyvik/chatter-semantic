@@ -3,7 +3,7 @@ import React from 'react';
 import AddUsers from "../components/AddUsers.jsx";
 import MainSettings from "../components/MainSettings.jsx";
 
-const settingsRouter = function(scope, view) {
+const settingsRouter = function (scope, view) {
   const states = {
     main: {
       view: "main",

@@ -16,7 +16,6 @@ const latestRooms = function (limit, withIds) {
   };
 };
 
-
 const chatterSubs = new SubsManager({
   cacheLimit: CHATTER_CACHE_LIMIT,
   expireIn: CHATTER_EXPIRE_IN
