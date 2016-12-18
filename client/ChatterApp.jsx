@@ -12,8 +12,7 @@ import {
 const latestRooms = function (limit, withIds) {
   return {
     find: {"_id": {$in: withIds}},
-    options: {sort: {lastActive: -1}, limit: limit}
-  };
+    options: {sort: {lastActive: -1}, limit: limit}};
 };
 
 const chatterSubs = new SubsManager({
@@ -44,8 +43,14 @@ const ChatterApp = React.createClass({
 
   getMeteorData () {
     const userId = Meteor.userId();
-    const roomsHandle = chatterSubs.subscribe("chatterRooms");
+    let roomsHandle = null;
     const userRoomsHandle = chatterSubs.subscribe("chatterUserRooms");
+
+    Tracker.autorun(function () {
+      const roomIds = _.pluck(Chatter.UserRoom.find({userId}).fetch(), "roomId");
+      roomsHandle = chatterSubs.subscribe("chatterRooms", roomIds);
+    });
+
     const subsReady = roomsHandle.ready() && userRoomsHandle.ready();
 
     let activeRooms = [];
@@ -74,6 +79,7 @@ const ChatterApp = React.createClass({
 
         activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
         archivedRooms = Chatter.Room.find(archivedRoomQuery.find, archivedRoomQuery.options).fetch();
+
         hasSupportRoom = Chatter.Room.find({
           "_id": {$in: allRoomIds},
           "roomType": "support"
