@@ -37,6 +37,7 @@ const MainSettings = React.createClass({
     const user = Meteor.user();
 
     const users = this.props.users;
+
     $(".ui.toggle.checkbox").checkbox();
 
     const addUsersHTML = (

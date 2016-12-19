@@ -84,7 +84,6 @@ const RoomList = React.createClass({
   render () {
     const user = Meteor.user();
     const { subsReady, archivedRooms, activeRooms, hasSupportRoom } = this.props;
-    console.log("activeRooms roomlist", activeRooms);
 
     const helpButton = !_.isEmpty(user.profile.supportUser);
 

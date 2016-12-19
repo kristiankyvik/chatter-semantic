@@ -40,8 +40,14 @@ const Room = React.createClass({
 
   getMeteorData () {
     const { roomId } = this.props;
-    const messagesHandle = roomSubs.subscribe("chatterMessages", {
-      messageLimit: Session.get("messageLimit")
+
+    let messagesHandle = null;
+
+    Tracker.autorun(function () {
+      messagesHandle = roomSubs.subscribe("chatterMessages", {
+        messageLimit: Session.get("messageLimit"),
+        roomId
+      });
     });
 
     const usersHandle = roomSubs.subscribe("users");
