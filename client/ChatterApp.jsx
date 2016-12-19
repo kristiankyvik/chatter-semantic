@@ -25,7 +25,7 @@ const ChatterApp = React.createClass({
 
   getInitialState: function () {
     Session.set("chatOpen", false);
-    Session.setDefault('messageLimit', 100);
+    Session.setDefault('messageLimit', Chatter.options.messageLimit);
 
     return {
       chatOpen: false,
