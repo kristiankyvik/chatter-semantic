@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Loader from "../components/Loader.jsx";
+
 import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
 
 const AddUsers = React.createClass({
@@ -29,7 +31,8 @@ const AddUsers = React.createClass({
     }
 
     return {
-      users
+      users,
+      subsReady
     };
   },
 
@@ -73,6 +76,10 @@ const AddUsers = React.createClass({
   },
 
   render () {
+    if (!this.data.subsReady) {
+      return <Loader/>;
+    }
+
     const allUsers = this.data.users.map( user => {
       if (user.profile.chatterNickname.indexOf(this.state.query) < 0) {return;}
       let btnSetup = {
