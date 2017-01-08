@@ -180,6 +180,7 @@ body
 
         &.ui.comments
             max-width: 100%
+            bottom: 60px
             .date-banner
                 width: 100%
                 text-align: center
@@ -244,19 +245,34 @@ body
         position: absolute
         width: 100%
         bottom: 0
-
-        textarea
-            max-height: 250px
-            min-height: 41px
-            vertical-align: middle
-            resize: none
-            border-radius: 0 0 4px 4px
-            border: none
-            overflow: auto
-            outline: none
-            -webkit-box-shadow: none
-            -moz-box-shadow: none
-            box-shadow: none
+        border-top: 1px solid rgba(128, 128, 128, 0.08)
+        .field
+            textarea
+                max-height: 250px
+                min-height: 48px
+                padding: 18px 70px 18px 20px
+                vertical-align: middle
+                resize: none
+                border-radius: 0 0 4px 4px
+                border: none
+                overflow: auto
+                outline: none
+                -webkit-box-shadow: none
+                -moz-box-shadow: none
+                box-shadow: none
+            .send-btn
+                position: absolute
+                right: 0px
+                bottom: 0px
+                padding: 16px 20px
+                cursor: pointer
+                top: 0
+                display: flex
+                align-items: center
+                color: #197cd0
+                font-size: 15px
+                &:hover
+                    color: #439fe0
 
     .settings
         &.scrollable

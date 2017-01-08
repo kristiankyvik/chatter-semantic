@@ -10,12 +10,17 @@ const Writer = React.createClass({
       this.value = '';
     });
 
-    if(event.keyCode === 13) {
-      event.preventDefault();
+    const enterPressed = event.keyCode === 13;
+    const btnPressed = event === "btn-pressed";
+    const hasSubmitted = enterPressed || btnPressed;
+
+    if (hasSubmitted) {
+      enterPressed ? event.preventDefault() : false;
       const text = input.value;
       this.props.pushMessage(text);
       input.value = "";
       $(input).attr("rows", "1").css("height", 41);
+      btnPressed ? ReactDOM.findDOMNode(this.refs.writer).focus() : false;
     }
 
     if ($(input).outerHeight() >= 250) {
@@ -31,6 +36,7 @@ const Writer = React.createClass({
     }
   },
 
+
   componentDidMount () {
     ReactDOM.findDOMNode(this.refs.writer).focus();
   },
@@ -41,6 +47,9 @@ const Writer = React.createClass({
         <div className="field">
           <textarea id="message" rows="1" name="message" ref="writer" placeholder="Message.." onKeyDown={this.handleSubmit}>
           </textarea>
+          <div className="send-btn" onClick={()=> this.handleSubmit("btn-pressed")}>
+            Send
+          </div>
         </div>
       </div>
     );
