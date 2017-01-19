@@ -13,12 +13,12 @@ const AddUsers = React.createClass({
     const userRoomHandle = Meteor.subscribe("chatterUserRooms");
     const userHandle = Meteor.subscribe("users");
 
-    const subsReady = userRoomHandle.ready();
+    const subsReady = userRoomHandle.ready() && userHandle.ready();
 
     let addedUsers = [];
     let searchedUsers = [];
 
-    if (subsReady && userHandle) {
+    if (subsReady) {
       addedUsers = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
       const regex = new RegExp(".*" + this.state.query + ".*", "i"); // 'i' for case insensitive search
       searchedUsers = this.state.query ? Meteor.users.find({username: {$regex: regex}}).fetch() : [];
@@ -82,6 +82,8 @@ const AddUsers = React.createClass({
       return <Loader/>;
     }
 
+    console.log(this.data.searchedUsers);
+
     const allUsers = this.data.searchedUsers.map( user => {
       let btnSetup = {
         action: user.added ? "remove" : "add",
@@ -111,7 +113,7 @@ const AddUsers = React.createClass({
               {user.profile.chatterNickname}
             </a>
             <div className="description">
-              Last logged in just now.
+              {user.profile.online ? "user is online" : "user is offline"}
             </div>
           </div>
         </div>
