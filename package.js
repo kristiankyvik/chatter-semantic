@@ -6,7 +6,7 @@ Package.describe({
   documentation: 'README.md'
 });
 
-Package.onUse(function(api) {
+Package.onUse(function (api) {
   api.versionsFrom('1.2.0.2');
 
   api.use([
@@ -34,16 +34,17 @@ Package.onUse(function(api) {
     'react-template-helper@0.2.7',
     'react-meteor-data',
     'meteorhacks:subs-manager',
-    'mquandalle:stylus@1.0.10'
+    'mquandalle:stylus@1.0.10',
+    'momentjs:moment@2.8.4',
+    'mizzao:timesync@0.4.0'
   ], 'client');
 
   api.export([
     'ChatterApp'
   ]);
-
 });
 
-Package.onTest(function(api) {
+Package.onTest(function (api) {
   api.use('ecmascript');
   api.use('practicalmeteor:chai');
   api.use('jorgeer:chatter-semantic');

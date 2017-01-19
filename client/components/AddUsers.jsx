@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Loader from "../components/Loader.jsx";
 
-import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
+import {getAvatarSvg, getRelativeTime} from "../template-helpers/shared-helpers.jsx";
 
 const AddUsers = React.createClass({
   mixins: [ReactMeteorData],
@@ -82,8 +82,6 @@ const AddUsers = React.createClass({
       return <Loader/>;
     }
 
-    console.log(this.data.searchedUsers);
-
     const allUsers = this.data.searchedUsers.map( user => {
       let btnSetup = {
         action: user.added ? "remove" : "add",
@@ -91,6 +89,10 @@ const AddUsers = React.createClass({
       };
 
       const loading = (user._id === this.state.requestingUser);
+
+      const userOnline = user.status.online;
+      const status = userOnline ? "user-status online" : "user-status offline";
+      const lastLogin = user.status.hasOwnProperty("lastLogin") ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
 
       return (
         <div className="item" key={user._id}>
@@ -102,7 +104,7 @@ const AddUsers = React.createClass({
               {btnSetup.text}
             </div>
           </div>
-          <div className={user.profile.online ? "user-status online" : "user-status offline"}>
+          <div className={status}>
           </div>
           <img
             className="ui avatar image"
@@ -113,7 +115,7 @@ const AddUsers = React.createClass({
               {user.profile.chatterNickname}
             </a>
             <div className="description">
-              {user.profile.online ? "user is online" : "user is offline"}
+              {lastLogin}
             </div>
           </div>
         </div>

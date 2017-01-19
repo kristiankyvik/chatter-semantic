@@ -5,5 +5,13 @@ const getAvatarSvg = function (userId) {
   return new Identicon(userId).toString();
 };
 
-export {getAvatarSvg};
+const getRelativeTime = function (timeAgo) {
+  diff = moment.utc(TimeSync.serverTime() - timeAgo);
+  time = diff.format("H:mm:ss");
+  days = + diff.format("DDD") - 1;
+  ago = days ? days + "d " : "";
+  return "Last logged in " + ago + time + " ago";
+};
+
+export {getAvatarSvg, getRelativeTime};
 

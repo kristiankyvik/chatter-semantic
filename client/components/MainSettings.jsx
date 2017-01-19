@@ -1,7 +1,7 @@
 import React from 'react';
 import Loader from "../components/Loader.jsx";
 
-import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
+import {getAvatarSvg, getRelativeTime} from "../template-helpers/shared-helpers.jsx";
 
 const MainSettings = React.createClass({
 
@@ -52,10 +52,13 @@ const MainSettings = React.createClass({
     );
 
     const roomUsersHTML = users.map(function (user) {
-      const statusClass = user.profile.online ? "user-status online" : "user-status offline";
+      const userOnline = user.status.online;
+      const status = userOnline ? "user-status online" : "user-status offline";
+      const lastLogin = user.status.hasOwnProperty("lastLogin") ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
+
       return (
         <div className="item room-user" key={user._id}>
-          <div className={statusClass}></div>
+          <div className={status}></div>
           <img
             className="ui avatar image"
             src={`data:image/png;base64,${getAvatarSvg(user._id)}`}
@@ -65,7 +68,7 @@ const MainSettings = React.createClass({
               {user.profile.chatterNickname}
             </a>
             <div className="description last-active">
-              Last logged in just now.
+              {lastLogin}
             </div>
           </div>
         </div>
