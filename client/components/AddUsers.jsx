@@ -129,8 +129,9 @@ const AddUsers = React.createClass({
             <div className="item">
               <div className="ui icon input transparent fluid">
                 <input
+                  autoFocus
                   type="text"
-                  placeholder="Enter query to start search..."
+                  placeholder="Enter query to start searching..."
                   ref="query"
                   onChange={this.handleChange}
                 />
