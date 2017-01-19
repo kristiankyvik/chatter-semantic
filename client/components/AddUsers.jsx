@@ -15,14 +15,15 @@ const AddUsers = React.createClass({
 
     const subsReady = userRoomHandle.ready();
 
-    let users = [];
-
+    let addedUsers = [];
+    let searchedUsers = [];
 
     if (subsReady && userHandle) {
-      const roomUsersIds = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
-      users = Meteor.users.find().fetch();
-      _.each(users, function (user) {
-        if (roomUsersIds.indexOf(user._id) < 0) {
+      addedUsers = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
+      const regex = new RegExp(".*" + this.state.query + ".*", "i"); // 'i' for case insensitive search
+      searchedUsers = this.state.query ? Meteor.users.find({username: {$regex: regex}}).fetch() : [];
+      _.each(searchedUsers, (user) => {
+        if (this.data.addedUsers.indexOf(user._id) < 0) {
           user.added = false;
         } else {
           user.added = true;
@@ -31,15 +32,17 @@ const AddUsers = React.createClass({
     }
 
     return {
-      users,
-      subsReady
+      subsReady,
+      addedUsers,
+      searchedUsers
     };
   },
 
   getInitialState: function () {
     return {
-      query: "",
-      requestingUser: false
+      requestingUser: false,
+      users: [],
+      query: ""
     };
   },
 
@@ -50,8 +53,7 @@ const AddUsers = React.createClass({
 
   toggleUser (action, userId) {
     if (this.state.requestingUser) return;
-
-    this.setState({requestingUser: userId});
+    this.setState({requestingUser: true});
 
     const roomId = this.props.room._id;
     const options = {
@@ -80,8 +82,7 @@ const AddUsers = React.createClass({
       return <Loader/>;
     }
 
-    const allUsers = this.data.users.map( user => {
-      if (user.profile.chatterNickname.indexOf(this.state.query) < 0) {return;}
+    const allUsers = this.data.searchedUsers.map( user => {
       let btnSetup = {
         action: user.added ? "remove" : "add",
         text: user.added ? "Remove" : "Add"
@@ -125,7 +126,7 @@ const AddUsers = React.createClass({
               <div className="ui icon input transparent fluid">
                 <input
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Enter query to start search..."
                   ref="query"
                   onChange={this.handleChange}
                 />
