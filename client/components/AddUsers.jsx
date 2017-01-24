@@ -89,8 +89,8 @@ const AddUsers = React.createClass({
       };
 
       const loading = (user._id === this.state.requestingUser);
-
-      const userOnline = user.status.online;
+      const userHasStatus = user.hasOwnProperty("status");
+      const userOnline = userHasStatus ? user.status.online : false;
       const status = userOnline ? "user-status online" : "user-status offline";
       const lastLogin = user.status.hasOwnProperty("lastLogin") ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
 

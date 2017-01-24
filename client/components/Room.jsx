@@ -190,6 +190,7 @@ const Room = React.createClass({
           if (isFirstMessage(this.messages[index - 1], message)) {
             avatar = user._id;
             nickname = user.profile.chatterNickname;
+          } else if (isFirstMessageOfDay) {
           }
         }
 

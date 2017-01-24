@@ -52,9 +52,10 @@ const MainSettings = React.createClass({
     );
 
     const roomUsersHTML = users.map(function (user) {
-      const userOnline = user.status.online;
+      const userHasStatus = user.hasOwnProperty("status");
+      const userOnline = userHasStatus ? user.status.online : false;
       const status = userOnline ? "user-status online" : "user-status offline";
-      const lastLogin = user.status.hasOwnProperty("lastLogin") ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
+      const lastLogin = userHasStatus ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
 
       return (
         <div className="item room-user" key={user._id}>
