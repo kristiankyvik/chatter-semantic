@@ -55,7 +55,8 @@ const MainSettings = React.createClass({
       const userHasStatus = user.hasOwnProperty("status");
       const userOnline = userHasStatus ? user.status.online : false;
       const status = userOnline ? "user-status online" : "user-status offline";
-      const lastLogin = userHasStatus ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
+      const userHasLastLoginDate = userHasStatus && user.status.hasOwnProperty("lastLogin");
+      const lastLogin = userHasLastLoginDate ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
 
       return (
         <div className="item room-user" key={user._id}>
