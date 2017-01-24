@@ -92,7 +92,7 @@ const AddUsers = React.createClass({
       const userHasStatus = user.hasOwnProperty("status");
       const userOnline = userHasStatus ? user.status.online : false;
       const status = userOnline ? "user-status online" : "user-status offline";
-      const lastLogin = user.status.hasOwnProperty("lastLogin") ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
+      const lastLogin = userHasStatus ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
 
       return (
         <div className="item" key={user._id}>
