@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
+import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
 import {
   ROOM_LIST_CACHE_LIMIT,
@@ -68,7 +68,8 @@ const RoomListItem = React.createClass({
     let statusClass = "user-status none";
 
     if (lastUser) {
-      statusClass = lastUser.profile.online ? "user-status online" : "user-status offline";
+      const {isOnline} = getUserStatus(lastUser);
+      statusClass = isOnline ? "user-status online" : "user-status offline";
       lastAvatar = lastUser._id;
     }
 

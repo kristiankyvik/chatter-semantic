@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Loader from "../components/Loader.jsx";
 
-import {getAvatarSvg} from "../template-helpers/shared-helpers.jsx";
+import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
 import {
   PROFILE_CACHE_LIMIT,
@@ -79,6 +79,7 @@ const Profile = React.createClass({
     const user = this.data.user.profile;
     const headerText = `${user.chatterNickname}'s Profile`;
     const canEditNickname = Chatter.options.editableNickname;
+    const {isOnline, lastLogin} = getUserStatus(this.data.user);
 
     const form = (
       <div>
@@ -117,8 +118,8 @@ const Profile = React.createClass({
         <div className="sub header">
           <span>{user.chatterNickname}</span> is {user.isChatterAdmin ? "" : "not"} an <span>admin</span>.
         </div>
-        <p className={user.online ? "success-msg" : "failure-msg"}>
-          <span>{user.chatterNickname}</span> is currently {user.online ? "online" : "offline"}.
+        <p className={isOnline ? "success-msg" : "failure-msg"}>
+          <span>{lastLogin}</span>
         </p>
         {this.props.userProfile === userId && canEditNickname ? form : null}
       </div>

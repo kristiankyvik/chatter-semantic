@@ -13,5 +13,16 @@ const getRelativeTime = function (timeAgo) {
   return "Last logged in " + ago + time + " ago";
 };
 
-export {getAvatarSvg, getRelativeTime};
+const getUserStatus = function (user) {
+  const userHasStatus = user.hasOwnProperty("status");
+  const isOnline = userHasStatus ? user.status.online : false;
+  const userHasLastLoginDate = userHasStatus && user.status.hasOwnProperty("lastLogin");
+  const lastLogin = userHasLastLoginDate ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
+  return {
+    isOnline,
+    lastLogin
+  };
+};
+
+export {getAvatarSvg, getRelativeTime, getUserStatus};
 

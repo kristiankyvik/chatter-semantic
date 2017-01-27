@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Loader from "../components/Loader.jsx";
 
-import {getAvatarSvg, getRelativeTime} from "../template-helpers/shared-helpers.jsx";
+import {getAvatarSvg, getRelativeTime, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
 const AddUsers = React.createClass({
   mixins: [ReactMeteorData],
@@ -89,11 +89,8 @@ const AddUsers = React.createClass({
       };
 
       const loading = (user._id === this.state.requestingUser);
-      const userHasStatus = user.hasOwnProperty("status");
-      const userOnline = userHasStatus ? user.status.online : false;
-      const status = userOnline ? "user-status online" : "user-status offline";
-      const userHasLastLoginDate = userHasStatus && user.status.hasOwnProperty("lastLogin");
-      const lastLogin = userHasLastLoginDate ? getRelativeTime(user.status.lastLogin.date) : "User is offline";
+      const {isOnline, lastLogin} = getUserStatus(user);
+      const statusCircleClass = isOnline ? "user-status online" : "user-status offline";
 
       return (
         <div className="item" key={user._id}>
@@ -105,7 +102,7 @@ const AddUsers = React.createClass({
               {btnSetup.text}
             </div>
           </div>
-          <div className={status}>
+          <div className={statusCircleClass}>
           </div>
           <img
             className="ui avatar image"
