@@ -30,10 +30,7 @@ const timestampShouldBeDisplayed = function (currentMsg, nextMsg) {
   return veryRecentMessage && timeSinceLastMsgGreaterThan(VERY_RECENT_MSG_INTERVAL, currentMsg, nextMsg) || recentMessage && timeSinceLastMsgGreaterThan(RECENT_MSG_INTERVAL, currentMsg, nextMsg);
 };
 
-const roomSubs = new SubsManager({
-  cacheLimit: ROOM_CACHE_LIMIT,
-  expireIn: ROOM_EXPIRE_IN
-});
+const roomSubs = new SubsCache(-1, -1);
 
 const Room = React.createClass({
   mixins: [ReactMeteorData],
@@ -50,7 +47,7 @@ const Room = React.createClass({
         messageLimit: Session.get("messageLimit"),
         roomId
       });
-      roomDataHandle = Meteor.subscribe("roomData", roomId
+      roomDataHandle = roomSubs.subscribe("roomData", roomId
       );
     });
 
@@ -62,7 +59,8 @@ const Room = React.createClass({
 
     return {
       subsReady,
-      roomDataHandle
+      roomDataHandle,
+      messagesHandle
     };
   },
 
@@ -99,7 +97,9 @@ const Room = React.createClass({
 
   componentWillUnmount () {
     Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
+    console.log("stoping room subscriptions");
     this.data.roomDataHandle.stop();
+    this.data.messagesHandle.stop();
   },
 
   componentWillUpdate () {

@@ -15,10 +15,8 @@ const latestRooms = function (limit, withIds) {
     options: {sort: {lastActive: -1}, limit: limit}};
 };
 
-const chatterSubs = new SubsManager({
-  cacheLimit: CHATTER_CACHE_LIMIT,
-  expireIn: CHATTER_EXPIRE_IN
-});
+const chatterSubs = new SubsCache(-1, -1);
+
 
 const ChatterApp = React.createClass({
   mixins: [ReactMeteorData],
@@ -45,11 +43,12 @@ const ChatterApp = React.createClass({
   getMeteorData () {
     const userId = Meteor.userId();
     let roomListDataHandle = null;
-    Tracker.autorun( () => {
-      roomListDataHandle = chatterSubs.subscribe("roomListData", userId, Session.get("refreshPub"));
-    });
 
-    const subsReady = roomListDataHandle.ready();
+    if (this.state.view === "roomList") {
+      roomListDataHandle = chatterSubs.subscribe("roomListData", userId, "dfkdslk");
+    }
+
+    let subsReady = _.isNull(roomListDataHandle) ? false : roomListDataHandle.ready();
     let hasSupportRoom = false;
     let msgNotif = false;
     let allRoomIds = [];
@@ -58,7 +57,6 @@ const ChatterApp = React.createClass({
     if (subsReady) {
 
       if (userId) {
-        console.log("doing everything again");
         var tRooms = Chatter.Room.find({}, {sort: {lastActive: -1}}).fetch();
         allRooms = tRooms.map(function (room) {
           const roomId = room._id;
@@ -91,11 +89,15 @@ const ChatterApp = React.createClass({
       hasSupportRoom,
       msgNotif,
       allRoomIds,
-      allRooms
+      allRooms,
+      roomListDataHandle
     };
   },
 
   goToRoom (roomId, roomName) {
+    if (!_.isNull(this.data.roomListDataHandle)) {
+      this.data.roomListDataHandle.stop();
+    }
     this.setState({
       roomId: roomId,
       view: 'room',
@@ -118,9 +120,8 @@ const ChatterApp = React.createClass({
   },
 
   setView (view) {
-    if (view === "roomList") {
-      const count =  count > 100 ? 0 : Session.get("refreshPub");
-      Session.set("refreshPub", count + 1);
+    if (view !== "roomList") {
+      this.data.roomListDataHandle.stop();
     }
     this.setState(router(this, view));
   },
@@ -135,18 +136,8 @@ const ChatterApp = React.createClass({
     }
   },
 
-  toggleChatState () {
-    // ATTENTION: removing for the purpose of the widget implementation which uses the global Session object instead
-    // const state = !this.state.chatOpen;
-    // this.setState({
-    //   chatOpen: state
-    // });
-  },
-
   render () {
     const chatHTML = getChatHTML(this);
-    this.checkIfCurrentRoomExists();
-
     return (
       chatHTML
     );
