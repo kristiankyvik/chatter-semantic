@@ -97,7 +97,6 @@ const Room = React.createClass({
 
   componentWillUnmount () {
     Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
-    console.log("stoping room subscriptions");
     this.data.roomDataHandle.stop();
     this.data.messagesHandle.stop();
   },

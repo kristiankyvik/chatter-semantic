@@ -23,7 +23,6 @@ const ChatterApp = React.createClass({
 
   getInitialState: function () {
     Session.set("chatOpen", false);
-    Session.set("refreshPub", 1);
     Session.setDefault('messageLimit', Chatter.options.messageLimit);
 
     return {
@@ -55,7 +54,6 @@ const ChatterApp = React.createClass({
     let allRooms = [];
 
     if (subsReady) {
-
       if (userId) {
         var tRooms = Chatter.Room.find({}, {sort: {lastActive: -1}}).fetch();
         allRooms = tRooms.map(function (room) {
