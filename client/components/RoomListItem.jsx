@@ -2,78 +2,20 @@ import React from 'react';
 
 import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
-import {
-  ROOM_LIST_CACHE_LIMIT,
-  ROOM_LIST_EXPIRE_IN
-} from "../global-variables.js";
-
-const roomListItemSubs = new SubsManager({
-  cacheLimit: ROOM_LIST_CACHE_LIMIT,
-  expireIn: ROOM_LIST_EXPIRE_IN
-});
-
 const RoomListItem = React.createClass({
-  mixins: [ReactMeteorData],
-
-  getMeteorData () {
-    const messagesHandle = roomListItemSubs.subscribe("chatterMessages", {
-      messageLimit: 1,
-      roomId: this.props.room._id
-    });
-    const countHandle = roomListItemSubs.subscribe("chatterUserRooms", {
-      roomId: this.props.room._id
-    });
-
-    const usersHandle = roomListItemSubs.subscribe("users");
-
-    const subsReady = messagesHandle.ready() && countHandle.ready() && usersHandle.ready();
-    const userId = Meteor.userId();
-
-    let message = "no messages yet";
-    let timeAgo = this.props.room.getTimeAgo();
-    let unreadMsgCount = 0;
-    let lastUser = null;
-
-    if (subsReady) {
-      const checkCount = Chatter.UserRoom.findOne({roomId: this.props.room._id, userId: userId});
-
-      unreadMsgCount = _.isEmpty(checkCount) ? -1 : checkCount.unreadMsgCount;
-
-      const lastMessage = Chatter.Message.findOne({roomId: this.props.room._id }, {sort: {createdAt: -1, limit: 1}});
-      if (!_.isEmpty(lastMessage)) {
-        message = lastMessage.message;
-        timeAgo = lastMessage.getTimeAgo();
-        lastUser = Meteor.users.findOne(lastMessage.userId);
-      }
-    }
-
-    return {
-      message,
-      timeAgo,
-      unreadMsgCount,
-      lastUser
-    };
-  },
 
   render () {
-    const {
-      goToRoom,
-      room
-    } = this.props;
-
-    const unreadMsgCount = this.data.unreadMsgCount;
-
-    const lastUser = this.data.lastUser;
+    const {room, goToRoom} = this.props;
     let lastAvatar = "default";
     let statusClass = "user-status none";
 
-    if (lastUser) {
-      const {isOnline} = getUserStatus(lastUser);
+    if (!_.isNull(room.lastMsgUser)) {
+      const {isOnline} = getUserStatus(room.lastMsgUser);
       statusClass = isOnline ? "user-status online" : "user-status offline";
-      lastAvatar = lastUser._id;
+      lastAvatar = room.lastMsgUser._id;
     }
 
-    const unread = unreadMsgCount ? "unread" : null;
+    const unread = room.unreadMsgCount > 0 ? "unread" : null;
 
     return (
       <div
@@ -92,15 +34,15 @@ const RoomListItem = React.createClass({
               {room.name}
             </div>
             <div className="meta">
-              {this.data.timeAgo}
+              {room.lastMsgTimeAgo}
             </div>
           </div>
           <div className="description">
             <div className="preview">
-              {this.data.message}
+              {room.lastMsgTxt}
             </div>
             <div className="counter">
-                { unreadMsgCount > 0 ? <span> {unreadMsgCount} </span> : "" }
+                { room.unreadMsgCount > 0 ? <span> {room.unreadMsgCount} </span> : "" }
             </div>
           </div>
         </div>

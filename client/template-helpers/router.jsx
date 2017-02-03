@@ -29,6 +29,7 @@ const router = function (scope, view) {
                         loadMoreRooms={scope.loadMoreRooms}
                         setUserProfile={scope.setUserProfile}
                         hasSupportRoom={scope.data.hasSupportRoom}
+                        allRooms={scope.data.allRooms}
                       />
     },
     settings: {

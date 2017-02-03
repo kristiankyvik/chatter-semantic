@@ -94,7 +94,6 @@ const Room = React.createClass({
   },
 
   componentWillUnmount () {
-    if (!this.checkRoom()) return;
     Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
   },
 

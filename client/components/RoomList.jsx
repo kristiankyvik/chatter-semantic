@@ -83,7 +83,7 @@ const RoomList = React.createClass({
 
   render () {
     const user = Meteor.user();
-    const { subsReady, archivedRooms, activeRooms, hasSupportRoom } = this.props;
+    const { subsReady, hasSupportRoom, allRooms } = this.props;
 
     const helpButton = !_.isEmpty(user.profile.supportUser);
 
@@ -102,24 +102,17 @@ const RoomList = React.createClass({
     const newRoomBtn = (user.profile.isChatterAdmin) ? newRoomBtnHTML : null;
     const helpChatBtn = helpButton && (user.username !== "admin") && (!hasSupportRoom ) ? helpChatBtnHTML : null;
 
-    const activeRoomsHTML = activeRooms.map(room => {
-      room.archived = false;
-      return <RoomListItem
-              key={room._id}
-              goToRoom={this.goToRoom}
-              goToNewRoom={this.goToNewRoom}
-              room={room}
-            />;
-    });
+    let activeHTML = [];
+    let archivedHTML = [];
 
-    const archivedRoomsHTML = archivedRooms.map(room => {
-      room.archived = true;
-      return <RoomListItem
-              key={room._id}
-              goToRoom={this.goToRoom}
-              goToNewRoom={this.goToNewRoom}
-              room={room}
-            />;
+    _.forEach(allRooms, (room)=> {
+      const roomListItemComp = <RoomListItem
+                                key={room._id}
+                                goToRoom={this.goToRoom}
+                                goToNewRoom={this.goToNewRoom}
+                                room={room}
+                              />;
+      room.archived ? archivedHTML.push(roomListItemComp) : activeHTML.push(roomListItemComp);
     });
 
     return (
@@ -130,12 +123,12 @@ const RoomList = React.createClass({
               <div className="title active">
                 <div className="ui header">
                   <i className="dropdown icon"></i>
-                  Active channels <span className="count">({activeRooms.length})</span>
+                  Active channels <span className="count">({activeHTML.length})</span>
                 </div>
               </div>
               <div className="content active">
                 <div className="ui selection middle aligned list celled">
-                  {subsReady ? activeRoomsHTML : <Loader/>}
+                  {subsReady ? activeHTML : <Loader/>}
                   {this.getMoreRoomsBtn("active")}
                 </div>
               </div>
@@ -144,12 +137,12 @@ const RoomList = React.createClass({
               <div className="title">
                 <div className="ui header">
                   <i className="dropdown icon"></i>
-                  Archived channels <span className="count">({archivedRooms.length})</span>
+                  Archived channels <span className="count">({archivedHTML.length})</span>
                 </div>
               </div>
               <div className="content">
                 <div className="ui selection middle aligned list celled">
-                  {subsReady ? archivedRoomsHTML : <Loader/>}
+                  {subsReady ? archivedHTML : <Loader/>}
                   {this.getMoreRoomsBtn("archived")}
                 </div>
               </div>

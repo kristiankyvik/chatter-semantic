@@ -44,42 +44,36 @@ const ChatterApp = React.createClass({
   getMeteorData () {
     const userId = Meteor.userId();
     let roomsHandle = null;
-    const userRoomsHandle = chatterSubs.subscribe("chatterUserRooms");
 
-    Tracker.autorun(function () {
-      const roomIds = _.pluck(Chatter.UserRoom.find({userId}).fetch(), "roomId");
-      roomsHandle = chatterSubs.subscribe("chatterRooms", roomIds);
-    });
+    const roomDataHandle = chatterSubs.subscribe("roomData", userId);
+    const subsReady = roomDataHandle.ready();
 
-    const subsReady = roomsHandle.ready() && userRoomsHandle.ready();
-
-    let activeRooms = [];
-    let archivedRooms = [];
     let hasSupportRoom = false;
     let msgNotif = false;
     let allRoomIds = [];
+    let allRooms = [];
 
     if (subsReady) {
-      const {activeRoomLimit, archivedRoomLimit} = this.state;
 
       if (userId) {
-        const allRooms = Chatter.UserRoom.find({userId}).fetch();
-        const archivedUserRooms = Chatter.UserRoom.find({userId, archived: true}).fetch();
-        const activeUserRooms = Chatter.UserRoom.find({userId, archived: false}).fetch();
+        var tRooms = Chatter.Room.find().fetch();
+        allRooms = tRooms.map(function (room) {
+          const roomId = room._id;
+          const userRoom = Chatter.UserRoom.findOne({roomId});
+          room.archived = userRoom.archived;
+          room.unreadMsgCount = userRoom.unreadMsgCount;
+          const lastMsg = Chatter.Message.findOne({roomId});
+          const hasLastMessage = !_.isUndefined(lastMsg);
+          room.lastMsgTxt = hasLastMessage ? lastMsg.message : "no messages yet";
+          room.lastMsgTimeAgo = hasLastMessage ? lastMsg.getTimeAgo() : null;
+          room.lastMsgUser = hasLastMessage ? Meteor.users.findOne(lastMsg.userId) : null;
+          return room;
+        });
 
-        allRoomIds = _.pluck(allRooms, "roomId");
-
-        const archivedRoomIds = _.pluck(archivedUserRooms, "roomId");
-
-        const activeRoomIds = _.pluck(activeUserRooms, "roomId");
-
-        const activeRoomQuery = latestRooms(activeRoomLimit, activeRoomIds);
-        const archivedRoomQuery = latestRooms(archivedRoomLimit, archivedRoomIds);
+        const allUserRooms = Chatter.UserRoom.find({userId}).fetch();
+        allRoomIds = _.pluck(allUserRooms, "roomId");
 
         msgNotif = Chatter.UserRoom.find({userId: userId, unreadMsgCount: { $gt: 0 }}).fetch().length;
-
-        activeRooms = Chatter.Room.find(activeRoomQuery.find, activeRoomQuery.options).fetch();
-        archivedRooms = Chatter.Room.find(archivedRoomQuery.find, archivedRoomQuery.options).fetch();
 
         hasSupportRoom = Chatter.Room.find({
           "_id": {$in: allRoomIds},
@@ -89,12 +83,11 @@ const ChatterApp = React.createClass({
     }
 
     return {
-      activeRooms,
-      archivedRooms,
       subsReady,
       hasSupportRoom,
       msgNotif,
-      allRoomIds
+      allRoomIds,
+      allRooms
     };
   },
 
