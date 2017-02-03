@@ -57,6 +57,7 @@ const ChatterApp = React.createClass({
     let archivedRooms = [];
     let hasSupportRoom = false;
     let msgNotif = false;
+    let allRoomIds = [];
 
     if (subsReady) {
       const {activeRoomLimit, archivedRoomLimit} = this.state;
@@ -66,7 +67,7 @@ const ChatterApp = React.createClass({
         const archivedUserRooms = Chatter.UserRoom.find({userId, archived: true}).fetch();
         const activeUserRooms = Chatter.UserRoom.find({userId, archived: false}).fetch();
 
-        const allRoomIds = _.pluck(allRooms, "roomId");
+        allRoomIds = _.pluck(allRooms, "roomId");
 
         const archivedRoomIds = _.pluck(archivedUserRooms, "roomId");
 
@@ -92,7 +93,8 @@ const ChatterApp = React.createClass({
       archivedRooms,
       subsReady,
       hasSupportRoom,
-      msgNotif
+      msgNotif,
+      allRoomIds
     };
   },
 
@@ -122,6 +124,16 @@ const ChatterApp = React.createClass({
     this.setState(router(this, view));
   },
 
+  checkIfCurrentRoomExists () {
+    if (!_.isNull(this.state.roomId)) {
+      if (this.data.allRoomIds.indexOf(this.state.roomId) < 0) {
+        this.setState({
+          roomId: null
+        });
+      }
+    }
+  },
+
   toggleChatState () {
     // ATTENTION: removing for the purpose of the widget implementation which uses the global Session object instead
     // const state = !this.state.chatOpen;
@@ -132,6 +144,8 @@ const ChatterApp = React.createClass({
 
   render () {
     const chatHTML = getChatHTML(this);
+    this.checkIfCurrentRoomExists();
+
     return (
       chatHTML
     );

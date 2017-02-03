@@ -75,6 +75,10 @@ const Room = React.createClass({
   },
 
   componentWillMount () {
+    // Check if roomId is Null (if room has been deleted) and return user to roomList if so
+    if (_.isNull(this.props.roomId)) {
+      this.props.setView("roomList");
+    }
     // creates a throttled version for both listeners
     this.pushMessage = _.debounce(this.pushMessage, 100);
     this.listenScrollEvent = _.debounce(this.listenScrollEvent, 100);
@@ -115,14 +119,6 @@ const Room = React.createClass({
     this.props.setView("profile");
   },
 
-  checkRoom () {
-    Meteor.call("room.check", this.props.roomId, (error, result) => {
-      if (!result) {
-        this.props.setView("roomList");
-      }
-    });
-  },
-
   listenScrollEvent () {
     // TODO: throttleeeeee
     const scroller = this.refs.scroller;
@@ -137,8 +133,6 @@ const Room = React.createClass({
   },
 
   render () {
-    this.checkRoom();
-
     const loader = (
       <Loader />
     );
