@@ -36,7 +36,8 @@ Package.onUse(function (api) {
     'meteorhacks:subs-manager',
     'mquandalle:stylus@1.0.10',
     'momentjs:moment@2.8.4',
-    'mizzao:timesync@0.4.0'
+    'mizzao:timesync@0.4.0',
+    'ccorcos:subs-cache'
   ], 'client');
 
   api.export([

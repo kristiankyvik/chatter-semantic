@@ -25,6 +25,7 @@ const ChatterApp = React.createClass({
 
   getInitialState: function () {
     Session.set("chatOpen", false);
+    Session.set("refreshPub", 1);
     Session.setDefault('messageLimit', Chatter.options.messageLimit);
 
     return {
@@ -43,11 +44,12 @@ const ChatterApp = React.createClass({
 
   getMeteorData () {
     const userId = Meteor.userId();
-    let roomsHandle = null;
+    let roomListDataHandle = null;
+    Tracker.autorun( () => {
+      roomListDataHandle = chatterSubs.subscribe("roomListData", userId, Session.get("refreshPub"));
+    });
 
-    const roomDataHandle = chatterSubs.subscribe("roomData", userId);
-    const subsReady = roomDataHandle.ready();
-
+    const subsReady = roomListDataHandle.ready();
     let hasSupportRoom = false;
     let msgNotif = false;
     let allRoomIds = [];
@@ -56,19 +58,21 @@ const ChatterApp = React.createClass({
     if (subsReady) {
 
       if (userId) {
-        var tRooms = Chatter.Room.find().fetch();
+        console.log("doing everything again");
+        var tRooms = Chatter.Room.find({}, {sort: {lastActive: -1}}).fetch();
         allRooms = tRooms.map(function (room) {
           const roomId = room._id;
           const userRoom = Chatter.UserRoom.findOne({roomId});
           room.archived = userRoom.archived;
           room.unreadMsgCount = userRoom.unreadMsgCount;
-          const lastMsg = Chatter.Message.findOne({roomId});
+          const lastMsg = Chatter.Message.findOne({roomId}, {sort: {createdAt: -1}});
           const hasLastMessage = !_.isUndefined(lastMsg);
           room.lastMsgTxt = hasLastMessage ? lastMsg.message : "no messages yet";
           room.lastMsgTimeAgo = hasLastMessage ? lastMsg.getTimeAgo() : null;
           room.lastMsgUser = hasLastMessage ? Meteor.users.findOne(lastMsg.userId) : null;
           return room;
         });
+
 
         const allUserRooms = Chatter.UserRoom.find({userId}).fetch();
         allRoomIds = _.pluck(allUserRooms, "roomId");
@@ -114,6 +118,10 @@ const ChatterApp = React.createClass({
   },
 
   setView (view) {
+    if (view === "roomList") {
+      const count =  count > 100 ? 0 : Session.get("refreshPub");
+      Session.set("refreshPub", count + 1);
+    }
     this.setState(router(this, view));
   },
 

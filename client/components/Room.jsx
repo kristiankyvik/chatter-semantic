@@ -42,23 +42,27 @@ const Room = React.createClass({
     const { roomId } = this.props;
 
     let messagesHandle = null;
+    let roomDataHandle = null;
+
 
     Tracker.autorun(function () {
       messagesHandle = roomSubs.subscribe("chatterMessages", {
         messageLimit: Session.get("messageLimit"),
         roomId
       });
+      roomDataHandle = Meteor.subscribe("roomData", roomId
+      );
     });
 
-    const usersHandle = roomSubs.subscribe("users");
-    const subsReady = messagesHandle.ready() && usersHandle.ready();
+    const subsReady = messagesHandle.ready() && roomDataHandle.ready();
 
     if (subsReady) {
       this.messages = Chatter.Message.find({"roomId": roomId}, {sort: {createdAt: 1}}).fetch();
     }
 
     return {
-      subsReady
+      subsReady,
+      roomDataHandle
     };
   },
 
@@ -95,6 +99,7 @@ const Room = React.createClass({
 
   componentWillUnmount () {
     Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
+    this.data.roomDataHandle.stop();
   },
 
   componentWillUpdate () {
