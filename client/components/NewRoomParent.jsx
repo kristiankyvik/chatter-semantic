@@ -1,5 +1,4 @@
 import React from 'react';
-import newRoomRouter from "../template-helpers/newRoomRouter.jsx";
 
 const NewRoomParent = React.createClass({
   getInitialState: function () {

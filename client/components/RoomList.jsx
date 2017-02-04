@@ -4,9 +4,6 @@ import ReactDOM from 'react-dom';
 import Loader from "../components/Loader.jsx";
 import RoomListItem from "../components/RoomListItem.jsx";
 
-import getChatHTML from "../template-helpers/getChatHTML.jsx";
-import router from "../template-helpers/router.jsx";
-
 const latestRooms = function (limit, withIds) {
   return {
     find: {"_id": {$in: withIds}},
