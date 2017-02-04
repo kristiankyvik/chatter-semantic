@@ -1,49 +1,81 @@
 import React from 'react';
 
-const leftIconConfig = {
-  roomList: {
-    icon: "",
-    nextView: "roomList"
-  },
-  room: {
-    icon: "chevron left icon",
-    nextView: "roomList"
-  },
-  settings: {
-    icon: "close icon",
-    nextView: "room"
-  },
-  newRoom: {
-    icon: "close icon",
-    nextView: "roomList"
-  },
-  addUsers: {
-    icon: "chevron left icon",
-    nextView: "settings"
-  },
-  profile: {
-    icon: "close icon",
-    nextView: "roomList"
+const getLeftIconConfig = function (path) {
+  const leftIconConfig = {
+    "/": {
+      icon: "",
+      nextView: "/profile"
+    },
+    "/room": {
+      icon: "chevron left icon",
+      nextView: "/"
+    },
+    "/settings": {
+      icon: "close icon",
+      nextView: "/room"
+    },
+    "/newroom": {
+      icon: "close icon",
+      nextView: "/"
+    },
+    "/newroom/addusers": {
+      icon: "close icon",
+      nextView: "/"
+    },
+    "/profile": {
+      icon: "close icon",
+      nextView: "/"
+    }
+  };
+
+  if (path.substring(0, 6) === "/room/") {
+    return {
+      icon: "chevron left icon",
+      nextView: "/"
+    };
   }
+
+  return leftIconConfig[path];
+};
+
+
+const getRightIconConfig = function (path) {
+  const rightIconConfig = {
+    "/": {
+      icon: "setting icon",
+      nextView: "/profile"
+    }
+  };
+
+  if (path.substring(0, 6) === "/room/") {
+    return {
+      icon: "setting icon",
+      nextView: path + "/settings"
+    };
+  }
+
+  return rightIconConfig[path];
 };
 
 const Nav = React.createClass({
 
-  setView () {
-    const settings = leftIconConfig[this.props.view];
-    this.props.setView(settings.nextView);
+  setView (nextView) {
+    console.log(nextView);
+    this.props.parentProps.router.push(nextView);
   },
 
   render () {
-    const isRoomView = this.props.view === "room";
-    const isRoomListView = this.props.view === "roomList";
+    const { parentProps } = this.props;
 
-    const nextView = isRoomView ? "settings" : "profile";
+    const path = parentProps.location.pathname;
+    console.log("current path: ", path);
+    console.log("current left: ", getLeftIconConfig(path));
+    console.log("current right: ", getRightIconConfig(path));
 
 
     const leftIconHTML = (
-      <a className="icon item" onClick={() => this.setView()}>
-        <i className={leftIconConfig[this.props.view].icon}></i>
+      <a className="icon item" onClick={() => this.setView(getLeftIconConfig(path).nextView)}>
+        <i className={getLeftIconConfig(path).icon}></i>
       </a>
     );
 
@@ -56,17 +88,17 @@ const Nav = React.createClass({
         </div>
         <div className="header item">
           <div className="status">
-            <span key={this.props.header}>
-              {this.props.header}
+            <span>
+              {Chatter.options.chatName}
             </span>
           </div>
         </div>
         <div className="right menu">
           <a
             className="icon item"
-            onClick={()=> this.props.setView(nextView)}
+            onClick={()=> this.setView(getRightIconConfig(path).nextView)}
           >
-            {isRoomView || isRoomListView ? settingsIconHTML : null }
+            {path.substring(0, 6) === "/room/" || path === "/" ? settingsIconHTML : null }
           </a>
           <a
             id="chatter-close"

@@ -12,7 +12,7 @@ const MainNewRoom = React.createClass({
     Meteor.call("room.create", params, (error, result) => {
       Meteor.call("room.get", result, (error, result) => {
         this.props.setRoom(result);
-        this.props.setView('addUsers');
+        this.props.router.push("newroom/addusers");
       });
     });
   },

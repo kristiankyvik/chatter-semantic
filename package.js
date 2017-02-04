@@ -17,9 +17,9 @@ Package.onUse(function (api) {
   api.imply('jorgeer:chatter-core@0.1.0');
 
   api.addFiles([
-    'client/ChatterApp.jsx',
     'client/chatter.html',
     'client/chatter.js',
+    'client/Routes.jsx',
 
     'client/variables.styl',
     'client/styles.styl',

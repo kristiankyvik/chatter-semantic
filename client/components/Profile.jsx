@@ -15,25 +15,10 @@ const profileSubs = new SubsManager({
 });
 
 const Profile = React.createClass({
-  mixins: [ReactMeteorData],
 
   getInitialState: function () {
     return {
       nicknameChanged: false
-    };
-  },
-
-  getMeteorData () {
-    const usersHandle = profileSubs.subscribe("users");
-    const subsReady = usersHandle.ready();
-    let user = null;
-
-    if (subsReady) {
-      user = Meteor.users.findOne(this.props.userProfile);
-    }
-    return {
-      user,
-      subsReady
     };
   },
 
@@ -71,15 +56,15 @@ const Profile = React.createClass({
   },
 
   render () {
-    if (!this.data.subsReady) {
+    const user = Meteor.user();
+    if (_.isUndefined(user)) {
       return <Loader/>;
     }
+    console.log(user);
 
-    const userId = this.data.user._id;
-    const user = this.data.user.profile;
     const headerText = `${user.chatterNickname}'s Profile`;
     const canEditNickname = Chatter.options.editableNickname;
-    const {isOnline, lastLogin} = getUserStatus(this.data.user);
+    const {isOnline, lastLogin} = getUserStatus(user);
 
     const form = (
       <div>
@@ -110,18 +95,18 @@ const Profile = React.createClass({
       <div className="padded profile scrollable">
         <img
           className="ui small circular centered image"
-          src={`data:image/png;base64,${getAvatarSvg(this.data.user._id)}`}
+          src={`data:image/png;base64,${getAvatarSvg(user._id)}`}
         />
         <div className="ui header centered">
           {headerText}
         </div>
         <div className="sub header">
-          <span>{user.chatterNickname}</span> is {user.isChatterAdmin ? "" : "not"} an <span>admin</span>.
+          <span>{user.profile.chatterNickname}</span> is {user.profile.isChatterAdmin ? "" : "not"} an <span>admin</span>.
         </div>
         <p className={isOnline ? "success-msg" : "failure-msg"}>
           <span>{lastLogin}</span>
         </p>
-        {this.props.userProfile === userId && canEditNickname ? form : null}
+        {canEditNickname ? form : null}
       </div>
     );
   }

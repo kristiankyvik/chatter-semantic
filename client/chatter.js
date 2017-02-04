@@ -1,7 +1,7 @@
-import ChatterApp from "./ChatterApp.jsx";
+import Routes from "./Routes.jsx";
 
 Template.chatter.helpers({
-  ChatterApp () {
-    return ChatterApp;
+  Routes () {
+    return Routes;
   }
 });

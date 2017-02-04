@@ -16,9 +16,11 @@ const MainSettings = React.createClass({
   },
 
   deleteRoom () {
+    console.log("deletin this room", this.props.room);
     Meteor.call("room.delete", this.props.room._id, (error, result) => {
       if (!error) {
-        this.props.setView("roomList");
+        console.log("deleted");
+        this.props.router.push("/");
       }
     });
   },
@@ -34,14 +36,18 @@ const MainSettings = React.createClass({
       return <Loader/>;
     }
 
+    console.log("main settings", this.props);
+
     const user = Meteor.user();
 
-    const users = this.props.users;
+    const { users, router, location, room } = this.props;
+
+    console.log("room in main settings", room);
 
     $(".ui.toggle.checkbox").checkbox();
 
     const addUsersHTML = (
-      <div className="item addUserItem" onClick={ () => this.props.setSettingsView("addUsers")}>
+      <div className="item addUserItem" onClick={ () => router.push(`/room/${room._id}/addusers`) }>
         <i className="add user icon"></i>
         <div className="content">
           <a className="header">
@@ -99,13 +105,10 @@ const MainSettings = React.createClass({
           Channel description
         </div>
         <p className="room-description">
-          {this.props.room.description ? this.props.room.description : null }
-        </p>
-        <p className="gray-text">
-          This channel was created by {this.props.room.createdBy} on the {this.props.room.createdAt.toISOString()}.
+          {this.props.room.description ? room.description : null }
         </p>
 
-        {user.profile.isChatterAdmin || this.props.room.roomType === "support" ? deleteRoomHTML : null}
+        {user.profile.isChatterAdmin || room.roomType === "support" ? deleteRoomHTML : null}
 
         <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
           <label>
@@ -113,7 +116,7 @@ const MainSettings = React.createClass({
           </label>
           <input
             type="checkbox"
-            value={this.props.room.archived}
+            value={room.archived}
             name="public"
             tabIndex="0"
             className="hidden"

@@ -44,7 +44,7 @@ const ChatterApp = React.createClass({
     let roomListDataHandle = null;
 
     if (this.state.view === "roomList") {
-      roomListDataHandle = chatterSubs.subscribe("roomListData", userId, "dfkdslk");
+      roomListDataHandle = chatterSubs.subscribe("roomListData", userId);
     }
 
     let subsReady = _.isNull(roomListDataHandle) ? false : roomListDataHandle.ready();
@@ -118,10 +118,14 @@ const ChatterApp = React.createClass({
   },
 
   setView (view) {
-    if (view !== "roomList") {
+    if ((view !== "roomList") && !_.isNull(this.data.roomListDataHandle)) {
       this.data.roomListDataHandle.stop();
     }
     this.setState(router(this, view));
+  },
+
+  toggleChatState () {
+
   },
 
   checkIfCurrentRoomExists () {

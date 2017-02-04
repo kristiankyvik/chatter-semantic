@@ -30,42 +30,10 @@ const timestampShouldBeDisplayed = function (currentMsg, nextMsg) {
   return veryRecentMessage && timeSinceLastMsgGreaterThan(VERY_RECENT_MSG_INTERVAL, currentMsg, nextMsg) || recentMessage && timeSinceLastMsgGreaterThan(RECENT_MSG_INTERVAL, currentMsg, nextMsg);
 };
 
-const roomSubs = new SubsCache(-1, -1);
-
 const Room = React.createClass({
-  mixins: [ReactMeteorData],
-
-  getMeteorData () {
-    const { roomId } = this.props;
-
-    let messagesHandle = null;
-    let roomDataHandle = null;
-
-
-    Tracker.autorun(function () {
-      messagesHandle = roomSubs.subscribe("chatterMessages", {
-        messageLimit: Session.get("messageLimit"),
-        roomId
-      });
-      roomDataHandle = roomSubs.subscribe("roomData", roomId
-      );
-    });
-
-    const subsReady = messagesHandle.ready() && roomDataHandle.ready();
-
-    if (subsReady) {
-      this.messages = Chatter.Message.find({"roomId": roomId}, {sort: {createdAt: 1}}).fetch();
-    }
-
-    return {
-      subsReady,
-      roomDataHandle,
-      messagesHandle
-    };
-  },
 
   pushMessage (text) {
-    const roomId = this.props.roomId;
+    const roomId = this.props.params.roomId;
     const params = {
       message: text,
       roomId
@@ -78,27 +46,17 @@ const Room = React.createClass({
 
   componentWillMount () {
     // Check if roomId is Null (if room has been deleted) and return user to roomList if so
-    if (_.isNull(this.props.roomId)) {
+    if (_.isNull(this.props.params.roomId)) {
       this.props.setView("roomList");
     }
     // creates a throttled version for both listeners
     this.pushMessage = _.debounce(this.pushMessage, 100);
     this.listenScrollEvent = _.debounce(this.listenScrollEvent, 100);
-
-    if (_.isEmpty(this.messages)) {
-      this.messages = [];
-    }
   },
 
   componentDidMount () {
     this.scrollDown();
-    Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
-  },
-
-  componentWillUnmount () {
-    Meteor.call("room.unreadMsgCount.reset", this.props.roomId);
-    this.data.roomDataHandle.stop();
-    this.data.messagesHandle.stop();
+    Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId);
   },
 
   componentWillUpdate () {
@@ -126,9 +84,9 @@ const Room = React.createClass({
     // TODO: throttleeeeee
     const scroller = this.refs.scroller;
     if (scroller.scrollTop === 0) {
-      Meteor.call("message.count", this.props.roomId, (error, result) => {
+      Meteor.call("message.count", this.props.params.roomId, (error, result) => {
         const messageCount = result;
-        if (messageCount > this.messages.length) {
+        if (messageCount > this.props.messages.length) {
           Session.set("messageLimit", Session.get("messageLimit") + 50);
         }
       });
@@ -136,18 +94,14 @@ const Room = React.createClass({
   },
 
   render () {
-    const loader = (
-      <Loader />
-    );
+    const roomWrapperClass = this.props.messages.length ? "messagesLoading" : "";
 
-    const roomWrapperClass = this.messages.length ? "messagesLoading" : "";
-
-    const numberOfMessages = this.messages.length;
+    const numberOfMessages = this.props.messages.length;
     const messages = (
-      this.messages.map((message, index) => {
+      this.props.messages.map((message, index) => {
         let dateBanner = timeAgo = avatar = nickname = null;
-        const prevMsg = this.messages[index - 1];
-        const nextMsg = this.messages[index + 1];
+        const prevMsg = this.props.messages[index - 1];
+        const nextMsg = this.props.messages[index + 1];
         const user = Meteor.users.findOne(message.userId);
 
         const isFirstMessageOfChat = index === 0;
@@ -184,7 +138,7 @@ const Room = React.createClass({
           avatar = user._id;
           nickname = user.profile.chatterNickname;
         } else {
-          if (isFirstMessage(this.messages[index - 1], message)) {
+          if (isFirstMessage(this.props.messages[index - 1], message)) {
             avatar = user._id;
             nickname = user.profile.chatterNickname;
           } else if (isFirstMessageOfDay) {
@@ -211,7 +165,7 @@ const Room = React.createClass({
 
     return (
       <div className={"roomWrapper " + roomWrapperClass}>
-        {this.data.subsReady ? null : loader}
+        {this.props.subsReady ? null : <Loader />}
         <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
           {messages}
         </div>

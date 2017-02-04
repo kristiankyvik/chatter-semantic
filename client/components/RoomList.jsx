@@ -82,6 +82,7 @@ const RoomList = React.createClass({
   },
 
   render () {
+    console.log("props RL", this.props);
     const user = Meteor.user();
     const { subsReady, hasSupportRoom, allRooms } = this.props;
 
@@ -111,6 +112,7 @@ const RoomList = React.createClass({
                                 goToRoom={this.goToRoom}
                                 goToNewRoom={this.goToNewRoom}
                                 room={room}
+                                router={this.props.router}
                               />;
       room.archived ? archivedHTML.push(roomListItemComp) : activeHTML.push(roomListItemComp);
     });

@@ -1,0 +1,64 @@
+Searching 107884 files for "somepath"
+
+/Users/kristiankyvik/hubro-sideprojects/chatter-example/node_modules/ejs/README.md:
+   95
+   96  Includes are inserted at runtime, so you can use variables for the path in the
+   97: `include` call (for example `<%- include(somePath) %>`). Variables in your
+   98  top-level data object are available to all your includes, but local variables
+   99  need to be passed down.
+
+/Users/kristiankyvik/hubro-sideprojects/chatter-example/node_modules/xolvio-ddp/test/ddp-client.js:
+  450
+  451      it("should use full base url if it's starts with http", function() {
+  452:       var info = '{"base_url": "https://somepath"}';
+  453        var get = function(opts, callback) {
+  454          callback(null, null, info);
+  ...
+  460          ddpclient._makeSockJSConnection();
+  461
+  462:         var wsUrl = "wss://somepath/websocket";
+  463          assert.ok(ddpclient._makeWebSocketConnection.calledWith(wsUrl));
+  464        });
+  ...
+  466
+  467      it("should compute url based on the base_url if it's not starts with http", function() {
+  468:       var info = '{"base_url": "/somepath"}';
+  469        var get = function(opts, callback) {
+  470          callback(null, null, info);
+  ...
+  476          ddpclient._makeSockJSConnection();
+  477
+  478:         var wsUrl = "ws://localhost:3000/somepath/websocket";
+  479          assert.ok(ddpclient._makeWebSocketConnection.calledWith(wsUrl));
+  480        });
+
+/Users/kristiankyvik/hubro-sideprojects/chatter-widget-example/.load-tests/meteor-down/node_modules/ddp/test/ddp-client.js:
+  450
+  451      it("should use full base url if it's starts with http", function() {
+  452:       var info = '{"base_url": "https://somepath"}';
+  453        var get = function(opts, callback) {
+  454          callback(null, null, info);
+  ...
+  460          ddpclient._makeSockJSConnection();
+  461
+  462:         var wsUrl = "wss://somepath/websocket";
+  463          assert.ok(ddpclient._makeWebSocketConnection.calledWith(wsUrl));
+  464        });
+  ...
+  466
+  467      it("should compute url based on the base_url if it's not starts with http", function() {
+  468:       var info = '{"base_url": "/somepath"}';
+  469        var get = function(opts, callback) {
+  470          callback(null, null, info);
+  ...
+  476          ddpclient._makeSockJSConnection();
+  477
+  478:         var wsUrl = "ws://localhost:3000/somepath/websocket";
+  479          assert.ok(ddpclient._makeWebSocketConnection.calledWith(wsUrl));
+  480        });
+
+
+
+Searching 2015 files for "somepath"
+
+0 matches

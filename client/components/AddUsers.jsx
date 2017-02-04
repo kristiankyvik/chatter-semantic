@@ -10,6 +10,7 @@ const AddUsers = React.createClass({
 
   getMeteorData () {
     const { room } = this.props;
+
     const userRoomHandle = Meteor.subscribe("chatterUserRooms");
     const userHandle = Meteor.subscribe("users");
 
@@ -143,7 +144,7 @@ const AddUsers = React.createClass({
         <div className="btn-wrapper">
           <div
             className="ui fluid button primary"
-            onClick={this.props.buttonGoTo}
+            onClick={() => this.props.router.push(this.props.buttonGoTo)}
           >
             {this.props.buttonMessage}
           </div>
