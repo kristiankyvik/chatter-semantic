@@ -13,7 +13,6 @@ const NewRoomParent = React.createClass({
     });
   },
 
-
   render () {
     const children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {

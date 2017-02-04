@@ -68,10 +68,6 @@ const Nav = React.createClass({
     const { parentProps } = this.props;
 
     const path = parentProps.location.pathname;
-    console.log("current path: ", path);
-    console.log("current left: ", getLeftIconConfig(path));
-    console.log("current right: ", getRightIconConfig(path));
-
 
     const leftIconHTML = (
       <a className="icon item" onClick={() => this.setView(getLeftIconConfig(path).nextView)}>

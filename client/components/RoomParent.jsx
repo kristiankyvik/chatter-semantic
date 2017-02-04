@@ -42,7 +42,6 @@ const RoomParent = React.createClass({
     Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId);
     // this.data.roomDataHandle.stop();
     // this.data.messagesHandle.stop();
-    console.log("unmountinggg");
   },
 
   componentWillMount () {

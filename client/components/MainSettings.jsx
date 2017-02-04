@@ -36,13 +36,8 @@ const MainSettings = React.createClass({
       return <Loader/>;
     }
 
-    console.log("main settings", this.props);
-
     const user = Meteor.user();
-
     const { users, router, location, room } = this.props;
-
-    console.log("room in main settings", room);
 
     $(".ui.toggle.checkbox").checkbox();
 

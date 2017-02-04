@@ -46,9 +46,7 @@ const Room = React.createClass({
 
   componentWillMount () {
     // Check if roomId is Null (if room has been deleted) and return user to roomList if so
-    if (_.isNull(this.props.params.roomId)) {
-      this.props.setView("roomList");
-    }
+
     // creates a throttled version for both listeners
     this.pushMessage = _.debounce(this.pushMessage, 100);
     this.listenScrollEvent = _.debounce(this.listenScrollEvent, 100);
@@ -77,7 +75,6 @@ const Room = React.createClass({
 
   setUserProfile (userId) {
     this.props.setUserProfile(userId);
-    this.props.setView("profile");
   },
 
   listenScrollEvent () {

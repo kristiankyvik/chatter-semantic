@@ -20,7 +20,6 @@ const App = React.createClass({
   },
 
   render ( ) {
-    console.log("chat open", Session.get("chatOpen"));
     if (!Session.get("chatOpen")) {
       return <Widget toggleChatState={this.toggleChatState} msgNotif={false} />;
     }
