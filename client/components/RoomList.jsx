@@ -91,39 +91,12 @@ const RoomList = React.createClass({
     };
   },
 
-  goToRoom (roomId, roomName) {
-    if (!_.isNull(this.data.roomListDataHandle)) {
-      this.data.roomListDataHandle.stop();
-    }
-    this.setState({
-      roomId: roomId,
-      view: 'room',
-      header: roomName
-    });
-  },
-
-  setUserProfile (userId) {
-    this.setState({
-      userProfile: userId
-    });
-  },
-
   loadMoreRooms (type) {
     const loadOptions = {
       active: {activeRoomLimit: 100},
       archived: {archivedRoomLimit: 100}
     };
     this.setState(loadOptions[type]);
-  },
-
-  setView (view) {
-    if ((view !== "roomList") && !_.isNull(this.data.roomListDataHandle)) {
-      this.data.roomListDataHandle.stop();
-    }
-    this.setState(router(this, view));
-  },
-
-  toggleChatState () {
   },
 
   checkIfCurrentRoomExists () {
@@ -134,10 +107,6 @@ const RoomList = React.createClass({
         });
       }
     }
-  },
-
-  goToNewRoom () {
-    this.props.setView("newRoom");
   },
 
   componentDidMount () {
@@ -194,7 +163,6 @@ const RoomList = React.createClass({
     if (_.isUndefined(user)) {
       return <Loader/>;
     }
-    console.log("props RL", Chatter.Message.find().fetch());
 
     const { subsReady, hasSupportRoom, allRooms } = this.data;
 
