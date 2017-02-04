@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Loader from "../components/Loader.jsx";
-
-import {getAvatarSvg, getRelativeTime, getUserStatus} from "../template-helpers/shared-helpers.jsx";
+import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
 const AddUsers = React.createClass({
   mixins: [ReactMeteorData],

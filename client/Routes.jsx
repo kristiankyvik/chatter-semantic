@@ -2,7 +2,7 @@ import React from 'react';
 import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 
 import App from "./App.jsx";
-import RoomList2 from "./components/RoomList2.jsx";
+import RoomList from "./components/RoomList.jsx";
 import Profile from "./components/Profile.jsx";
 import Room from "./components/Room.jsx";
 import MainSettings from "./components/MainSettings.jsx";
@@ -17,7 +17,7 @@ const Routes = React.createClass({
     return (
       <Router history={ hashHistory }>
         <Route path="/" component={App}>
-          <IndexRoute component={RoomList2}/>
+          <IndexRoute component={RoomList}/>
           <Route path="/profile" component={ Profile } />
           <Route path="/room(/:roomId)" component={ RoomParent } >
             <IndexRoute component={ Room } />

@@ -1,11 +1,38 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-import RoomListItem from "../components/RoomListItem.jsx";
 import Loader from "../components/Loader.jsx";
+import RoomListItem from "../components/RoomListItem.jsx";
+
+import getChatHTML from "../template-helpers/getChatHTML.jsx";
+import router from "../template-helpers/router.jsx";
+
+const latestRooms = function (limit, withIds) {
+  return {
+    find: {"_id": {$in: withIds}},
+    options: {sort: {lastActive: -1}, limit: limit}};
+};
+
+const chatterSubs = new SubsCache(-1, -1);
+
 
 const RoomList = React.createClass({
+  mixins: [ReactMeteorData],
+
   getInitialState: function () {
+    Session.setDefault('messageLimit', Chatter.options.messageLimit);
+
     return {
+      chatOpen: false,
+      roomId: null,
+      userProfile: Meteor.userId(),
+      header: Chatter.options.chatName,
+      view: "roomList",
+      msgNotif: 0,
+      activeRooms: [],
+      archivedRooms: [],
+      activeRoomLimit: Chatter.options.initialRoomLoad,
+      archivedRoomLimit: Chatter.options.initialRoomLoad,
       activeShowing: false,
       archivedShowing: false,
       archivedCount: 0,
@@ -14,8 +41,102 @@ const RoomList = React.createClass({
     };
   },
 
+  getMeteorData () {
+    const userId = Meteor.userId();
+    let roomListDataHandle = null;
+
+    if (this.state.view === "roomList") {
+      roomListDataHandle = chatterSubs.subscribe("roomListData", userId);
+    }
+
+    let subsReady = _.isNull(roomListDataHandle) ? false : roomListDataHandle.ready();
+    let hasSupportRoom = false;
+    let msgNotif = false;
+    let allRoomIds = [];
+    let allRooms = [];
+
+    if (subsReady) {
+      if (userId) {
+        var tRooms = Chatter.Room.find({}, {sort: {lastActive: -1}}).fetch();
+        allRooms = tRooms.map(function (room) {
+          const roomId = room._id;
+          const userRoom = Chatter.UserRoom.findOne({roomId});
+          room.archived = userRoom.archived;
+          room.unreadMsgCount = userRoom.unreadMsgCount;
+          const lastMsg = Chatter.Message.findOne({roomId}, {sort: {createdAt: -1}});
+          const hasLastMessage = !_.isUndefined(lastMsg);
+          room.lastMsgTxt = hasLastMessage ? lastMsg.message : "no messages yet";
+          room.lastMsgTimeAgo = hasLastMessage ? lastMsg.getTimeAgo() : null;
+          room.lastMsgUser = hasLastMessage ? Meteor.users.findOne(lastMsg.userId) : null;
+          return room;
+        });
+
+
+        const allUserRooms = Chatter.UserRoom.find({userId}).fetch();
+        allRoomIds = _.pluck(allUserRooms, "roomId");
+
+        msgNotif = Chatter.UserRoom.find({userId: userId, unreadMsgCount: { $gt: 0 }}).fetch().length;
+
+        hasSupportRoom = Chatter.Room.find({
+          "_id": {$in: allRoomIds},
+          "roomType": "support"
+        }).count();
+      }
+    }
+
+    return {
+      subsReady,
+      hasSupportRoom,
+      msgNotif,
+      allRoomIds,
+      allRooms,
+      roomListDataHandle
+    };
+  },
+
   goToRoom (roomId, roomName) {
-    this.props.goToRoom(roomId, roomName);
+    if (!_.isNull(this.data.roomListDataHandle)) {
+      this.data.roomListDataHandle.stop();
+    }
+    this.setState({
+      roomId: roomId,
+      view: 'room',
+      header: roomName
+    });
+  },
+
+  setUserProfile (userId) {
+    this.setState({
+      userProfile: userId
+    });
+  },
+
+  loadMoreRooms (type) {
+    const loadOptions = {
+      active: {activeRoomLimit: 100},
+      archived: {archivedRoomLimit: 100}
+    };
+    this.setState(loadOptions[type]);
+  },
+
+  setView (view) {
+    if ((view !== "roomList") && !_.isNull(this.data.roomListDataHandle)) {
+      this.data.roomListDataHandle.stop();
+    }
+    this.setState(router(this, view));
+  },
+
+  toggleChatState () {
+  },
+
+  checkIfCurrentRoomExists () {
+    if (!_.isNull(this.state.roomId)) {
+      if (this.data.allRoomIds.indexOf(this.state.roomId) < 0) {
+        this.setState({
+          roomId: null
+        });
+      }
+    }
   },
 
   goToNewRoom () {
@@ -24,22 +145,11 @@ const RoomList = React.createClass({
 
   componentDidMount () {
     $('.ui.accordion').accordion();
-    Meteor.call("room.getUnreadMsgCount", (error, response) => {
-      this.setState(response);
-    });
-
-    this.props.setUserProfile(Meteor.userId());
+    // Meteor.call("room.getUnreadMsgCount", (error, response) => {
+    //   this.setState(response);
+    // });
   },
 
-  loadMoreRooms (type) {
-    const options = {
-      archived: {archivedShowing: true},
-      active: {activeShowing: true}
-    };
-
-    this.setState(options[type]);
-    this.props.loadMoreRooms(type);
-  },
 
   createHelpRoom () {
     if (this.props.hasSupportRoom || this.state.makingRequest ) return;
@@ -82,14 +192,19 @@ const RoomList = React.createClass({
   },
 
   render () {
-    console.log("props RL", this.props);
+
     const user = Meteor.user();
-    const { subsReady, hasSupportRoom, allRooms } = this.props;
+    if (_.isUndefined(user)) {
+      return <Loader/>;
+    }
+    console.log("props RL", Chatter.Message.find().fetch());
+
+    const { subsReady, hasSupportRoom, allRooms } = this.data;
 
     const helpButton = !_.isEmpty(user.profile.supportUser);
 
     const newRoomBtnHTML = (
-      <div className="ui icon primary button" onClick={this.goToNewRoom} >
+      <div className="ui icon primary button" onClick={() => this.props.router.push("/newroom") } >
         <i className="plus icon"></i> New channel
       </div>
     );
@@ -116,7 +231,6 @@ const RoomList = React.createClass({
                               />;
       room.archived ? archivedHTML.push(roomListItemComp) : activeHTML.push(roomListItemComp);
     });
-
     return (
       <div>
         <div className="roomList scrollable">
@@ -162,3 +276,4 @@ const RoomList = React.createClass({
 });
 
 export default RoomList;
+
