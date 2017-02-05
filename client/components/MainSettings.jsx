@@ -16,16 +16,17 @@ const MainSettings = React.createClass({
   },
 
   deleteRoom () {
-    console.log("deletin this room", this.props.room);
     Meteor.call("room.delete", this.props.room._id, (error, result) => {
       if (!error) {
-        console.log("deleted");
         this.props.router.push("/");
       }
     });
   },
 
   componentDidUpdate () {
+    if (this.props.headerText !== "Settings") {
+      this.props.updateHeader("Settings");
+    }
     if (this.props.room.archived) {
       $(".ui.toggle.checkbox").checkbox('check');
     }

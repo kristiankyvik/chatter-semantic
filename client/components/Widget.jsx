@@ -1,9 +1,29 @@
 import React from 'react';
 
 const Widget = React.createClass({
+  mixins: [ReactMeteorData],
+
+  getMeteorData () {
+    const widgetDataHandle = Meteor.subscribe("widgetData");
+
+    const subsReady = widgetDataHandle.ready();
+
+    let count = 0;
+
+    if (subsReady) {
+      count = Counts.get("widgetCounter");
+    }
+    return {
+      count,
+      widgetDataHandle
+    };
+  },
+
+  componentWillUnmount () {
+    this.data.widgetDataHandle.stop();
+  },
 
   render () {
-    const msgNotif = this.props.msgNotif;
     const msgNotifHTML = (
       <div className="widget-msg-notif">
        </div>
@@ -11,7 +31,7 @@ const Widget = React.createClass({
     return (
       <div className="ui button primary chatter-open" id="chatter-open" onClick={this.props.toggleChatState}>
         <i className="comment icon"></i>
-        {msgNotif ? msgNotifHTML : null}
+        {this.data.count > 0 ? msgNotifHTML : null}
       </div>
     );
   }

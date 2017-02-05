@@ -10,10 +10,6 @@ const getLeftIconConfig = function (path) {
       icon: "chevron left icon",
       nextView: "/"
     },
-    "/settings": {
-      icon: "close icon",
-      nextView: "/room"
-    },
     "/newroom": {
       icon: "close icon",
       nextView: "/"
@@ -28,10 +24,15 @@ const getLeftIconConfig = function (path) {
     }
   };
 
-  if (path.substring(0, 6) === "/room/") {
+  if (path.substring(0, 6) === "/room/" && path.length === 23) {
     return {
       icon: "chevron left icon",
       nextView: "/"
+    };
+  } else if (path.endsWith("/settings")) {
+    return {
+      icon: "close icon",
+      nextView: path.substring( 0, 23)
     };
   }
 
@@ -60,7 +61,6 @@ const getRightIconConfig = function (path) {
 const Nav = React.createClass({
 
   setView (nextView) {
-    console.log(nextView);
     this.props.parentProps.router.push(nextView);
   },
 
@@ -85,7 +85,7 @@ const Nav = React.createClass({
         <div className="header item">
           <div className="status">
             <span>
-              {Chatter.options.chatName}
+              {this.props.headerText}
             </span>
           </div>
         </div>
@@ -94,7 +94,7 @@ const Nav = React.createClass({
             className="icon item"
             onClick={()=> this.setView(getRightIconConfig(path).nextView)}
           >
-            {path.substring(0, 6) === "/room/" || path === "/" ? settingsIconHTML : null }
+            {(path.substring(0, 6) === "/room/" && path.length === 23) || path === "/" ? settingsIconHTML : null }
           </a>
           <a
             id="chatter-close"

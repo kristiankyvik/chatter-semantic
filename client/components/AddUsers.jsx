@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Loader from "../components/Loader.jsx";
+
 import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
 const AddUsers = React.createClass({
@@ -9,10 +11,9 @@ const AddUsers = React.createClass({
   getMeteorData () {
     const { room } = this.props;
 
-    const userRoomHandle = Meteor.subscribe("chatterUserRooms");
-    const userHandle = Meteor.subscribe("users");
+    const addUsersHandle = Meteor.subscribe("addUsers");
 
-    const subsReady = userRoomHandle.ready() && userHandle.ready();
+    const subsReady = addUsersHandle.ready();
 
     let addedUsers = [];
     let searchedUsers = [];
@@ -33,7 +34,8 @@ const AddUsers = React.createClass({
     return {
       subsReady,
       addedUsers,
-      searchedUsers
+      searchedUsers,
+      addUsersHandle
     };
   },
 
@@ -74,6 +76,16 @@ const AddUsers = React.createClass({
     Meteor.call(options[action].command, options[action].params, (error, result) => {
       this.setState({requestingUser: false});
     });
+  },
+
+  componentDidUpdate () {
+    if (this.props.headerText !== "Add users") {
+      this.props.updateHeader("Add users");
+    }
+  },
+
+  componentWillUnmount () {
+    this.data.addUsersHandle.stop();
   },
 
   render () {

@@ -4,21 +4,12 @@ import ReactDOM from 'react-dom';
 import Loader from "../components/Loader.jsx";
 import RoomListItem from "../components/RoomListItem.jsx";
 
-const latestRooms = function (limit, withIds) {
-  return {
-    find: {"_id": {$in: withIds}},
-    options: {sort: {lastActive: -1}, limit: limit}};
-};
-
 const chatterSubs = new SubsCache(-1, -1);
-
 
 const RoomList = React.createClass({
   mixins: [ReactMeteorData],
 
   getInitialState: function () {
-    Session.setDefault('messageLimit', Chatter.options.messageLimit);
-
     return {
       chatOpen: false,
       roomId: null,
@@ -26,15 +17,9 @@ const RoomList = React.createClass({
       header: Chatter.options.chatName,
       view: "roomList",
       msgNotif: 0,
-      activeRooms: [],
-      archivedRooms: [],
-      activeRoomLimit: Chatter.options.initialRoomLoad,
-      archivedRoomLimit: Chatter.options.initialRoomLoad,
-      activeShowing: false,
-      archivedShowing: false,
-      archivedCount: 0,
-      activeCount: 0,
-      makingRequest: false
+      roomCount: 0,
+      makingRequest: false,
+      roomLimit: 3
     };
   },
 
@@ -43,12 +28,11 @@ const RoomList = React.createClass({
     let roomListDataHandle = null;
 
     if (this.state.view === "roomList") {
-      roomListDataHandle = chatterSubs.subscribe("roomListData", userId);
+      roomListDataHandle = chatterSubs.subscribe("roomListData", {userId, roomLimit: this.state.roomLimit});
     }
 
     let subsReady = _.isNull(roomListDataHandle) ? false : roomListDataHandle.ready();
     let hasSupportRoom = false;
-    let msgNotif = false;
     let allRoomIds = [];
     let allRooms = [];
 
@@ -72,8 +56,6 @@ const RoomList = React.createClass({
         const allUserRooms = Chatter.UserRoom.find({userId}).fetch();
         allRoomIds = _.pluck(allUserRooms, "roomId");
 
-        msgNotif = Chatter.UserRoom.find({userId: userId, unreadMsgCount: { $gt: 0 }}).fetch().length;
-
         hasSupportRoom = Chatter.Room.find({
           "_id": {$in: allRoomIds},
           "roomType": "support"
@@ -84,19 +66,17 @@ const RoomList = React.createClass({
     return {
       subsReady,
       hasSupportRoom,
-      msgNotif,
       allRoomIds,
       allRooms,
       roomListDataHandle
     };
   },
 
-  loadMoreRooms (type) {
-    const loadOptions = {
-      active: {activeRoomLimit: 100},
-      archived: {archivedRoomLimit: 100}
+  loadMoreRooms () {
+    const roomLimitState = {
+      roomLimit: this.state.roomLimit + 5
     };
-    this.setState(loadOptions[type]);
+    this.setState(roomLimitState);
   },
 
   checkIfCurrentRoomExists () {
@@ -109,13 +89,22 @@ const RoomList = React.createClass({
     }
   },
 
-  componentDidMount () {
-    $('.ui.accordion').accordion();
-    // Meteor.call("room.getUnreadMsgCount", (error, response) => {
-    //   this.setState(response);
-    // });
+  componentWillMount () {
+    if (this.props.headerText !== Chatter.options.chatName) {
+      this.props.updateHeader(Chatter.options.chatName);
+    }
   },
 
+  componentDidMount () {
+    $('.ui.accordion').accordion();
+    Meteor.call("room.getCount", (error, response) => {
+      this.setState(response);
+    });
+  },
+
+  componentWillUnmount () {
+    this.data.roomListDataHandle.stop();
+  },
 
   createHelpRoom () {
     if (this.props.hasSupportRoom || this.state.makingRequest ) return;
@@ -129,37 +118,9 @@ const RoomList = React.createClass({
     });
   },
 
-  getMoreRoomsBtn (type) {
-    const roomOpts = {
-      archived: {
-        showing: this.state.archivedShowing,
-        count: this.state.archivedCount
-      },
-      active: {
-        showing: this.state.activeShowing,
-        count: this.state.activeCount
-      }
-    };
-
-    const opts = roomOpts[type];
-
-    if ( (opts.count > Chatter.options.initialRoomLoad) && (!opts.showing)) {
-      return (
-        <div
-          className="roomListBtn"
-          onClick={() => this.loadMoreRooms(type)}
-        >
-          <i className="chevron down icon"></i>
-          <span>Show more</span>
-        </div>
-      );
-    }
-    return null;
-  },
-
   render () {
-
     const user = Meteor.user();
+
     if (_.isUndefined(user)) {
       return <Loader/>;
     }
@@ -180,7 +141,18 @@ const RoomList = React.createClass({
       </div>
     );
 
+    const loadMoreRoomsBtn = (
+      <div
+        className="roomListBtn"
+        onClick={() => this.loadMoreRooms()}
+      >
+        <i className="chevron down icon"></i>
+        <span>Load more rooms</span>
+      </div>
+    );
+
     const newRoomBtn = (user.profile.isChatterAdmin) ? newRoomBtnHTML : null;
+    const shouldShowButton = allRooms.length < this.state.roomCount ? true : false;
     const helpChatBtn = helpButton && (user.username !== "admin") && (!hasSupportRoom ) ? helpChatBtnHTML : null;
 
     let activeHTML = [];
@@ -196,6 +168,7 @@ const RoomList = React.createClass({
                               />;
       room.archived ? archivedHTML.push(roomListItemComp) : activeHTML.push(roomListItemComp);
     });
+
     return (
       <div>
         <div className="roomList scrollable">
@@ -210,7 +183,7 @@ const RoomList = React.createClass({
               <div className="content active">
                 <div className="ui selection middle aligned list celled">
                   {subsReady ? activeHTML : <Loader/>}
-                  {this.getMoreRoomsBtn("active")}
+                  {shouldShowButton ? loadMoreRoomsBtn : null}
                 </div>
               </div>
             </div>
@@ -224,7 +197,6 @@ const RoomList = React.createClass({
               <div className="content">
                 <div className="ui selection middle aligned list celled">
                   {subsReady ? archivedHTML : <Loader/>}
-                  {this.getMoreRoomsBtn("archived")}
                 </div>
               </div>
             </div>

@@ -44,6 +44,12 @@ const Profile = React.createClass({
     }
   },
 
+  componentDidUpdate () {
+    if (this.props.headerText !== "Profile") {
+      this.props.updateHeader("Profile");
+    }
+  },
+
   handleSubmit (e) {
     e.preventDefault();
     const nickname = this.nicknameInput.value.trim();
@@ -60,7 +66,6 @@ const Profile = React.createClass({
     if (_.isUndefined(user)) {
       return <Loader/>;
     }
-    console.log(user);
 
     const headerText = `${user.chatterNickname}'s Profile`;
     const canEditNickname = Chatter.options.editableNickname;

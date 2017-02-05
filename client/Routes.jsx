@@ -14,6 +14,7 @@ import AddUsers from "./components/AddUsers.jsx";
 const Routes = React.createClass({
 
   render () {
+    console.log("routes rerendering");
     return (
       <Router history={ hashHistory }>
         <Route path="/" component={App}>

@@ -45,7 +45,6 @@ const Room = React.createClass({
   },
 
   componentWillMount () {
-    // Check if roomId is Null (if room has been deleted) and return user to roomList if so
 
     // creates a throttled version for both listeners
     this.pushMessage = _.debounce(this.pushMessage, 100);
@@ -54,6 +53,9 @@ const Room = React.createClass({
 
   componentDidMount () {
     this.scrollDown();
+  },
+
+  componentWillUnmount() {
     Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId);
   },
 
@@ -65,6 +67,9 @@ const Room = React.createClass({
   componentDidUpdate () {
     if (this.shouldScroll) {
       this.scrollDown();
+    }
+    if (this.props.headerText !== this.props.room.name) {
+      this.props.updateHeader(this.props.room.name);
     }
   },
 
@@ -166,7 +171,7 @@ const Room = React.createClass({
         <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
           {messages}
         </div>
-        <Writer pushMessage={this.pushMessage}/>
+        <Writer numberOfMessages={numberOfMessages} pushMessage={this.pushMessage}/>
       </div>
     );
   }

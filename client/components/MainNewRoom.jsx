@@ -12,9 +12,15 @@ const MainNewRoom = React.createClass({
     Meteor.call("room.create", params, (error, result) => {
       Meteor.call("room.get", result, (error, result) => {
         this.props.setRoom(result);
-        this.props.router.push("newroom/addusers");
+        this.props.router.push("/newroom/addusers");
       });
     });
+  },
+
+  componentDidUpdate () {
+    if (this.props.headerText !== "New room") {
+      this.props.updateHeader("New room");
+    }
   },
 
   componentDidMount () {

@@ -5,25 +5,31 @@ const roomSubs = new SubsCache(-1, -1);
 const RoomParent = React.createClass({
   mixins: [ReactMeteorData],
 
+  getInitialState: function () {
+    Session.setDefault('messageLimit', Chatter.options.messageLimit);
+    return {
+    };
+  },
+
   getMeteorData () {
     let messagesHandle = null;
     let roomDataHandle = null;
 
     const roomId = this.props.params.roomId;
-    Tracker.autorun(function () {
-      messagesHandle = roomSubs.subscribe("chatterMessages", {
-        messageLimit: Session.get("messageLimit"),
-        roomId
-      });
-      roomDataHandle = roomSubs.subscribe("roomData", roomId
-      );
+    messagesHandle = roomSubs.subscribe("chatterMessages", {
+      messageLimit: Session.get("messageLimit"),
+      roomId
     });
+    roomDataHandle = roomSubs.subscribe("roomData", roomId
+    );
+
 
     const subsReady = messagesHandle.ready() && roomDataHandle.ready();
     let users = [];
     let room = {};
 
     if (subsReady) {
+      // When we retreive the messages we want to sort them by oldest first
       this.messages = Chatter.Message.find({"roomId": roomId}, {sort: {createdAt: 1}}).fetch();
       users = Meteor.users.find().fetch();
       room = Chatter.Room.find({_id: roomId}).fetch()[0];
@@ -39,12 +45,14 @@ const RoomParent = React.createClass({
   },
 
   componentWillUnmount () {
-    Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId);
-    // this.data.roomDataHandle.stop();
-    // this.data.messagesHandle.stop();
+    this.data.roomDataHandle.stop();
+    this.data.messagesHandle.stop();
   },
 
   componentWillMount () {
+    Session.set({
+      messageLimit: 50,
+    });
     if (_.isEmpty(this.messages)) {
       this.messages = [];
     }
@@ -58,7 +66,9 @@ const RoomParent = React.createClass({
         subsReady: this.data.subsReady,
         buttonMessage: "Back to Settings",
         messages: this.messages,
-        buttonGoTo: `/room/${this.props.params.roomId}/settings`
+        buttonGoTo: `/room/${this.props.params.roomId}/settings`,
+        updateHeader: this.props.updateHeader,
+        headerText: this.props.headerText
       });
     });
 
