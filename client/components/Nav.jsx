@@ -1,64 +1,72 @@
 import React from 'react';
 
-const getLeftIconConfig = function (path) {
-  const leftIconConfig = {
-    "/": {
-      icon: "",
-      nextView: "/profile"
-    },
-    "/room": {
-      icon: "chevron left icon",
-      nextView: "/"
-    },
-    "/newroom": {
-      icon: "close icon",
-      nextView: "/"
-    },
-    "/newroom/addusers": {
-      icon: "close icon",
-      nextView: "/"
-    },
-    "/profile": {
-      icon: "close icon",
-      nextView: "/"
-    }
-  };
-
-  if (path.substring(0, 6) === "/room/" && path.length === 23) {
-    return {
-      icon: "chevron left icon",
-      nextView: "/"
-    };
-  } else if (path.endsWith("/settings")) {
-    return {
-      icon: "close icon",
-      nextView: path.substring( 0, 23)
-    };
-  }
-
-  return leftIconConfig[path];
-};
-
-
-const getRightIconConfig = function (path) {
-  const rightIconConfig = {
-    "/": {
-      icon: "setting icon",
-      nextView: "/profile"
-    }
-  };
-
-  if (path.substring(0, 6) === "/room/") {
-    return {
-      icon: "setting icon",
-      nextView: path + "/settings"
-    };
-  }
-
-  return rightIconConfig[path];
-};
 
 const Nav = React.createClass({
+
+  getLeftIconConfig (path) {
+    const leftIconConfig = {
+      "/": {
+        icon: "",
+        nextView: "/profile"
+      },
+      "/room": {
+        icon: "chevron left icon",
+        nextView: "/"
+      },
+      "/newroom": {
+        icon: "close icon",
+        nextView: "/"
+      },
+      "/newroom/addusers": {
+        icon: "close icon",
+        nextView: "/"
+      },
+      "/profile": {
+        icon: "close icon",
+        nextView: "/"
+      }
+    };
+
+    if (path.substring(0, 6) === "/room/" && path.length === 23) {
+      return {
+        icon: "chevron left icon",
+        nextView: "/"
+      };
+    } else if (path.endsWith("/settings")) {
+      return {
+        icon: "close icon",
+        nextView: path.substring( 0, 23)
+      };
+    } else if (path.endsWith("/addusers")) {
+
+      return {
+        icon: "close icon",
+        nextView: path.slice(0, -9)
+      };
+    }
+
+    return leftIconConfig[path];
+  },
+
+
+  getRightIconConfig (path) {
+    const rightIconConfig = {
+      "/": {
+        icon: "setting icon",
+        nextView: "/profile"
+      }
+    };
+
+    if (path.substring(0, 6) === "/room/") {
+      return {
+        icon: "setting icon",
+        nextView: path + "/settings"
+      };
+    }
+
+    return rightIconConfig[path];
+  },
+
 
   setView (nextView) {
     this.props.parentProps.router.push(nextView);
@@ -68,10 +76,9 @@ const Nav = React.createClass({
     const { parentProps } = this.props;
 
     const path = parentProps.location.pathname;
-
     const leftIconHTML = (
-      <a className="icon item" onClick={() => this.setView(getLeftIconConfig(path).nextView)}>
-        <i className={getLeftIconConfig(path).icon}></i>
+      <a className="icon item" onClick={() => this.setView(this.getLeftIconConfig(path).nextView)}>
+        <i className={this.getLeftIconConfig(path).icon}></i>
       </a>
     );
 
@@ -92,7 +99,7 @@ const Nav = React.createClass({
         <div className="right menu">
           <a
             className="icon item"
-            onClick={()=> this.setView(getRightIconConfig(path).nextView)}
+            onClick={()=> this.setView(this.getRightIconConfig(path).nextView)}
           >
             {(path.substring(0, 6) === "/room/" && path.length === 23) || path === "/" ? settingsIconHTML : null }
           </a>
