@@ -22,8 +22,9 @@ const AddUsers = React.createClass({
       addedUsers = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
       const regex = new RegExp(".*" + this.state.query + ".*", "i"); // 'i' for case insensitive search
       searchedUsers = this.state.query ? Meteor.users.find({username: {$regex: regex}}).fetch() : [];
+
       _.each(searchedUsers, (user) => {
-        if (this.data.addedUsers.indexOf(user._id) < 0) {
+        if (addedUsers.indexOf(user._id) < 0) {
           user.added = false;
         } else {
           user.added = true;

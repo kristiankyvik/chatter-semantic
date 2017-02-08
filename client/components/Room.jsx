@@ -96,7 +96,7 @@ const Room = React.createClass({
   },
 
   render () {
-    const roomWrapperClass = this.props.messages.length ? "messagesLoading" : "";
+    const roomWrapperClass = this.props.messages.length > 0 ? "" : "messagesLoading";
 
     const numberOfMessages = this.props.messages.length;
     const messages = (
@@ -149,7 +149,6 @@ const Room = React.createClass({
 
         const ownsMessage = Meteor.userId() === message.userId;
         const messageClass = ownsMessage ? "chatter-msg comment yours" : "chatter-msg comment";
-
         return (
           <Message
             key={message._id}

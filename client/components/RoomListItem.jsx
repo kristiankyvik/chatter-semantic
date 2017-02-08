@@ -5,7 +5,7 @@ import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.js
 const RoomListItem = React.createClass({
 
   render () {
-    const {room, router} = this.props;
+    const {room, goToRoom} = this.props;
     let lastAvatar = "default";
     let statusClass = "user-status none";
 
@@ -20,7 +20,7 @@ const RoomListItem = React.createClass({
     return (
       <div
         className={"item transition visible roomListItem " + unread}
-        onClick={() => router.push("/room/" + room._id)}
+        onClick={() => goToRoom(room._id)}
       >
         <div className={statusClass}></div>
         <img

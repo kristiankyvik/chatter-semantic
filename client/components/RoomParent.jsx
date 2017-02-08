@@ -55,9 +55,6 @@ const RoomParent = React.createClass({
     Session.set({
       messageLimit: 50,
     });
-    // if (_.isEmpty(this.messages)) {
-    //   this.messages = [];
-    // }
   },
 
   render () {

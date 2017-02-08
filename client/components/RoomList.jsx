@@ -4,106 +4,27 @@ import ReactDOM from 'react-dom';
 import Loader from "../components/Loader.jsx";
 import RoomListItem from "../components/RoomListItem.jsx";
 
-const chatterSubs = new SubsCache(-1, -1);
-
 const RoomList = React.createClass({
-  mixins: [ReactMeteorData],
 
   getInitialState: function () {
     return {
-      chatOpen: false,
-      roomId: null,
-      userProfile: Meteor.userId(),
-      header: Chatter.options.chatName,
-      view: "roomList",
-      msgNotif: 0,
       roomCount: 0,
-      makingRequest: false,
-      roomLimit: 3
+      makingRequest: false
     };
   },
 
-  getMeteorData () {
-    const userId = Meteor.userId();
-    let roomListDataHandle = null;
-
-    if (this.state.view === "roomList") {
-      roomListDataHandle = chatterSubs.subscribe("roomListData", {userId, roomLimit: this.state.roomLimit});
-    }
-
-    let subsReady = _.isNull(roomListDataHandle) ? false : roomListDataHandle.ready();
-    let hasSupportRoom = false;
-    let allRoomIds = [];
-    let allRooms = [];
-
-    if (subsReady) {
-      if (userId) {
-        var tRooms = Chatter.Room.find({}, {sort: {lastActive: -1}}).fetch();
-        allRooms = tRooms.map(function (room) {
-          const roomId = room._id;
-          const userRoom = Chatter.UserRoom.findOne({roomId});
-          room.archived = userRoom.archived;
-          room.unreadMsgCount = userRoom.unreadMsgCount;
-          const lastMsg = Chatter.Message.findOne({roomId}, {sort: {createdAt: -1}});
-          const hasLastMessage = !_.isUndefined(lastMsg);
-          room.lastMsgTxt = hasLastMessage ? lastMsg.message : "no messages yet";
-          room.lastMsgTimeAgo = hasLastMessage ? lastMsg.getTimeAgo() : null;
-          room.lastMsgUser = hasLastMessage ? Meteor.users.findOne(lastMsg.userId) : null;
-          return room;
-        });
-
-
-        const allUserRooms = Chatter.UserRoom.find({userId}).fetch();
-        allRoomIds = _.pluck(allUserRooms, "roomId");
-
-        hasSupportRoom = Chatter.Room.find({
-          "_id": {$in: allRoomIds},
-          "roomType": "support"
-        }).count();
-      }
-    }
-
-    return {
-      subsReady,
-      hasSupportRoom,
-      allRoomIds,
-      allRooms,
-      roomListDataHandle
-    };
-  },
-
-  loadMoreRooms () {
-    const roomLimitState = {
-      roomLimit: this.state.roomLimit + 5
-    };
-    this.setState(roomLimitState);
-  },
-
-  checkIfCurrentRoomExists () {
-    if (!_.isNull(this.state.roomId)) {
-      if (this.data.allRoomIds.indexOf(this.state.roomId) < 0) {
-        this.setState({
-          roomId: null
-        });
-      }
-    }
-  },
-
-  componentWillMount () {
-    if (this.props.headerText !== Chatter.options.chatName) {
-      this.props.updateHeader(Chatter.options.chatName);
-    }
-  },
-
-  componentDidMount () {
-    $('.ui.accordion').accordion();
+  componentWillReceiveProps () {
     Meteor.call("room.getCount", (error, response) => {
       this.setState(response);
     });
   },
 
-  componentWillUnmount () {
-    this.data.roomListDataHandle.stop();
+  componentDidMount () {
+    $('.ui.accordion').accordion();
+  },
+
+  goToRoom (id) {
+    this.props.router.push("/room/" + id);
   },
 
   createHelpRoom () {
@@ -114,7 +35,7 @@ const RoomList = React.createClass({
       if (!error) {
         this.props.goToRoom(result, "Help");
       }
-      this.setState({makingRequest: false});
+      this.setState({makingRequest: false });
     });
   },
 
@@ -125,7 +46,7 @@ const RoomList = React.createClass({
       return <Loader/>;
     }
 
-    const { subsReady, hasSupportRoom, allRooms } = this.data;
+    const { subsReady, hasSupportRoom, allRooms, loadMoreRooms } = this.props;
 
     const helpButton = !_.isEmpty(user.profile.supportUser);
 
@@ -144,7 +65,7 @@ const RoomList = React.createClass({
     const loadMoreRoomsBtn = (
       <div
         className="roomListBtn"
-        onClick={() => this.loadMoreRooms()}
+        onClick={loadMoreRooms}
       >
         <i className="chevron down icon"></i>
         <span>Load more rooms</span>
@@ -164,7 +85,7 @@ const RoomList = React.createClass({
                                 goToRoom={this.goToRoom}
                                 goToNewRoom={this.goToNewRoom}
                                 room={room}
-                                router={this.props.router}
+                                goToRoom={this.goToRoom}
                               />;
       room.archived ? archivedHTML.push(roomListItemComp) : activeHTML.push(roomListItemComp);
     });
