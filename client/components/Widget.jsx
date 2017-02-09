@@ -28,6 +28,9 @@ const Widget = React.createClass({
       <div className="widget-msg-notif">
        </div>
     );
+    if (Session.get("chatOpen") || !this.props.initialLoad) {
+      return null;
+    }
     return (
       <div className="ui button primary chatter-open" id="chatter-open" onClick={this.props.toggleChatState}>
         <i className="comment icon"></i>

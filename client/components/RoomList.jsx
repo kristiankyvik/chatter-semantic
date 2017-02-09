@@ -13,7 +13,12 @@ const RoomList = React.createClass({
     };
   },
 
-  componentWillReceiveProps () {
+  componentWillReceiveProps (nextProps) {
+
+    if (nextProps.subsReady && !nextProps.initialLoad) {
+      console.log("Chatter loaded fully");
+      this.props.setInitialLoad(true);
+    }
     Meteor.call("room.getCount", (error, response) => {
       this.setState(response);
     });

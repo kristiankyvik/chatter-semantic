@@ -96,8 +96,6 @@ const Room = React.createClass({
   },
 
   render () {
-    const roomWrapperClass = this.props.messages.length > 0 ? "" : "messagesLoading";
-
     const numberOfMessages = this.props.messages.length;
     const messages = (
       this.props.messages.map((message, index) => {
@@ -165,12 +163,13 @@ const Room = React.createClass({
     );
 
     return (
-      <div className={"roomWrapper " + roomWrapperClass}>
-        <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
-          {this.props.subsReady ? messages : <Loader />}
-        </div>
-        <Writer numberOfMessages={numberOfMessages} pushMessage={this.pushMessage}/>
-      </div>
+      <div>
+         {this.props.subsReady ? null : <Loader />}
+         <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
+           {messages}
+         </div>
+         <Writer numberOfMessages={numberOfMessages} pushMessage={this.pushMessage}/>
+       </div>
     );
   }
 });

@@ -104,6 +104,9 @@ const RoomListParent = React.createClass({
         roomCount={this.data.roomCount}
         router={this.props.router}
         loadMoreRooms={this.loadMoreRooms}
+        setInitialLoad={this.props.setInitialLoad}
+        initialLoad={this.props.initialLoad}
+
       />
     );
   }

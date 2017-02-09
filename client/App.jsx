@@ -1,6 +1,6 @@
 import React from 'react';
-import Nav from './components/Nav.jsx';
-import Widget from "./components/Widget.jsx";
+import Widget from './components/Widget.jsx';
+import Chat from "./components/Chat.jsx";
 
 const App = React.createClass({
 
@@ -10,12 +10,21 @@ const App = React.createClass({
       msgNotif: 0
     });
     return {
-      headerText: Chatter.options.chatName
+      headerText: Chatter.options.chatName,
+      initialLoad: false
     };
   },
 
   toggleChatState () {
     return;
+  },
+
+  setInitialLoad (status) {
+    this.setState({initialLoad: status});
+  },
+
+  shouldComponentUpdate (nextProps, nextState) {
+    return true;
   },
 
   updateHeader (headerText) {
@@ -32,25 +41,28 @@ const App = React.createClass({
       );
     }
 
-    if (!Session.get("chatOpen")) {
-      return <Widget toggleChatState={this.toggleChatState} />;
-    }
-
     const children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         router: this.props.router,
         pathname: this.props.location.pathname,
         updateHeader: this.updateHeader,
-        headerText: this.state.headerText
+        headerText: this.state.headerText,
+        setInitialLoad: this.setInitialLoad,
+        initialLoad: this.state.initialLoad
       });
     });
 
+    const chatClass = Session.get("chatOpen") ? "" : "hidden";
     return (
-      <div className="ui right vertical wide visible sidebar chatter" id="chatter">
-          <Nav headerText={this.state.headerText} parentProps={this.props} toggleChatState={this.toggleChatState}/>
-          <div className="wrapper">
-            {children}
-          </div>
+      <div>
+        <Widget toggleChatState={this.toggleChatState} initialLoad={this.state.initialLoad} />
+        <Chat
+          chatClass={chatClass}
+          headerText={this.state.headerText}
+          parentProps={this.props}
+          toggleChatState={this.toggleChatState}
+          children={children}
+        />
       </div>
     );
   }
