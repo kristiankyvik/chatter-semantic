@@ -6,7 +6,7 @@ const App = React.createClass({
 
   getInitialState: function () {
     Session.set({
-      chatOpen: true,
+      chatOpen: false,
       msgNotif: 0
     });
     return {

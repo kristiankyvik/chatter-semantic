@@ -55,7 +55,7 @@ const Room = React.createClass({
     this.scrollDown();
   },
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId);
   },
 
