@@ -52,6 +52,12 @@ const App = React.createClass({
       });
     });
 
+    // After a refresh, check whether we find ouselves in the root, if not redirect
+    if (!this.state.initialLoad && this.props.location.pathname !== "/" ) {
+      this.props.router.push("/");
+    }
+
+
     const chatClass = Session.get("chatOpen") ? "" : "hidden";
     return (
       <div>

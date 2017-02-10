@@ -164,9 +164,8 @@ const Room = React.createClass({
 
     return (
       <div>
-         {this.props.subsReady ? null : <Loader />}
          <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
-           {messages}
+           {this.props.subsReady ? messages : <Loader />}
          </div>
          <Writer numberOfMessages={numberOfMessages} pushMessage={this.pushMessage}/>
        </div>
