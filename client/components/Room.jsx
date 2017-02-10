@@ -32,6 +32,13 @@ const timestampShouldBeDisplayed = function (currentMsg, nextMsg) {
 
 const Room = React.createClass({
 
+  getInitialState: function () {
+    return {
+      roomCount: 0,
+      fetchingOlderMsgs: false
+    };
+  },
+
   pushMessage (text) {
     const roomId = this.props.params.roomId;
     const params = {
@@ -45,7 +52,6 @@ const Room = React.createClass({
   },
 
   componentWillMount () {
-
     // creates a throttled version for both listeners
     this.pushMessage = _.debounce(this.pushMessage, 100);
     this.listenScrollEvent = _.debounce(this.listenScrollEvent, 100);
@@ -73,6 +79,15 @@ const Room = React.createClass({
     }
   },
 
+  componentWillReceiveProps (nextProps) {
+    // Track the loading old messges event
+    if (this.state.fetchingOlderMsgs && (this.props.messages.length < nextProps.messages.length)) {
+      this.setState({"fetchingOlderMsgs": false});
+      const scroller = this.refs.scroller;
+      scroller.scrollTop = 0;
+    }
+  },
+
   scrollDown () {
     const scroller = this.refs.scroller;
     scroller.scrollTop = scroller.scrollHeight;
@@ -89,6 +104,8 @@ const Room = React.createClass({
       Meteor.call("message.count", this.props.params.roomId, (error, result) => {
         const messageCount = result;
         if (messageCount > this.props.messages.length) {
+          this.setState({"fetchingOlderMsgs": true});
+          console.log("set to true");
           Session.set("messageLimit", Session.get("messageLimit") + 50);
         }
       });
@@ -97,7 +114,9 @@ const Room = React.createClass({
 
   render () {
     const numberOfMessages = this.props.messages.length;
-    const messages = (
+    const roomWrapperClass = this.state.fetchingOlderMsgs ? "messagesLoading" : "";
+
+    let messages = (
       this.props.messages.map((message, index) => {
         let dateBanner = timeAgo = avatar = nickname = null;
         const prevMsg = this.props.messages[index - 1];
@@ -161,13 +180,13 @@ const Room = React.createClass({
         );
       })
     );
-
     return (
-      <div>
-         <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
-           {this.props.subsReady ? messages : <Loader />}
-         </div>
-         <Writer numberOfMessages={numberOfMessages} pushMessage={this.pushMessage}/>
+      <div className={"roomWrapper " + roomWrapperClass}>
+        <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
+          {this.state.fetchingOlderMsgs ? <Loader small={true} /> : null}
+          {messages.length > 0 ? messages : <Loader/>}
+        </div>
+        <Writer numberOfMessages={numberOfMessages} pushMessage={this.pushMessage}/>
        </div>
     );
   }
