@@ -4,16 +4,6 @@ import Loader from "../components/Loader.jsx";
 
 import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
-import {
-  PROFILE_CACHE_LIMIT,
-  PROFILE_EXPIRE_IN
-} from "../global-variables.js";
-
-const profileSubs = new SubsManager({
-  cacheLimit: PROFILE_CACHE_LIMIT,
-  expireIn: PROFILE_EXPIRE_IN
-});
-
 const Profile = React.createClass({
 
   getInitialState: function () {
@@ -67,9 +57,9 @@ const Profile = React.createClass({
       return <Loader/>;
     }
 
-    const headerText = `${user.chatterNickname}'s Profile`;
+    const headerText = `${user.profile.chatterNickname}'s Profile`;
     const canEditNickname = Chatter.options.editableNickname;
-    const {isOnline, lastLogin} = getUserStatus(user);
+    const {isOnline} = getUserStatus(user);
 
     const form = (
       <div>
@@ -81,7 +71,7 @@ const Profile = React.createClass({
             <input
               type="text"
               name="nickname"
-              placeholder={user.chatterNickname}
+              placeholder={user.profile.chatterNickname}
               ref={this.initializeInput}
             />
           </div>
@@ -109,7 +99,7 @@ const Profile = React.createClass({
           <span>{user.profile.chatterNickname}</span> is {user.profile.isChatterAdmin ? "" : "not"} an <span>admin</span>.
         </div>
         <p className={isOnline ? "success-msg" : "failure-msg"}>
-          <span>{lastLogin}</span>
+          <span>User is {isOnline ? "online" : "offline"}</span>
         </p>
         {canEditNickname ? form : null}
       </div>
