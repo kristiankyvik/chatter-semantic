@@ -33,7 +33,7 @@ const RoomParent = React.createClass({
       // When we retreive the messages we want to sort them by oldest first
       this.messages = Chatter.Message.find({"roomId": roomId}, {sort: {createdAt: -1}}).fetch().reverse();
       users = Meteor.users.find().fetch();
-      room = Chatter.Room.find({_id: roomId}).fetch()[0];
+      this.room = Chatter.Room.find({_id: roomId}).fetch()[0];
     }
 
     return {
@@ -57,16 +57,19 @@ const RoomParent = React.createClass({
     });
 
     this.messages = [];
+    this.room = null;
 
-    if (_.isUndefined(this.messages)) {
+
+    if (_.isUndefined(this.messages || this.room)) {
       this.messages = [];
+      this.room = null;
     }
   },
 
   render () {
     const children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
-        room: this.data.room,
+        room: this.room,
         users: this.data.users,
         subsReady: this.data.subsReady,
         buttonMessage: "Back to Settings",

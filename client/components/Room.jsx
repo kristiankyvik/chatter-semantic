@@ -65,6 +65,13 @@ const Room = React.createClass({
     Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId);
   },
 
+  shouldComponentUpdate (nextProps, nextState) {
+    if (_.isNull(nextProps.room)) {
+      return false;
+    }
+    return true;
+  },
+
   componentWillUpdate () {
     const scroller = this.refs.scroller;
     this.shouldScroll = scroller.scrollTop + scroller.offsetHeight === scroller.scrollHeight;
@@ -105,7 +112,6 @@ const Room = React.createClass({
         const messageCount = result;
         if (messageCount > this.props.messages.length) {
           this.setState({"fetchingOlderMsgs": true});
-          console.log("set to true");
           Session.set("messageLimit", Session.get("messageLimit") + 50);
         }
       });
