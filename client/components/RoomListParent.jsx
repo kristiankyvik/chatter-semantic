@@ -20,9 +20,7 @@ const RoomListParent = React.createClass({
     const userId = Meteor.userId();
     let roomListDataHandle = null;
 
-    if (this.state.view === "roomList") {
-      roomListDataHandle = chatterSubs.subscribe("roomListData", {userId, roomLimit: this.state.roomLimit});
-    }
+    roomListDataHandle = chatterSubs.subscribe("roomListData2", {userId, roomLimit: this.state.roomLimit});
 
     let subsReady = _.isNull(roomListDataHandle) ? false : roomListDataHandle.ready();
     let hasSupportRoom = false;
@@ -33,7 +31,7 @@ const RoomListParent = React.createClass({
     if (subsReady) {
       if (userId) {
         var tRooms = Chatter.Room.find({}, {sort: {lastActive: -1}}).fetch();
-        allRooms = tRooms.map(function (room) {
+        allRooms = tRooms.slice(0, this.state.roomLimit).map(function (room) {
           const roomId = room._id;
           const userRoom = Chatter.UserRoom.findOne({roomId});
           room.archived = userRoom.archived;
@@ -45,7 +43,6 @@ const RoomListParent = React.createClass({
           room.lastMsgUser = hasLastMessage ? Meteor.users.findOne(lastMsg.userId) : null;
           return room;
         });
-
 
         const allUserRooms = Chatter.UserRoom.find({userId}).fetch();
         allRoomIds = _.pluck(allUserRooms, "roomId");
@@ -106,7 +103,7 @@ const RoomListParent = React.createClass({
         loadMoreRooms={this.loadMoreRooms}
         setInitialLoad={this.props.setInitialLoad}
         initialLoad={this.props.initialLoad}
-
+        user={this.props.user}
       />
     );
   }

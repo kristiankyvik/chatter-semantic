@@ -17,10 +17,6 @@ const Writer = React.createClass({
     if (hasSubmitted) {
       enterPressed ? event.preventDefault() : false;
       const text = input.value;
-      // WIP Not sure if this is what we want
-      // if (this.props.numberOfMessages >= Session.get("messageLimit")) {
-      //   Session.set("messageLimit", Session.get("messageLimit") + 1);
-      // }
 
       this.props.pushMessage(text);
       input.value = "";

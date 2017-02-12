@@ -6,7 +6,9 @@ const RoomParent = React.createClass({
   mixins: [ReactMeteorData],
 
   getInitialState: function () {
-    Session.setDefault('messageLimit', Chatter.options.messageLimit);
+    Session.set({
+      messageLimit: Chatter.options.messageLimit
+    });
     return {
     };
   },
@@ -52,9 +54,6 @@ const RoomParent = React.createClass({
   },
 
   componentWillMount () {
-    Session.set({
-      messageLimit: 50,
-    });
 
     this.messages = [];
     this.room = null;

@@ -14,14 +14,15 @@ const RoomList = React.createClass({
   },
 
   componentWillReceiveProps (nextProps) {
-
     if (nextProps.subsReady && !nextProps.initialLoad) {
       console.log("Chatter loaded fully");
       this.props.setInitialLoad(true);
     }
-    Meteor.call("room.getCount", (error, response) => {
-      this.setState(response);
-    });
+    if (nextProps.subsReady) {
+      Meteor.call("room.getCount", (error, response) => {
+        this.setState(response);
+      });
+    }
   },
 
   componentDidMount () {
@@ -45,9 +46,9 @@ const RoomList = React.createClass({
   },
 
   render () {
-    const user = Meteor.user();
+    const user = this.props.user;
 
-    if (_.isUndefined(user)) {
+    if (_.isEmpty(user)) {
       return <Loader/>;
     }
 
@@ -83,7 +84,6 @@ const RoomList = React.createClass({
 
     let activeHTML = [];
     let archivedHTML = [];
-
     _.forEach(allRooms, (room)=> {
       const roomListItemComp = <RoomListItem
                                 key={room._id}

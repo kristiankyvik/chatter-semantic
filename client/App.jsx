@@ -33,8 +33,15 @@ const App = React.createClass({
 
   render ( ) {
     console.log("render app");
+
+    // After a refresh, check whether we find ouselves in the root, if not redirect
+    if (!this.state.initialLoad && this.props.location.pathname !== "/" ) {
+      this.props.router.push("/");
+    }
+    const user = Meteor.user();
+
     // If user not logged in display empty div
-    if (_.isNull(Meteor.userId())) {
+    if (_.isEmpty(user)) {
       return (
         <div>
         </div>
@@ -48,15 +55,10 @@ const App = React.createClass({
         updateHeader: this.updateHeader,
         headerText: this.state.headerText,
         setInitialLoad: this.setInitialLoad,
-        initialLoad: this.state.initialLoad
+        initialLoad: this.state.initialLoad,
+        user: user
       });
     });
-
-    // After a refresh, check whether we find ouselves in the root, if not redirect
-    if (!this.state.initialLoad && this.props.location.pathname !== "/" ) {
-      this.props.router.push("/");
-    }
-
 
     const chatClass = Session.get("chatOpen") ? "" : "hidden";
     return (

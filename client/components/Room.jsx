@@ -53,7 +53,7 @@ const Room = React.createClass({
 
   componentWillMount () {
     // creates a throttled version for both listeners
-    this.pushMessage = _.debounce(this.pushMessage, 100);
+    this.pushMessage = _.debounce(this.pushMessage, 260);
     this.listenScrollEvent = _.debounce(this.listenScrollEvent, 100);
   },
 
@@ -190,7 +190,7 @@ const Room = React.createClass({
       <div className={"roomWrapper " + roomWrapperClass}>
         <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
           {this.state.fetchingOlderMsgs ? <Loader small={true} /> : null}
-          {messages.length > 0 ? messages : <Loader/>}
+          {messages.length === 0 && !this.props.subsReady ? <Loader/> : messages}
         </div>
         <Writer numberOfMessages={numberOfMessages} pushMessage={this.pushMessage}/>
        </div>
