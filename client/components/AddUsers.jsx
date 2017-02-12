@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Loader from "../components/Loader.jsx";
+import UserBanner from "../components/UserBanner.jsx";
 
 import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
@@ -15,16 +16,19 @@ const AddUsers = React.createClass({
 
     const subsReady = addUsersHandle.ready();
 
-    let addedUsers = [];
+    let addedUserIds = [];
     let searchedUsers = [];
+    let addedUsers = [];
 
     if (subsReady) {
-      addedUsers = _.pluck(Chatter.UserRoom.find({"roomId": room._id}).fetch(), "userId");
+      addedUserRooms = Chatter.UserRoom.find({"roomId": room._id}).fetch();
+      addedUserIds = _.pluck(addedUserRooms, "userId");
+      addedUsers = Meteor.users.find({_id: {$in: addedUserIds}}).fetch();
       const regex = new RegExp(".*" + this.state.query + ".*", "i"); // 'i' for case insensitive search
       searchedUsers = this.state.query ? Meteor.users.find({username: {$regex: regex}}).fetch() : [];
 
       _.each(searchedUsers, (user) => {
-        if (addedUsers.indexOf(user._id) < 0) {
+        if (addedUserIds.indexOf(user._id) < 0) {
           user.added = false;
         } else {
           user.added = true;
@@ -34,9 +38,10 @@ const AddUsers = React.createClass({
 
     return {
       subsReady,
-      addedUsers,
+      addedUserIds,
       searchedUsers,
-      addUsersHandle
+      addUsersHandle,
+      addedUsers
     };
   },
 
@@ -134,6 +139,13 @@ const AddUsers = React.createClass({
 
     return (
       <div>
+        <UserBanner
+          users={this.data.addedUsers}
+          router={this.props.router}
+          user={Meteor.user()}
+          addUsersPath={`/room/${this.props.params.roomId}`}
+          showAddUsersBtn={false}
+        />
         <div className="padded addUsers scrollable">
           <div className="ui list relaxed">
             <div className="item">

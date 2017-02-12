@@ -172,14 +172,18 @@ body
         .padded
             padding-top: 40px
 
+
+    .addUsers.scrollable.padded
+        top: 95px
+
     .room
         margin: 0 !important
         background-image: url(chatter-svg-bg)
 
-
         &.ui.comments
             max-width: 100%
-            bottom: 60px
+            bottom: 50px
+            top: 95px
             .date-banner
                 width: 100%
                 text-align: center
@@ -289,6 +293,34 @@ body
                 margin-top: 10px
         .deleteBtnWrapper
             padding-bottom: 20px
+
+    .online-user-banner
+        position: absolute
+        top: 55px
+        height: 40px
+        left: 0
+        right: 0
+        background-color: chatter-blue-darker
+        padding: 5px 10px
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .user
+            margin-right: -10px
+            .ui.avatar.image
+                border: 1px solid white
+                width: 2.1em;
+                height: 2.1em;
+        .user-status
+            top: 5px;
+        .addUserBtn
+            border: 1px solid white
+            margin-right: -10px
+            width: 2.1em;
+            height: 2.1em;
+            padding: 0.55em;
+            background-color: chatter-light-gray
+            z-index: 10
 
 .chatter-open.ui.button
     font-size: 2.2em

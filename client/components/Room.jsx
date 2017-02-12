@@ -3,14 +3,13 @@ import React from 'react';
 import Writer from "../components/Writer.jsx";
 import Loader from "../components/Loader.jsx";
 import Message from "../components/Message.jsx";
+import UserBanner from "../components/UserBanner.jsx";
 
 import {
   VERY_RECENT_MSG,
   RECENT_MSG,
   VERY_RECENT_MSG_INTERVAL,
-  RECENT_MSG_INTERVAL,
-  ROOM_CACHE_LIMIT,
-  ROOM_EXPIRE_IN
+  RECENT_MSG_INTERVAL
 } from "../global-variables.js";
 
 const isFirstMessage = function (prevMsg, currentMsg) {
@@ -119,14 +118,16 @@ const Room = React.createClass({
   },
 
   render () {
-    const numberOfMessages = this.props.messages.length;
-    const roomWrapperClass = this.state.fetchingOlderMsgs ? "messagesLoading" : "";
+    const {messages, users, router, subsReady} = this.props;
+    const user = Meteor.user();
+    const numberOfMessages = messages.length;
 
-    let messages = (
-      this.props.messages.map((message, index) => {
+    const roomWrapperClass = this.state.fetchingOlderMsgs ? "messagesLoading" : "";
+    let messagesHtml = (
+      messages.map((message, index) => {
         let dateBanner = timeAgo = avatar = nickname = null;
-        const prevMsg = this.props.messages[index - 1];
-        const nextMsg = this.props.messages[index + 1];
+        const prevMsg = messages[index - 1];
+        const nextMsg = messages[index + 1];
         const user = Meteor.users.findOne(message.userId);
 
         const isFirstMessageOfChat = index === 0;
@@ -163,7 +164,7 @@ const Room = React.createClass({
           avatar = user._id;
           nickname = user.profile.chatterNickname;
         } else {
-          if (isFirstMessage(this.props.messages[index - 1], message)) {
+          if (isFirstMessage(messages[index - 1], message)) {
             avatar = user._id;
             nickname = user.profile.chatterNickname;
           } else if (isFirstMessageOfDay) {
@@ -186,11 +187,20 @@ const Room = React.createClass({
         );
       })
     );
+
+
     return (
       <div className={"roomWrapper " + roomWrapperClass}>
+        <UserBanner
+          users={users}
+          router={router}
+          user={user}
+          addUsersPath={`/room/${this.props.params.roomId}/addusers`}
+          showAddUsersBtn={true}
+        />
         <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
           {this.state.fetchingOlderMsgs ? <Loader small={true} /> : null}
-          {messages.length === 0 && !this.props.subsReady ? <Loader/> : messages}
+          {messages.length === 0 && !subsReady ? <Loader/> : messagesHtml}
         </div>
         <Writer numberOfMessages={numberOfMessages} pushMessage={this.pushMessage}/>
        </div>

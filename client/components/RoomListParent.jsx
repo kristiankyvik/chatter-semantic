@@ -26,7 +26,6 @@ const RoomListParent = React.createClass({
     let hasSupportRoom = false;
     let allRoomIds = [];
     let allRooms = [];
-    let roomCount = 3;
 
     if (subsReady) {
       if (userId) {
@@ -58,8 +57,7 @@ const RoomListParent = React.createClass({
       hasSupportRoom,
       allRoomIds,
       allRooms,
-      roomListDataHandle,
-      roomCount
+      roomListDataHandle
     };
   },
 
@@ -98,7 +96,6 @@ const RoomListParent = React.createClass({
         allRoomIds={this.data.allRoomIds}
         allRooms={this.data.allRooms}
         roomListDataHandle={this.data.roomListDataHandle}
-        roomCount={this.data.roomCount}
         router={this.props.router}
         loadMoreRooms={this.loadMoreRooms}
         setInitialLoad={this.props.setInitialLoad}

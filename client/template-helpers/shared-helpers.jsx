@@ -1,8 +1,14 @@
 import Identicon from 'identicon.js';
 
+
+const identiconOptions = {
+  background: [255, 255, 255, 255],         // rgba white
+  margin: 0.2,                              // 20% margin
+};
+
 const getAvatarSvg = function (userId) {
   if (!userId) return null;
-  return new Identicon(userId).toString();
+  return new Identicon(userId, identiconOptions).toString();
 };
 
 const getRelativeTime = function (timeAgo) {
