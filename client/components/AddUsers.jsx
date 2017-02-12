@@ -106,7 +106,7 @@ const AddUsers = React.createClass({
       };
 
       const loading = (user._id === this.state.requestingUser);
-      const {isOnline, lastLogin} = getUserStatus(user);
+      const {isOnline} = getUserStatus(user);
       const statusCircleClass = isOnline ? "user-status online" : "user-status offline";
 
       return (
@@ -129,9 +129,9 @@ const AddUsers = React.createClass({
             <a className="header">
               {user.profile.chatterNickname}
             </a>
-            <div className="description">
-              {lastLogin}
-            </div>
+            <p className={isOnline ? "description success-msg" : "description failure-msg"}>
+              <span>User is {isOnline ? "online" : "offline"}</span>
+            </p>
           </div>
         </div>
       );
