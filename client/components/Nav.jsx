@@ -56,14 +56,6 @@ const Nav = React.createClass({
         nextView: "/profile"
       }
     };
-
-    if (path.substring(0, 6) === "/room/") {
-      return {
-        icon: "setting icon",
-        nextView: path + "/settings"
-      };
-    }
-
     return rightIconConfig[path];
   },
 
@@ -101,7 +93,7 @@ const Nav = React.createClass({
             className="icon item"
             onClick={()=> this.setView(this.getRightIconConfig(path).nextView)}
           >
-            {(path.substring(0, 6) === "/room/" && path.length === 23) || path === "/" ? settingsIconHTML : null }
+            {path === "/" ? settingsIconHTML : null }
           </a>
           <a
             id="chatter-close"
