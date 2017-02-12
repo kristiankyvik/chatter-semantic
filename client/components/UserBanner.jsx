@@ -7,7 +7,8 @@ const UserBanner = React.createClass({
     if (this.props.showInfo) {
       $('.info.circle.icon').popup({
         popup: $('.room-info-popup'),
-        on: 'click'
+        on: 'click',
+        boundary: '.room.scrollable.ui.comments'
       });
     }
   },
@@ -38,7 +39,7 @@ const UserBanner = React.createClass({
   },
 
   render () {
-    const {router, users, user, showAddUsersBtn, addUsersPath, room, showInfo} = this.props;
+    const {router, users, user, showAddUsersBtn, addUsersPath, room, showInfo, subsReady} = this.props;
 
     $(".ui.toggle.checkbox").checkbox();
 
@@ -90,19 +91,41 @@ const UserBanner = React.createClass({
         </div>
       );
     }
-    const onlineUsers = _.map(users, function (user) {
-      const userHasStatus = user.hasOwnProperty("status");
-      const userOnline = userHasStatus ? user.status.online : false;
+
+    const onlineUsers = [];
+    const numberOfUsers = users.length;
+
+
+    let numUsersShown = 6;
+    let numUsersNotShown = 0;
+    let notSeenHtml = null;
+
+    if (numberOfUsers <= 6) {
+      numUsersShown = numberOfUsers;
+    } else {
+      numUsersNotShown = numberOfUsers - 6;
+      notSeenHtml = (
+        <div className="notSeen">
+          <i className="plus icon"></i><div className="otherUsers">{numUsersNotShown}</div>
+        </div>
+      );
+    }
+
+    _(numUsersShown).times(function (n) {
+      const userHasStatus = users[n].hasOwnProperty("status");
+      const userOnline = userHasStatus ? users[n].status.online : false;
       const status = userOnline ? "user-status online" : "user-status offline";
-      return (
-        <div className="user" key={user._id}>
+
+      const userCircle = (
+        <div className="user" key={users[n]._id} data-tooltip={users[n].profile.chatterNickname} data-position="bottom center">
           <img
             className="ui avatar image"
-            src={`data:image/png;base64,${getAvatarSvg(user._id)}`}
+            src={`data:image/png;base64,${getAvatarSvg(users[n]._id)}`}
           />
           <div className={status}></div>
         </div>
       );
+      onlineUsers.push(userCircle);
     });
 
     const addUsersBtn = (
@@ -114,10 +137,19 @@ const UserBanner = React.createClass({
         <i className="plus icon"></i>
       </button>
     );
+
+
     if (user.profile.isChatterAdmin && showAddUsersBtn) {
       onlineUsers.push(addUsersBtn);
     }
 
+    if (numberOfUsers > 6) {
+      onlineUsers.push(notSeenHtml);
+    }
+
+    if (!subsReady) {
+      return null;
+    }
     return (
       <div className="online-user-banner">
         <div className="left">

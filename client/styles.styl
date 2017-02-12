@@ -300,7 +300,7 @@ body
         height: 40px
         left: 0
         right: 0
-        background-color: chatter-blue-darker
+        background-color: chatter-blue-lighter
         padding: 5px 10px
         display: flex;
         align-items: center;
@@ -318,21 +318,30 @@ body
                 padding-bottom: 20px
 
         .center
-            flex: 3
-            justify-content: center
+            flex: 6
+            justify-content: center;
+            align-items: center;
+            .notSeen
+                display: flex;
+                color: white;
+                padding: 3px 0 0 7px;
+                font-size: 13px;
+                i
+                    margin: 0;
         .right
             flex: 1
         .user
-            margin-right: -10px
+            margin-right: 2px
             .ui.avatar.image
                 border: 1px solid white
                 width: 2.1em;
                 height: 2.1em;
+                margin-right: 0;
         .user-status
             top: 5px;
         .addUserBtn
             border: 1px solid white
-            margin-right: -10px
+            margin-right: 2px
             width: 2.1em;
             height: 2.1em;
             padding: 0.55em;

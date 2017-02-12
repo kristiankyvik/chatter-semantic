@@ -43,7 +43,7 @@ const RoomParent = React.createClass({
         const isArchived = userRoom.archived;
         this.room.archived = isArchived;
         const userRoomsInRoom = _.pluck(Chatter.UserRoom.find({roomId}).fetch(), "userId");
-        this.users = Meteor.users.find({_id: {$in: userRoomsInRoom}}).fetch();
+        this.users = Meteor.users.find({_id: {$in: userRoomsInRoom}}, {sort: {"profile.online": 1}}).fetch();
       }
     }
 
