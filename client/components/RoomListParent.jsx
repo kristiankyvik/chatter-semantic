@@ -32,7 +32,10 @@ const RoomListParent = React.createClass({
         var tRooms = Chatter.Room.find({}, {sort: {lastActive: -1}, limit: this.state.roomLimit}).fetch();
         allRooms = _.map(tRooms, function (room) {
           const roomId = room._id;
-          const userRoom = Chatter.UserRoom.findOne({roomId});
+          const userRoom = Chatter.UserRoom.find({userId, roomId}, {limit: 1}).fetch()[0];
+          if (_.isEmpty(userRoom)) {
+            return;
+          }
           room.archived = userRoom.archived;
           room.unreadMsgCount = userRoom.unreadMsgCount;
           const lastMsg = Chatter.Message.findOne({roomId}, {sort: {createdAt: -1}});

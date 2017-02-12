@@ -35,11 +35,16 @@ const RoomParent = React.createClass({
       const userId = Meteor.userId();
       // When we retreive the messages we want to sort them by oldest first
       this.messages = Chatter.Message.find({"roomId": roomId}, {sort: {createdAt: -1}}).fetch().reverse();
-      this.users = Meteor.users.find().fetch();
       this.room = Chatter.Room.find({_id: roomId}).fetch()[0];
       const userRoom = Chatter.UserRoom.find({roomId, userId}, {limit: 1}).fetch()[0];
-      const isArchived = userRoom.archived;
-      this.room.archived = isArchived;
+      if (_.isEmpty(userRoom)) {
+        this.props.router.push("/");
+      } else {
+        const isArchived = userRoom.archived;
+        this.room.archived = isArchived;
+        const userRoomsInRoom = _.pluck(Chatter.UserRoom.find({roomId}).fetch(), "userId");
+        this.users = Meteor.users.find({_id: {$in: userRoomsInRoom}}).fetch();
+      }
     }
 
     return {

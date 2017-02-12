@@ -85,6 +85,9 @@ const RoomList = React.createClass({
     let activeHTML = [];
     let archivedHTML = [];
     _.forEach(allRooms, (room)=> {
+      if (_.isEmpty(room)) {
+        return;
+      }
       const roomListItemComp = <RoomListItem
                                 key={room._id}
                                 goToRoom={this.goToRoom}
