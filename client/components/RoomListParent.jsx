@@ -20,7 +20,7 @@ const RoomListParent = React.createClass({
     const userId = Meteor.userId();
     let roomListDataHandle = null;
 
-    roomListDataHandle = chatterSubs.subscribe("roomListData2", {userId, roomLimit: this.state.roomLimit});
+    roomListDataHandle = chatterSubs.subscribe("roomListData", {userId, roomLimit: this.state.roomLimit});
 
     let subsReady = _.isNull(roomListDataHandle) ? false : roomListDataHandle.ready();
     let hasSupportRoom = false;
