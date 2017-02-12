@@ -30,8 +30,8 @@ const RoomListParent = React.createClass({
 
     if (subsReady) {
       if (userId) {
-        var tRooms = Chatter.Room.find({}, {sort: {lastActive: -1}}).fetch();
-        allRooms = tRooms.slice(0, this.state.roomLimit).map(function (room) {
+        var tRooms = Chatter.Room.find({}, {sort: {lastActive: -1}, limit: this.state.roomLimit}).fetch();
+        allRooms = _.map(tRooms, function (room) {
           const roomId = room._id;
           const userRoom = Chatter.UserRoom.findOne({roomId});
           room.archived = userRoom.archived;
