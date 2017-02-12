@@ -145,6 +145,8 @@ const AddUsers = React.createClass({
           user={Meteor.user()}
           addUsersPath={`/room/${this.props.params.roomId}`}
           showAddUsersBtn={false}
+          subsReady={this.data.subsReady}
+          showInfo={false}
         />
         <div className="padded addUsers scrollable">
           <div className="ui list relaxed">

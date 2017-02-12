@@ -61,7 +61,9 @@ const Room = React.createClass({
   },
 
   componentWillUnmount () {
-    Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId);
+    if (!_.isNull(this.props.params.roomId)) {
+      Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId);
+    }
   },
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -118,7 +120,7 @@ const Room = React.createClass({
   },
 
   render () {
-    const {messages, users, router, subsReady} = this.props;
+    const {messages, users, router, subsReady, room} = this.props;
     const user = Meteor.user();
     const numberOfMessages = messages.length;
 
@@ -187,16 +189,17 @@ const Room = React.createClass({
         );
       })
     );
-
-
     return (
       <div className={"roomWrapper " + roomWrapperClass}>
         <UserBanner
+          room={this.props.room}
           users={users}
           router={router}
           user={user}
           addUsersPath={`/room/${this.props.params.roomId}/addusers`}
           showAddUsersBtn={true}
+          subsReady={subsReady}
+          showInfo={true}
         />
         <div className="room scrollable ui comments basic padded" onScroll={this.listenScrollEvent} ref="scroller">
           {this.state.fetchingOlderMsgs ? <Loader small={true} /> : null}

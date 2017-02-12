@@ -305,6 +305,23 @@ body
         display: flex;
         align-items: center;
         justify-content: center;
+        .left, .right, .center
+            display: flex
+        .left
+            flex: 1
+            i
+                font-size: 1.1em;
+                margin-left: 6px;
+                color: white
+                cursor: pointer
+            .deleteBtnWrapper
+                padding-bottom: 20px
+
+        .center
+            flex: 3
+            justify-content: center
+        .right
+            flex: 1
         .user
             margin-right: -10px
             .ui.avatar.image
