@@ -143,23 +143,21 @@ const UserBanner = React.createClass({
       onlineUsers.push(addUsersBtn);
     }
 
-    if (numberOfUsers > 6) {
+    if (numUsersNotShown > 0) {
       onlineUsers.push(notSeenHtml);
     }
 
-    if (!subsReady) {
-      return null;
-    }
+
     return (
       <div className="online-user-banner">
         <div className="left">
           <i className={showInfo ? "info circle icon" : "hidden"} onClick={this.checkIfArchived}></i>
             <div className="ui custom popup room-info-popup">
-              {roomInfo}
+              {subsReady ? roomInfo : null}
             </div>
         </div>
         <div className="center">
-          {onlineUsers}
+          {subsReady ? onlineUsers : null}
         </div>
         <div className="right">
         </div>
