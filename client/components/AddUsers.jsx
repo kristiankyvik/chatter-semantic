@@ -10,24 +10,17 @@ const AddUsers = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData () {
-    const { room } = this.props;
-
-    const addUsersHandle = Meteor.subscribe("addUsers");
-
-    const subsReady = addUsersHandle.ready();
-
-    let addedUserIds = [];
-    let searchedUsers = [];
-    let addedUsers = [];
+    const addUsersSearchHandle = Meteor.subscribe("addUsersSearch", this.state.query);
+    const addUsersHandle = Meteor.subscribe("addUsers", this.props.params.roomId);
+    const subsReady = addUsersHandle.ready() && addUsersSearchHandle.ready();
 
     if (subsReady) {
-      addedUserRooms = Chatter.UserRoom.find({"roomId": room._id}).fetch();
-      addedUserIds = _.pluck(addedUserRooms, "userId");
-      addedUsers = Meteor.users.find({_id: {$in: addedUserIds}}).fetch();
+      addedUserRooms = Chatter.UserRoom.find({"roomId": this.props.params.roomId}).fetch();
+      const addedUserIds = _.pluck(addedUserRooms, "userId");
+      this.addedUsers = Meteor.users.find({_id: {$in: addedUserIds}}).fetch();
       const regex = new RegExp(".*" + this.state.query + ".*", "i"); // 'i' for case insensitive search
-      searchedUsers = this.state.query ? Meteor.users.find({username: {$regex: regex}}).fetch() : [];
-
-      _.each(searchedUsers, (user) => {
+      this.searchedUsers = this.state.query.length ? Meteor.users.find({username: {$regex: regex}}).fetch() : [];
+      _.each(this.searchedUsers, (user) => {
         if (addedUserIds.indexOf(user._id) < 0) {
           user.added = false;
         } else {
@@ -38,10 +31,7 @@ const AddUsers = React.createClass({
 
     return {
       subsReady,
-      addedUserIds,
-      searchedUsers,
-      addUsersHandle,
-      addedUsers
+      addUsersHandle
     };
   },
 
@@ -51,6 +41,16 @@ const AddUsers = React.createClass({
       users: [],
       query: ""
     };
+  },
+
+  compponentWillMount () {
+    this.searchedUsers = [];
+    this.addedUsers = [];
+
+    if (_.isUndefined(this.searchedUsers || this.addedUsers)) {
+      this.searchedUsers = [];
+      this.addedUsers = [];
+    }
   },
 
   handleChange () {
@@ -95,11 +95,12 @@ const AddUsers = React.createClass({
   },
 
   render () {
-    if (!this.data.subsReady) {
-      return <Loader/>;
+    if (_.isUndefined(this.searchedUsers || this.addedUsers)) {
+      this.searchedUsers = [];
+      this.addedUsers = [];
     }
 
-    const allUsers = this.data.searchedUsers.map( user => {
+    const allUsers = this.searchedUsers.map( user => {
       let btnSetup = {
         action: user.added ? "remove" : "add",
         text: user.added ? "Remove" : "Add"
@@ -140,7 +141,7 @@ const AddUsers = React.createClass({
     return (
       <div>
         <UserBanner
-          users={this.data.addedUsers}
+          users={this.addedUsers}
           router={this.props.router}
           user={Meteor.user()}
           addUsersPath={`/room/${this.props.params.roomId}`}

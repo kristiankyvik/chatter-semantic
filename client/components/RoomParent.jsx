@@ -25,11 +25,7 @@ const RoomParent = React.createClass({
     roomDataHandle = roomSubs.subscribe("roomData", roomId
     );
 
-
     const subsReady = messagesHandle.ready() && roomDataHandle.ready();
-    let users = [];
-    let room = {};
-    let messages = [];
 
     if (subsReady) {
       const userId = Meteor.userId();
@@ -44,16 +40,16 @@ const RoomParent = React.createClass({
         this.room.archived = isArchived;
         const userRoomsInRoom = _.pluck(Chatter.UserRoom.find({roomId}).fetch(), "userId");
         this.users = Meteor.users.find({_id: {$in: userRoomsInRoom}}, {sort: {"profile.online": 1}}).fetch();
+        _.map(this.users, function (user) {
+          return user.profile.online;
+        });
       }
     }
 
     return {
       subsReady,
       roomDataHandle,
-      messagesHandle,
-      users,
-      room,
-      messages
+      messagesHandle
     };
   },
 
@@ -68,7 +64,7 @@ const RoomParent = React.createClass({
     this.users = [];
 
 
-    if (_.isUndefined(this.messages || this.room)) {
+    if (_.isUndefined(this.messages || this.room || this.users)) {
       this.messages = [];
       this.room = null;
       this.users = [];
