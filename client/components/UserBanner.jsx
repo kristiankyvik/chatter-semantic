@@ -153,11 +153,11 @@ const UserBanner = React.createClass({
         <div className="left">
           <i className={showInfo ? "info circle icon" : "hidden"} onClick={this.checkIfArchived}></i>
             <div className="ui custom popup room-info-popup">
-              {subsReady ? roomInfo : null}
+              {roomInfo}
             </div>
         </div>
         <div className="center">
-          {subsReady ? onlineUsers : null}
+          {onlineUsers}
         </div>
         <div className="right">
         </div>

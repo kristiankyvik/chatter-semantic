@@ -6,12 +6,14 @@ import UserBanner from "../components/UserBanner.jsx";
 
 import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
+const addUsersSubs = new SubsCache(-1, -1);
+
 const AddUsers = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData () {
     const addUsersSearchHandle = Meteor.subscribe("addUsersSearch", this.state.query);
-    const addUsersHandle = Meteor.subscribe("addUsers", this.props.params.roomId);
+    const addUsersHandle = addUsersSubs.subscribe("addUsers", this.props.params.roomId);
     const subsReady = addUsersHandle.ready() && addUsersSearchHandle.ready();
 
     if (subsReady) {
