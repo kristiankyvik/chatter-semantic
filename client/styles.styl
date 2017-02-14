@@ -112,6 +112,10 @@ body
             .ui.avatar.image
                 width: 3em
                 height: 3em
+                -moz-osx-font-smoothing: auto
+                -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
+                -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
+                box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
             .content
                 width: 85%
                 padding-left: 0.8em
@@ -123,7 +127,7 @@ body
                         text-overflow: ellipsis
                         white-space: nowrap
                         float: left
-                        color: chatter-gray
+                        color: rgba(0, 0, 0, 0.87)
                     .meta
                         color: chatter-trans-gray
                         display: block
@@ -161,7 +165,7 @@ body
 
     .roomWrapper
         .ui.inverted.dimmer
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.2)
         &.messagesLoading
             .ui.active.inverted.dimmer
                 height: 40px
@@ -186,7 +190,7 @@ body
             max-width: 100%
             bottom: 50px
             top: 95px
-            padding-bottom: 5px;
+            padding-bottom: 5px
             .date-banner
                 width: 100%
                 text-align: center
@@ -314,16 +318,16 @@ body
         right: 0
         background-color: chatter-blue-lighter
         padding: 5px 10px
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex
+        align-items: center
+        justify-content: center
         .left, .right, .center
             display: flex
         .left
             flex: 1
             i
-                font-size: 1.1em;
-                margin-left: 6px;
+                font-size: 1.1em
+                margin-left: 6px
                 color: white
                 cursor: pointer
             .deleteBtnWrapper
@@ -331,34 +335,40 @@ body
 
         .center
             flex: 6
-            justify-content: center;
-            align-items: center;
+            justify-content: center
+            align-items: center
             .notSeen
-                display: flex;
-                color: white;
-                padding: 3px 0 0 7px;
-                font-size: 13px;
+                display: flex
+                color: white
+                padding: 3px 0 0 7px
+                font-size: 13px
                 i
-                    margin: 0;
+                    margin: 0
         .right
             flex: 1
         .user
             margin-right: 2px
             .ui.avatar.image
-                border: 1px solid white
-                width: 2.1em;
-                height: 2.1em;
-                margin-right: 0;
+                width: 2.1em
+                height: 2.1em
+                margin-right: 0
+                -moz-osx-font-smoothing: auto
+                -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
+                -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
+                box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
         .user-status
-            top: 5px;
+            top: 5px
         .addUserBtn
-            border: 1px solid white
             margin-right: 2px
-            width: 2.1em;
-            height: 2.1em;
-            padding: 0.55em;
+            width: 2.1em
+            height: 2.1em
+            padding: 0.55em
             background-color: chatter-light-gray
             z-index: 10
+            -moz-osx-font-smoothing: auto
+            -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
+            -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
 
 .chatter-open.ui.button
     font-size: 2.2em

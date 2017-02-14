@@ -6,7 +6,7 @@ const RoomListItem = React.createClass({
 
   render () {
     const {room, goToRoom} = this.props;
-    let lastAvatar = "01010101010101";
+    let lastAvatar = "09090909090909";
     let statusClass = "user-status none";
 
     if (!_.isNull(room.lastMsgUser)) {
