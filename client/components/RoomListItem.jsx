@@ -34,12 +34,12 @@ const RoomListItem = React.createClass({
               {room.name}
             </div>
             <div className="meta">
-              {room.lastMsgTimeAgo}
+              {room.getTimeAgo()}
             </div>
           </div>
           <div className="description">
             <div className="preview">
-              {room.lastMsgTxt}
+              {room.lastMessage}
             </div>
             <div className="counter">
                 { room.unreadMsgCount > 0 ? <span> {room.unreadMsgCount} </span> : "" }

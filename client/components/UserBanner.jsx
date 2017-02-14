@@ -105,7 +105,7 @@ const UserBanner = React.createClass({
     } else {
       numUsersNotShown = numberOfUsers - 6;
       notSeenHtml = (
-        <div className="notSeen">
+        <div className="notSeen" key={"notSeen"}>
           <i className="plus icon"></i><div className="otherUsers">{numUsersNotShown}</div>
         </div>
       );
@@ -115,7 +115,6 @@ const UserBanner = React.createClass({
       const userHasStatus = users[n].hasOwnProperty("status");
       const userOnline = userHasStatus ? users[n].status.online : false;
       const status = userOnline ? "user-status online" : "user-status offline";
-
       const userCircle = (
         <div className="user" key={users[n]._id} data-tooltip={users[n].profile.chatterNickname} data-position="bottom center">
           <img

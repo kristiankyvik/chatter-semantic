@@ -164,11 +164,11 @@ const Room = React.createClass({
         // takes care of the display of avatars and nicknames
         if (index === 0 ) {
           avatar = message.userId;
-          nickname = _.isEmpty(user.profile) ? message.userId : user.profile.chatterNickname;
+          nickname = !_.isEmpty(user) && user.hasOwnProperty("profile") ? user.profile.chatterNickname : message.userId;
         } else {
           if (isFirstMessage(messages[index - 1], message)) {
             avatar = user._id;
-            nickname = _.isEmpty(user.profile) ? message.userId : user.profile.chatterNickname;
+            nickname = !_.isEmpty(user) && user.hasOwnProperty("profile") ? user.profile.chatterNickname : message.userId;
           } else if (isFirstMessageOfDay) {
           }
         }

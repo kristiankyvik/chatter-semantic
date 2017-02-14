@@ -38,11 +38,7 @@ const RoomListParent = React.createClass({
           }
           room.archived = userRoom.archived;
           room.unreadMsgCount = userRoom.unreadMsgCount;
-          const lastMsg = Chatter.Message.findOne({roomId}, {sort: {createdAt: -1}});
-          const hasLastMessage = !_.isUndefined(lastMsg);
-          room.lastMsgTxt = hasLastMessage ? lastMsg.message : "no messages yet";
-          room.lastMsgTimeAgo = hasLastMessage ? lastMsg.getTimeAgo() : null;
-          room.lastMsgUser = hasLastMessage ? Meteor.users.findOne(lastMsg.userId) : null;
+          room.lastMsgUser = !_.isEmpty(room.lastMessageOwner) ? Meteor.users.findOne(room.lastMessageOwner) : null;
           return room;
         });
 
