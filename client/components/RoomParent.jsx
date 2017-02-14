@@ -75,7 +75,7 @@ const RoomParent = React.createClass({
         room: this.room,
         users: this.users,
         subsReady: this.data.subsReady,
-        buttonMessage: "Back to room",
+        buttonMessage: "Go to room",
         messages: this.messages,
         buttonGoTo: `/room/${this.props.params.roomId}`,
         updateHeader: this.props.updateHeader,

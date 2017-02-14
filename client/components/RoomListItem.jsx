@@ -6,7 +6,7 @@ const RoomListItem = React.createClass({
 
   render () {
     const {room, goToRoom} = this.props;
-    let lastAvatar = "default";
+    let lastAvatar = "01010101010101";
     let statusClass = "user-status none";
 
     if (!_.isNull(room.lastMsgUser)) {
@@ -39,7 +39,7 @@ const RoomListItem = React.createClass({
           </div>
           <div className="description">
             <div className="preview">
-              {room.lastMessage}
+              {_.isEmpty(room.lastMessage) ? "no messages yet" : room.lastMessage}
             </div>
             <div className="counter">
                 { room.unreadMsgCount > 0 ? <span> {room.unreadMsgCount} </span> : "" }

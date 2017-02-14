@@ -27,7 +27,6 @@ const Routes = React.createClass({
           </Route>
           <Route path="/newroom" component={ NewRoomParent } >
             <IndexRoute component={ MainNewRoom } />
-            <Route path="/newroom/addusers" component={ AddUsers } />
           </Route>
         </Route>
       </Router>

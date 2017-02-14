@@ -18,9 +18,7 @@ const NewRoomParent = React.createClass({
       return React.cloneElement(child, {
         setRoom: this.setRoom,
         room: this.state.room,
-        buttonMessage: "Go to room",
         messages: this.messages,
-        buttonGoTo: _.isNull(this.state.room) ? null : `/room/${this.state.room._id}`,
         updateHeader: this.props.updateHeader,
         headerText: this.props.headerText
       });
