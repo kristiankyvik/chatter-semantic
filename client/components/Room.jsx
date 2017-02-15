@@ -167,7 +167,7 @@ const Room = React.createClass({
           nickname = !_.isEmpty(user) && user.hasOwnProperty("profile") ? user.profile.chatterNickname : message.userId;
         } else {
           if (isFirstMessage(messages[index - 1], message)) {
-            avatar = user._id;
+            avatar = message.userId;
             nickname = !_.isEmpty(user) && user.hasOwnProperty("profile") ? user.profile.chatterNickname : message.userId;
           } else if (isFirstMessageOfDay) {
           }
