@@ -14,7 +14,7 @@ const Nav = React.createClass({
     const leftIconConfig = {
       "/": {
         icon: "",
-        nextView: "/profile"
+        nextView: "/"
       },
       "/room": {
         icon: "chevron left icon",
@@ -45,7 +45,6 @@ const Nav = React.createClass({
         nextView: path.substring( 0, 23)
       };
     } else if (path.endsWith("/addusers")) {
-
       return {
         icon: "close icon",
         nextView: path.slice(0, -9)
