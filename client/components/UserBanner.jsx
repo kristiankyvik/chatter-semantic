@@ -8,7 +8,7 @@ const UserBanner = React.createClass({
       $('.info.circle.icon').popup({
         popup: $('.room-info-popup'),
         on: 'click',
-        boundary: '.room.scrollable.ui.comments'
+        position: 'bottom left'
       });
     }
   },
@@ -132,6 +132,8 @@ const UserBanner = React.createClass({
         key={"add-user-button"}
         className="circular ui icon button addUserBtn"
         onClick={ () => router.push(addUsersPath)}
+        data-tooltip="Add users"
+        data-position="bottom center"
       >
         <i className="plus icon"></i>
       </button>
@@ -151,9 +153,9 @@ const UserBanner = React.createClass({
       <div className="online-user-banner">
         <div className="left">
           <i className={showInfo ? "info circle icon" : "hidden"} onClick={this.checkIfArchived}></i>
-            <div className="ui custom popup room-info-popup">
-              {roomInfo}
-            </div>
+          <div className="ui custom popup room-info-popup">
+            {roomInfo}
+          </div>
         </div>
         <div className="center">
           {onlineUsers}

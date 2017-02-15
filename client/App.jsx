@@ -70,6 +70,7 @@ const App = React.createClass({
           parentProps={this.props}
           toggleChatState={this.toggleChatState}
           children={children}
+          user={user}
         />
       </div>
     );
