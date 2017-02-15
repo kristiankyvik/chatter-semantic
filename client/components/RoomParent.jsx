@@ -1,6 +1,6 @@
 import React from 'react';
 
-const roomSubs = new SubsCache(-1, -1);
+const roomSubs = new SubsCache(5, 60);
 
 const RoomParent = React.createClass({
   mixins: [ReactMeteorData],
@@ -40,7 +40,7 @@ const RoomParent = React.createClass({
         const isArchived = userRoom.archived;
         this.room.archived = isArchived;
         const userRoomsInRoom = _.pluck(Chatter.UserRoom.find({roomId}).fetch(), "userId");
-        this.users = Meteor.users.find({_id: {$in: userRoomsInRoom}}, {sort: {"profile.online": 1}}).fetch();
+        this.users = Meteor.users.find({_id: {$in: userRoomsInRoom}}, {sort: {"status.online": -1}}).fetch();
       }
     }
 

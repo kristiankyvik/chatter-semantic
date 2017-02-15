@@ -6,7 +6,7 @@ import UserBanner from "../components/UserBanner.jsx";
 
 import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
-const addUsersSubs = new SubsCache(-1, -1);
+const addUsersSubs = new SubsCache(5, 50);
 
 const AddUsers = React.createClass({
   mixins: [ReactMeteorData],

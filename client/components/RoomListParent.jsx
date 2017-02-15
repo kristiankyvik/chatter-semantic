@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import RoomList from "../components/RoomList.jsx";
 
-const chatterSubs = new SubsCache(-1, -1);
+const chatterSubs = new SubsCache(5, 60);
 
 const RoomListParent = React.createClass({
   mixins: [ReactMeteorData],
