@@ -3,9 +3,7 @@ import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 
 import App from "./App.jsx";
 import RoomListParent from "./components/RoomListParent.jsx";
-import Profile from "./components/Profile.jsx";
 import Room from "./components/Room.jsx";
-import MainSettings from "./components/MainSettings.jsx";
 import RoomParent from "./components/RoomParent.jsx";
 import NewRoomParent from "./components/NewRoomParent.jsx";
 import MainNewRoom from "./components/MainNewRoom.jsx";
@@ -19,10 +17,8 @@ const Routes = React.createClass({
       <Router history={ hashHistory }>
         <Route path="/" component={ App }>
           <IndexRoute component={ RoomListParent }/>
-          <Route path="/profile" component={ Profile } />
           <Route path="/room(/:roomId)" component={ RoomParent } >
             <IndexRoute component={ Room } />
-            <Route path="/room(/:roomId)/settings" component={ MainSettings } />
             <Route path="/room(/:roomId)/addusers" component={ AddUsers } />
           </Route>
           <Route path="/newroom" component={ NewRoomParent } >
