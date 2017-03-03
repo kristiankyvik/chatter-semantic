@@ -1,5 +1,5 @@
 import React from 'react';
-import { IndexRoute, Router, Route, hashHistory } from 'react-router';
+import { IndexRoute, Router, Route, createMemoryHistory } from 'react-router';
 
 import App from "./App.jsx";
 import RoomListParent from "./components/RoomListParent.jsx";
@@ -12,9 +12,9 @@ import AddUsers from "./components/AddUsers.jsx";
 const Routes = React.createClass({
 
   render () {
-    console.log("routes rerendering");
+    const history = createMemoryHistory('/');
     return (
-      <Router history={ hashHistory }>
+      <Router history={ history }>
         <Route path="/" component={ App }>
           <IndexRoute component={ RoomListParent }/>
           <Route path="/room(/:roomId)" component={ RoomParent } >

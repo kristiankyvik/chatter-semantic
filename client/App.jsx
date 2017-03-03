@@ -7,7 +7,8 @@ const App = React.createClass({
   getInitialState: function () {
     Session.set({
       chatOpen: false,
-      msgNotif: 0
+      msgNotif: 0,
+      initialLoad: false
     });
     return {
       headerText: Chatter.options.chatName,
@@ -16,11 +17,17 @@ const App = React.createClass({
   },
 
   toggleChatState () {
+    Session.set("chatOpen", !Session.get("chatOpen"));
     return;
   },
 
   setInitialLoad (status) {
     this.setState({initialLoad: status});
+    // Tell chatter dispatcher in meteor application
+    // that app has loaded
+    if (status && !Session.get("initialLoad")) {
+      Session.set("initialLoad", true);
+    }
   },
 
   shouldComponentUpdate (nextProps, nextState) {

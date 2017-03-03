@@ -7,11 +7,12 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('1.2.0.2');
+  api.versionsFrom('1.4.2.3');
 
   api.use([
     'ecmascript',
-    'jorgeer:chatter-core@0.1.0'
+    'jorgeer:chatter-core@0.1.0',
+    'mizzao:user-status@0.6.6'
   ]);
 
   api.imply('jorgeer:chatter-core@0.1.0');
