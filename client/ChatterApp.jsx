@@ -1,5 +1,5 @@
-import React from 'react';
-import { IndexRoute, Router, Route, createMemoryHistory } from 'react-router';
+import React from "react";
+import { IndexRoute, Router, Route, createMemoryHistory } from "react-router";
 
 import App from "./App.jsx";
 import RoomListParent from "./components/RoomListParent.jsx";
@@ -9,7 +9,7 @@ import NewRoomParent from "./components/NewRoomParent.jsx";
 import MainNewRoom from "./components/MainNewRoom.jsx";
 import AddUsers from "./components/AddUsers.jsx";
 
-const Routes = React.createClass({
+const ChatterApp = React.createClass({
 
   render () {
     const history = createMemoryHistory('/');
@@ -30,4 +30,4 @@ const Routes = React.createClass({
   }
 });
 
-export default Routes;
+export default ChatterApp;

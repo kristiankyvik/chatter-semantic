@@ -1,6 +1,5 @@
 import Identicon from 'identicon.js';
 
-
 const identiconOptions = {
   background: [255, 255, 255, 255],         // rgba white
   margin: 0.2,                              // 20% margin

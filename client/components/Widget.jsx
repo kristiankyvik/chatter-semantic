@@ -1,4 +1,5 @@
 import React from 'react';
+import { Counts } from "meteor/tmeasday:publish-counts";
 
 const Widget = React.createClass({
   mixins: [ReactMeteorData],
@@ -28,6 +29,7 @@ const Widget = React.createClass({
       <div className="widget-msg-notif">
        </div>
     );
+
     if (Session.get("chatOpen") || !this.props.initialLoad) {
       return null;
     }

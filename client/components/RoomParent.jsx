@@ -57,11 +57,6 @@ const RoomParent = React.createClass({
   },
 
   componentWillMount () {
-    this.messages = [];
-    this.room = null;
-    this.users = [];
-
-
     if (_.isUndefined(this.messages || this.room || this.users)) {
       this.messages = [];
       this.room = null;

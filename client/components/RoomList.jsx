@@ -15,7 +15,6 @@ const RoomList = React.createClass({
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.subsReady && !nextProps.initialLoad) {
-      console.log("Chatter loaded fully");
       this.props.setInitialLoad(true);
     }
     if (nextProps.subsReady) {
@@ -38,9 +37,6 @@ const RoomList = React.createClass({
 
     this.setState({makingRequest: true});
     Meteor.call("help.createRoom", (error, result) => {
-      if (!error) {
-        this.props.goToRoom(result, "Help");
-      }
       this.setState({makingRequest: false });
     });
   },

@@ -121,6 +121,7 @@ const Room = React.createClass({
 
   render () {
     const {messages, users, router, subsReady, room} = this.props;
+    console.log(messages, users, room);
     const user = Meteor.user();
     const numberOfMessages = messages.length;
 

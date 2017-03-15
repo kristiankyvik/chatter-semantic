@@ -20,7 +20,7 @@ Package.onUse(function (api) {
   api.addFiles([
     'client/chatter.html',
     'client/chatter.js',
-    'client/Routes.jsx',
+    'client/ChatterApp.jsx',
 
     'client/variables.styl',
     'client/styles.styl',

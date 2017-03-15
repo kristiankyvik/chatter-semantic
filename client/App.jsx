@@ -17,8 +17,10 @@ const App = React.createClass({
   },
 
   toggleChatState () {
-    Session.set("chatOpen", !Session.get("chatOpen"));
-    return;
+    if (!Chatter.options.customToggleHandlers) {
+      Session.set("chatOpen", !Session.get("chatOpen"));
+      this.forceUpdate();
+    }
   },
 
   setInitialLoad (status) {
