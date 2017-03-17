@@ -30,7 +30,7 @@ const Widget = React.createClass({
        </div>
     );
 
-    if (Session.get("chatOpen") || !this.props.initialLoad) {
+    if (Session.get("chatOpen")) {
       return null;
     }
     return (

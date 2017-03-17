@@ -97,8 +97,6 @@ const RoomListParent = React.createClass({
         roomListDataHandle={this.data.roomListDataHandle}
         router={this.props.router}
         loadMoreRooms={this.loadMoreRooms}
-        setInitialLoad={this.props.setInitialLoad}
-        initialLoad={this.props.initialLoad}
         user={this.props.user}
       />
     );

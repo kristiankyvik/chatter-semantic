@@ -5,14 +5,8 @@ import Chat from "./components/Chat.jsx";
 const App = React.createClass({
 
   getInitialState: function () {
-    Session.set({
-      chatOpen: false,
-      msgNotif: 0,
-      initialLoad: false
-    });
     return {
-      headerText: Chatter.options.chatName,
-      initialLoad: false
+      headerText: Chatter.options.chatName
     };
   },
 
@@ -23,17 +17,19 @@ const App = React.createClass({
     }
   },
 
-  setInitialLoad (status) {
-    this.setState({initialLoad: status});
-    // Tell chatter dispatcher in meteor application
-    // that app has loaded
-    if (status && !Session.get("initialLoad")) {
-      Session.set("initialLoad", true);
-    }
+  componentDidMount () {
+    Session.set({
+      chatOpen: false,
+      msgNotif: 0
+    });
+    this.forceUpdate();
   },
 
-  shouldComponentUpdate (nextProps, nextState) {
-    return true;
+  componentWillMount () {
+    // After a refresh, check whether we find ouselves in the root, if not redirect
+    if (this.props.location.pathname !== "/" ) {
+      this.props.router.push("/");
+    }
   },
 
   updateHeader (headerText) {
@@ -41,10 +37,6 @@ const App = React.createClass({
   },
 
   render ( ) {
-    // After a refresh, check whether we find ouselves in the root, if not redirect
-    if (!this.state.initialLoad && this.props.location.pathname !== "/" ) {
-      this.props.router.push("/");
-    }
     const user = Meteor.user();
 
     // If user not logged in display empty div
@@ -61,23 +53,20 @@ const App = React.createClass({
         pathname: this.props.location.pathname,
         updateHeader: this.updateHeader,
         headerText: this.state.headerText,
-        setInitialLoad: this.setInitialLoad,
-        initialLoad: this.state.initialLoad,
         user: user
       });
     });
 
-    const chatClass = Session.get("chatOpen") ? "" : "hidden";
     return (
       <div>
-        <Widget toggleChatState={this.toggleChatState} initialLoad={this.state.initialLoad} />
+        <Widget toggleChatState={this.toggleChatState} />
         <Chat
-          chatClass={chatClass}
           headerText={this.state.headerText}
           parentProps={this.props}
           toggleChatState={this.toggleChatState}
           children={children}
           user={user}
+          chatClass={Session.get("chatOpen")}
         />
       </div>
     );

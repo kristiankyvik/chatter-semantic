@@ -14,17 +14,21 @@ const RoomList = React.createClass({
   },
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.subsReady && !nextProps.initialLoad) {
-      this.props.setInitialLoad(true);
-    }
     if (nextProps.subsReady) {
       Meteor.call("room.getCount", (error, response) => {
-        this.setState(response);
+        if (this.mounted) {
+          this.setState(response);
+        }
       });
     }
   },
 
+  componentWillUnmount () {
+    this.mounted = false;
+  },
+
   componentDidMount () {
+    this.mounted = true;
     $('.ui.accordion').accordion();
   },
 
