@@ -116,8 +116,6 @@ const Nav = React.createClass({
 
     const headerText = `${user.profile.chatterNickname}'s info`;
     const canEditNickname = Chatter.options.editableNickname;
-    const {isOnline} = getUserStatus(user);
-
     const form = (
       <div>
         <form className="ui form" onSubmit={this.handleSubmit} ref="form">
@@ -158,8 +156,8 @@ const Nav = React.createClass({
              <span> you're </span> {user.profile.isChatterAdmin ? "" : "not"} an <span>admin</span>
             </div>
             <div className="extra">
-              <p className={isOnline ? "success-msg" : "failure-msg"}>
-                <span>you're {isOnline ? "online" : "offline"}</span>
+              <p className={"success-msg"}>
+                <span>you're online</span>
               </p>
             </div>
           </div>

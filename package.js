@@ -11,8 +11,7 @@ Package.onUse(function (api) {
 
   api.use([
     'ecmascript',
-    'jorgeer:chatter-core@0.1.0',
-    'mizzao:user-status@0.6.6'
+    'jorgeer:chatter-core@0.1.0'
   ]);
 
   api.imply('jorgeer:chatter-core@0.1.0');
@@ -37,7 +36,6 @@ Package.onUse(function (api) {
     'meteorhacks:subs-manager',
     'mquandalle:stylus@1.0.10',
     'momentjs:moment@2.8.4',
-    'mizzao:timesync@0.4.0',
     'ccorcos:subs-cache'
   ], 'client');
 

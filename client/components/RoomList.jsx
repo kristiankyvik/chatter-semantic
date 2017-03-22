@@ -46,7 +46,7 @@ const RoomList = React.createClass({
       } else {
         this.setState({makingRequest: false });
         this.props.router.push("/room/" + result);
-    }
+      }
     });
   },
 
