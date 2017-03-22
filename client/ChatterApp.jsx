@@ -9,23 +9,28 @@ import NewRoomParent from "./components/NewRoomParent.jsx";
 import MainNewRoom from "./components/MainNewRoom.jsx";
 import AddUsers from "./components/AddUsers.jsx";
 
+const routes = (
+  <Route path="/" component={ App }>
+    <IndexRoute component={ RoomListParent }/>
+    <Route path="/room(/:roomId)" component={ RoomParent } >
+      <IndexRoute component={ Room } />
+      <Route path="/room(/:roomId)/addusers" component={ AddUsers } />
+    </Route>
+    <Route path="/newroom" component={ NewRoomParent } >
+      <IndexRoute component={ MainNewRoom } />
+    </Route>
+  </Route>
+);
+
+const history = createMemoryHistory('/');
+
+
 const ChatterApp = React.createClass({
 
   render () {
-    const history = createMemoryHistory('/');
-
     return (
       <Router history={ history }>
-        <Route path="/" component={ App }>
-          <IndexRoute component={ RoomListParent }/>
-          <Route path="/room(/:roomId)" component={ RoomParent } >
-            <IndexRoute component={ Room } />
-            <Route path="/room(/:roomId)/addusers" component={ AddUsers } />
-          </Route>
-          <Route path="/newroom" component={ NewRoomParent } >
-            <IndexRoute component={ MainNewRoom } />
-          </Route>
-        </Route>
+        {routes}
       </Router>
     );
   }
