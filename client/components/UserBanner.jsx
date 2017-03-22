@@ -20,12 +20,18 @@ const UserBanner = React.createClass({
       userId: this.props.user._id
     };
 
-    Meteor.call("room.archive", params);
+    Meteor.call("room.archive", params, (error, result) => {
+      if (error) {
+        console.log("[CHATTER] error: ", error.error);
+      }
+    });
   },
 
   deleteRoom () {
     Meteor.call("room.delete", this.props.room._id, (error, result) => {
-      if (!error) {
+      if (error) {
+        console.log("[CHATTER] error: ", error.error);
+      } else {
         this.props.router.push("/");
       }
     });

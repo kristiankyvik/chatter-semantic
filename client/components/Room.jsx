@@ -46,8 +46,13 @@ const Room = React.createClass({
     };
 
     if (!text || text.length > 1000) return;
-    Meteor.call("message.send", params);
-    this.scrollDown();
+    Meteor.call("message.send", params, (error, result) => {
+      if (error) {
+        console.log("[CHATTER] error: ", error.error);
+      } else {
+        this.scrollDown();
+      }
+    });
   },
 
   componentWillMount () {
@@ -66,7 +71,7 @@ const Room = React.createClass({
   componentWillUnmount () {
     if (!_.isNull(this.props.params.roomId)) {
       Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId, (error, result) => {
-        console.log("error: ", error.error);
+        console.log("[CHATTER] error: ", error.error);
       });
     }
   },
@@ -108,10 +113,14 @@ const Room = React.createClass({
     const scroller = this.refs.scroller;
     if (scroller.scrollTop === 0) {
       Meteor.call("message.count", this.props.params.roomId, (error, result) => {
-        const messageCount = result;
-        if (messageCount > this.props.messages.length) {
-          this.setState({"fetchingOlderMsgs": true});
-          Session.set("messageLimit", Session.get("messageLimit") + 50);
+        if (error) {
+          console.log("[CHATTER] error: ", error.error);
+        } else {
+          const messageCount = result;
+          if (messageCount > this.props.messages.length) {
+            this.setState({"fetchingOlderMsgs": true});
+            Session.set("messageLimit", Session.get("messageLimit") + 50);
+          }
         }
       });
     }

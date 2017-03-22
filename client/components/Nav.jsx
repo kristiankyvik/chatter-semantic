@@ -95,7 +95,9 @@ const Nav = React.createClass({
     const nickname = this.nicknameInput.value.trim();
     if (nickname.length === 0) return;
     Meteor.call("user.changeNickname", nickname, (error, result) => {
-      if (!error) {
+      if (error) {
+        console.log("[CHATTER] error: ", error.error);
+      } else {
         this.setState({nicknameChanged: true});
       }
     });

@@ -82,7 +82,11 @@ const AddUsers = React.createClass({
       }
     };
     Meteor.call(options[action].command, options[action].params, (error, result) => {
-      this.setState({requestingUser: false});
+      if (error) {
+        console.log("[CHATTER] error: ", error.error);
+      } else {
+        this.setState({requestingUser: false});
+      }
     });
   },
 

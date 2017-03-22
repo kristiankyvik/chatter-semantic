@@ -10,12 +10,18 @@ const MainNewRoom = React.createClass({
     params.description = ReactDOM.findDOMNode(this.refs.channelDescription).value.trim();
     if (params.name.length === 0) return;
     Meteor.call("room.create", params, (error, result) => {
-      Meteor.call("room.get", result, (error, result) => {
-        if (!error) {
-          this.props.setRoom(result);
-          this.props.router.push(`/room/${result._id}/addusers`);
-        }
-      });
+      if (error) {
+        console.log("[CHATTER] error: ", error.error);
+      } else {
+        Meteor.call("room.get", result, (error, result) => {
+          if (error) {
+            console.log("[CHATTER] error: ", error.error);
+          } else {
+            this.props.setRoom(result);
+            this.props.router.push(`/room/${result._id}/addusers`);
+          }
+        });
+      }
     });
   },
 
