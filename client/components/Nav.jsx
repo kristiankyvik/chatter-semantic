@@ -2,6 +2,8 @@ import React from 'react';
 
 import {getAvatarSvg, getUserStatus} from "../template-helpers/shared-helpers.jsx";
 
+import { Chatter } from "meteor/jorgeer:chatter-core";
+
 const Nav = React.createClass({
 
   getInitialState: function () {

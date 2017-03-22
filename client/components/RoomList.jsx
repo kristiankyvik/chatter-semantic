@@ -42,6 +42,7 @@ const RoomList = React.createClass({
     this.setState({makingRequest: true});
     Meteor.call("help.createRoom", (error, result) => {
       this.setState({makingRequest: false });
+      this.props.router.push("/room/" + result);
     });
   },
 

@@ -1,6 +1,9 @@
 import React from 'react';
+
 import Widget from './components/Widget.jsx';
 import Chat from "./components/Chat.jsx";
+
+import { Chatter } from "meteor/jorgeer:chatter-core";
 
 const App = React.createClass({
 

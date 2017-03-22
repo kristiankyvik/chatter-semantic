@@ -58,19 +58,15 @@ const Room = React.createClass({
 
   componentDidMount () {
     this.scrollDown();
+    if (!_.isEmpty(this.props.room) && this.props.headerText !== this.props.room.name) {
+      this.props.updateHeader(this.props.room.name);
+    }
   },
 
   componentWillUnmount () {
     if (!_.isNull(this.props.params.roomId)) {
       Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId);
     }
-  },
-
-  shouldComponentUpdate (nextProps, nextState) {
-    if (_.isNull(nextProps.room)) {
-      return false;
-    }
-    return true;
   },
 
   componentWillUpdate () {
@@ -82,7 +78,7 @@ const Room = React.createClass({
     if (this.shouldScroll) {
       this.scrollDown();
     }
-    if (this.props.headerText !== this.props.room.name) {
+    if (!_.isEmpty(this.props.room) && this.props.headerText !== this.props.room.name) {
       this.props.updateHeader(this.props.room.name);
     }
   },

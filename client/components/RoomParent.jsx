@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Chatter } from "meteor/jorgeer:chatter-core";
+
 const roomSubs = new SubsCache(5, 60);
 
 const RoomParent = React.createClass({
@@ -38,7 +40,9 @@ const RoomParent = React.createClass({
         this.props.router.push("/");
       } else {
         const isArchived = userRoom.archived;
-        this.room.archived = isArchived;
+        if (!_.isEmpty(this.room)) {
+          this.room.archived = isArchived;
+        }
         const userRoomsInRoom = _.pluck(Chatter.UserRoom.find({roomId}).fetch(), "userId");
         this.users = Meteor.users.find({_id: {$in: userRoomsInRoom}}, {sort: {"status.online": -1}}).fetch();
       }

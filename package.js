@@ -44,6 +44,8 @@ Package.onUse(function (api) {
   api.export([
     'ChatterApp'
   ]);
+
+  api.mainModule("main.js", "client");
 });
 
 Package.onTest(function (api) {

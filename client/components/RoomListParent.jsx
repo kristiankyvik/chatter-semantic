@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import RoomList from "../components/RoomList.jsx";
 
+import { Chatter } from "meteor/jorgeer:chatter-core";
+
 const chatterSubs = new SubsCache(5, 60);
 
 const RoomListParent = React.createClass({

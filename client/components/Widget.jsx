@@ -34,7 +34,7 @@ const Widget = React.createClass({
       return null;
     }
     return (
-      <div className="ui button primary chatter-open" id="chatter-open" onClick={this.props.toggleChatState}>
+      <div className="ui button primary chatter-btn" id="chatter-btn" onClick={this.props.toggleChatState}>
         <i className="comment icon"></i>
         {this.data.count > 0 ? msgNotifHTML : null}
       </div>

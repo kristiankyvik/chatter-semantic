@@ -13,6 +13,7 @@ const ChatterApp = React.createClass({
 
   render () {
     const history = createMemoryHistory('/');
+
     return (
       <Router history={ history }>
         <Route path="/" component={ App }>
