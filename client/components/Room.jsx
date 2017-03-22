@@ -71,7 +71,9 @@ const Room = React.createClass({
   componentWillUnmount () {
     if (!_.isNull(this.props.params.roomId)) {
       Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId, (error, result) => {
-        console.log("[CHATTER] error: ", error.error);
+        if (error) {
+          console.log("[CHATTER] error: ", error.error);
+        }
       });
     }
   },
