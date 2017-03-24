@@ -194,6 +194,7 @@ const Room = React.createClass({
             avatar={avatar}
             setUserProfile={this.setUserProfile}
             timeAgo={timeAgo}
+            isAdmin={!_.isEmpty(user) && user.hasOwnProperty("profile") ? user.profile.isChatterAdmin : false}
           />
         );
       })

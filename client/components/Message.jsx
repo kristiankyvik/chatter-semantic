@@ -12,7 +12,8 @@ const Message = React.createClass({
       setUserProfile,
       avatar,
       timeAgo,
-      messageClass
+      messageClass,
+      isAdmin
     } = this.props;
 
     const avatarImgHTML = (
@@ -23,7 +24,7 @@ const Message = React.createClass({
     );
 
     const avatarImg = avatar ? avatarImgHTML : null;
-
+    const admin_badge_class = avatar ? "" : "hidden";
     return (
       <div key={message._id} className={messageClass}>
         {dateBanner}
@@ -36,6 +37,8 @@ const Message = React.createClass({
             onClick={() => setUserProfile(message.userId)}
           >
             {avatarImg}
+            <i className={"star icon admin-badge " + admin_badge_class}>
+            </i>
           </a>
           <div className="content">
             <div className="text">

@@ -228,12 +228,22 @@ body
                 .avatar
                     cursor: pointer
                     width: 2em
+                    position: relative
                     img
                         border-radius: 1rem
                         -moz-osx-font-smoothing: auto
                         -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
                         -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
                         box-shadow: 0 1px 2px 0 rgba(0,0,0,.15)
+                    .admin-badge
+                        margin: 0
+                        position: absolute
+                        right: -4px
+                        bottom: -2px
+                        font-size: 15px
+                        color: #fbbd08
+                        &.hidden
+                            display: none !important
                 .time-ago
                     line-height: 17px
                     color: chatter-meta-gray
