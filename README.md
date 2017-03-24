@@ -11,9 +11,24 @@ Chatter has the ambition of becoming an easy to set up in-app chat package that 
 
 This logic needs to be moved to the Accounts.onCreateUser() call of your meteor application:
 
-Accounts.onCreateUser(function (options, user) {
-  user.profile = options.profile ? options.profile : {};
-  user.profile.chatterNickname = Chatter.getNickname(user);
-  user.profile.supportUser = null;
-  return user;
-});
+## Usage
+
+### Add the package
+
+By adding it to your packagesfile or running the following command:
+
+```
+meteor add jorgeer:chatter-semantic
+```
+
+### Read the docs for the jorgeer:chatter-core package
+
+A number of things need to be configured to be able to use the package with your meteor app.
+
+### Tests
+
+In order to run the test packages simpy run the following command in the root of your meteor app
+
+```
+meteor test-packages ./packages/chattercore --port 3100 --driver-package practicalmeteor:mocha
+```

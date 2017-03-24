@@ -3,21 +3,28 @@ import ReactDOM from 'react-dom';
 
 
 const Writer = React.createClass({
+  getInitialState: function () {
+    return {
+      msg_too_long: false
+    };
+  },
 
   handleSubmit (event) {
     const input = document.getElementById("message");
-    $(input).on('focus', function () {
-      this.value = '';
-    });
+    const text = input.value;
+
+    if (text.length >= 1000) {
+      this.setState({msg_too_long: true});
+    } else if (this.state.msg_too_long) {
+      this.setState({msg_too_long: false});
+    }
 
     const enterPressed = event.keyCode === 13;
     const btnPressed = event === "btn-pressed";
     const hasSubmitted = enterPressed || btnPressed;
 
-    if (hasSubmitted) {
+    if (hasSubmitted && !this.state.msg_too_long) {
       enterPressed ? event.preventDefault() : false;
-      const text = input.value;
-
       this.props.pushMessage(text);
       input.value = "";
       $(input).attr("rows", "1").css("height", 41);
@@ -43,14 +50,15 @@ const Writer = React.createClass({
   },
 
   render () {
+    const btn_disabled = this.state.msg_too_long ? "disabled" : "";
     return (
       <div className="ui form writer">
         <div className="field">
-          <textarea id="message" rows="1" name="message" ref="writer" placeholder="Message.." onKeyDown={this.handleSubmit}>
+          <textarea id="message" rows="1" name="message" ref="writer" placeholder="Message.." onKeyUp={this.handleSubmit}>
           </textarea>
-          <div className="send-btn" onClick={()=> this.handleSubmit("btn-pressed")}>
+          <button className={"ui button send-btn" + " " + btn_disabled} ref="send_btn" onClick={()=> this.handleSubmit("btn-pressed")}>
             Send
-          </div>
+          </button>
         </div>
       </div>
     );
