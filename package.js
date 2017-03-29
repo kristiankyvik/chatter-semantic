@@ -20,7 +20,6 @@ Package.onUse(function (api) {
     'client/chatter.html',
     'client/chatter.js',
     'client/ChatterApp.jsx',
-
     'client/variables.styl',
     'client/styles.styl',
   ], ['client']);
@@ -36,7 +35,8 @@ Package.onUse(function (api) {
     'meteorhacks:subs-manager',
     'mquandalle:stylus@1.0.10',
     'momentjs:moment@2.8.4',
-    'ccorcos:subs-cache'
+    'ccorcos:subs-cache',
+    'semantic:ui@2.2.6_5'
   ], 'client');
 
   api.export([

@@ -1,17 +1,16 @@
 @import '/variables.styl'
 
-body
-    background-color: transparent
-
 .hidden
     display: none
 
 .chatter.ui.sidebar
+    background-color: transparent
     background-color: chatter-white !important
     overflow-x: hidden !important
     border-radius: 5px!important
     width: 400px !important
     top: auto !important
+    font-size: 0.9rem
     box-shadow:  0 5px 40px rgba(0,0,0,.16) !important
     .bold
         font-weight: 600
@@ -47,6 +46,10 @@ body
             top: 54px
             bottom: 42px
 
+    .ui.header
+        font-size: 1.2rem;
+        font-weight: 700;
+
     .user-status
         position: absolute
         width: 0.8em
@@ -69,6 +72,7 @@ body
         background-color: chatter-blue
         border: 1px solid chatter-blue-darker
         border-radius: 4px 4px 0 0
+        font-size: 0.9rem
         .item
             padding-top: 1.4em
             padding-bottom: 1.4em
@@ -107,6 +111,9 @@ body
             color: chatter-trans-gray
             font-size: 10px
             text-transform: uppercase
+        .title .header
+            font-size: 1.2rem
+            font-weight: 700
         .ui.list .item
             padding-top: 16px
             padding-bottom: 16px
@@ -252,8 +259,8 @@ body
 
                 &.yours
                     text-align: right
-                    .nickname
-                        display: none
+                    // .nickname
+                    //     visibility: hidden
                     .author, .date, .content .text
                         color: rgba(0, 0, 0, 0.87)
 
