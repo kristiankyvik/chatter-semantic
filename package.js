@@ -35,8 +35,7 @@ Package.onUse(function (api) {
     'meteorhacks:subs-manager',
     'mquandalle:stylus@1.0.10',
     'momentjs:moment@2.8.4',
-    'ccorcos:subs-cache',
-    'semantic:ui@2.2.6_5'
+    'ccorcos:subs-cache'
   ], 'client');
 
   api.export([
@@ -54,3 +53,4 @@ Package.onTest(function (api) {
   api.use('practicalmeteor:sinon');
   api.addFiles('chattersemantic-tests.js');
 });
+

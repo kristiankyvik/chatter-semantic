@@ -1,8 +1,5 @@
 @import '/variables.styl'
 
-.hidden
-    display: none
-
 .chatter.ui.sidebar
     background-color: transparent
     background-color: chatter-white !important
@@ -12,6 +9,10 @@
     top: auto !important
     font-size: 0.9rem
     box-shadow:  0 5px 40px rgba(0,0,0,.16) !important
+    .hidden
+        display: none
+    &.hidden
+        display: none
     .bold
         font-weight: 600
     .success-msg
@@ -72,7 +73,7 @@
         background-color: chatter-blue
         border: 1px solid chatter-blue-darker
         border-radius: 4px 4px 0 0
-        font-size: 0.9rem
+        font-size: 14px;
         .item
             padding-top: 1.4em
             padding-bottom: 1.4em
@@ -409,6 +410,9 @@
     margin: 0
     z-index: 100
     box-shadow:  0 5px 40px rgba(0,0,0,.16) !important
+
+    &.hidden
+        display: none
 
     i.icon
         margin: 0 !important

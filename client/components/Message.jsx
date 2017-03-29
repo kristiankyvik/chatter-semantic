@@ -24,7 +24,7 @@ const Message = React.createClass({
     );
 
     const avatarImg = avatar ? avatarImgHTML : null;
-    const admin_badge_class = avatar ? "" : "hidden";
+    const admin_badge_class = isAdmin  && avatar ? "" : "hidden";
     return (
       <div key={message._id} className={messageClass}>
         {dateBanner}

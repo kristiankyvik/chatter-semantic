@@ -1,4 +1,5 @@
 import Identicon from 'identicon.js';
+import {TimeSync} from "meteor/mizzao:timesync";
 
 const identiconOptions = {
   background: [255, 255, 255, 255],         // rgba white
