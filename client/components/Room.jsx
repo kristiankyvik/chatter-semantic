@@ -59,6 +59,13 @@ const Room = React.createClass({
     // creates a throttled version for both listeners
     this.pushMessage = _.debounce(this.pushMessage, 260);
     this.listenScrollEvent = _.debounce(this.listenScrollEvent, 100);
+    if (!_.isNull(this.props.params.roomId)) {
+      Meteor.call("room.unreadMsgCount.reset", this.props.params.roomId, (error, result) => {
+        if (error) {
+          console.log("[CHATTER] error: ", error.error);
+        }
+      });
+    }
   },
 
   componentDidMount () {

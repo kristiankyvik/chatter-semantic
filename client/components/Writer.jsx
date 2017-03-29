@@ -11,7 +11,7 @@ const Writer = React.createClass({
 
   handleSubmit (event) {
     const input = document.getElementById("message");
-    const text = input.value;
+    const text = input.value.trim();
 
     if (text.length >= 1000) {
       this.setState({msg_too_long: true});
@@ -22,7 +22,6 @@ const Writer = React.createClass({
     const enterPressed = event.keyCode === 13;
     const btnPressed = event === "btn-pressed";
     const hasSubmitted = enterPressed || btnPressed;
-
     if (hasSubmitted && !this.state.msg_too_long) {
       enterPressed ? event.preventDefault() : false;
       this.props.pushMessage(text);
@@ -43,7 +42,6 @@ const Writer = React.createClass({
       }
     }
   },
-
 
   componentDidMount () {
     ReactDOM.findDOMNode(this.refs.writer).focus();
