@@ -5,25 +5,29 @@ import ReactDOM from 'react-dom';
 const Writer = React.createClass({
   getInitialState: function () {
     return {
-      msg_too_long: false
+      msg_valid: false
     };
   },
 
   handleSubmit (event) {
+    const enterPressed = event.keyCode === 13;
+    enterPressed ? event.preventDefault() : false;
+
     const input = document.getElementById("message");
     const text = input.value.trim();
-
-    if (text.length >= 1000) {
-      this.setState({msg_too_long: true});
-    } else if (this.state.msg_too_long) {
-      this.setState({msg_too_long: false});
+    let valid = false;
+    if (text.length < 1000 && text.length > 0) {
+      this.setState({msg_valid: true});
+      valid = true;
+    } else if (this.state.msg_valid) {
+      valid = false;
+      this.setState({msg_valid: false});
     }
 
-    const enterPressed = event.keyCode === 13;
     const btnPressed = event === "btn-pressed";
     const hasSubmitted = enterPressed || btnPressed;
-    if (hasSubmitted && !this.state.msg_too_long) {
-      enterPressed ? event.preventDefault() : false;
+
+    if (hasSubmitted && valid) {
       this.props.pushMessage(text);
       input.value = "";
       $(input).attr("rows", "1").css("height", 41);
@@ -48,11 +52,11 @@ const Writer = React.createClass({
   },
 
   render () {
-    const btn_disabled = this.state.msg_too_long ? "disabled" : "";
+    const btn_disabled = this.state.msg_valid ? "" : "disabled";
     return (
       <div className="ui form writer">
         <div className="field">
-          <textarea id="message" rows="1" name="message" ref="writer" placeholder="Message.." onKeyUp={this.handleSubmit}>
+          <textarea id="message" rows="1" name="message" ref="writer" placeholder="Message.." onKeyDown={this.handleSubmit} onKeyUp={this.handleSubmit}>
           </textarea>
           <button className={"ui button send-btn" + " " + btn_disabled} ref="send_btn" onClick={()=> this.handleSubmit("btn-pressed")}>
             Send

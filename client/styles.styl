@@ -20,13 +20,13 @@
     .failure-msg
         color: chatter-status-red
 
-    .ui.primary.button
-        background-color: chatter-blue !important
-        border: 1px solid chatter-blue-darker !important
+    .ui.button
         background-image: none
         box-shadow: none
         font-size: 14px
-
+        &.primary
+            background-color: chatter-blue !important
+            border: 1px solid chatter-blue-darker !important
     p.gray-text
         color: chatter-trans-gray
         font-style: italic
@@ -409,6 +409,13 @@
 
         [data-tooltip]:after
             padding: 0.3em 0.5em
+
+        .room-info-popup
+            font-size: 12px
+            .ui.header
+                font-size: 17px
+                font-weight: 700
+                margin-bottom: 4px
 
 .chatter-btn.ui.button#chatter-btn
     font-size: 2.2em
