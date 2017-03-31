@@ -214,6 +214,7 @@ const Room = React.createClass({
           router={router}
           user={user}
           addUsersPath={`/room/${this.props.params.roomId}/addusers`}
+          roomUsersPath={`/room/${this.props.params.roomId}/roomusers`}
           showAddUsersBtn={true}
           subsReady={subsReady}
           showInfo={true}

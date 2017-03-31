@@ -45,7 +45,7 @@ const UserBanner = React.createClass({
   },
 
   render () {
-    const {router, users, user, showAddUsersBtn, addUsersPath, room, showInfo, subsReady} = this.props;
+    const {router, users, user, showAddUsersBtn, addUsersPath, room, showInfo, subsReady, roomUsersPath} = this.props;
 
     $(".ui.toggle.checkbox").checkbox();
 
@@ -111,7 +111,7 @@ const UserBanner = React.createClass({
     } else {
       numUsersNotShown = numberOfUsers - 6;
       notSeenHtml = (
-        <div className="notSeen" key={"notSeen"}>
+        <div className="notSeen" key={"notSeen"} data-tooltip="view all" data-position="bottom center" onClick={() => router.push(roomUsersPath)}>
           <i className="plus icon"></i><div className="otherUsers">{numUsersNotShown}</div>
         </div>
       );

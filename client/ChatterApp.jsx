@@ -8,6 +8,7 @@ import RoomParent from "./components/RoomParent.jsx";
 import NewRoomParent from "./components/NewRoomParent.jsx";
 import MainNewRoom from "./components/MainNewRoom.jsx";
 import AddUsers from "./components/AddUsers.jsx";
+import RoomUsers from "./components/RoomUsers.jsx";
 
 const routes = (
   <Route path="/" component={ App }>
@@ -15,6 +16,7 @@ const routes = (
     <Route path="/room(/:roomId)" component={ RoomParent } >
       <IndexRoute component={ Room } />
       <Route path="/room(/:roomId)/addusers" component={ AddUsers } />
+      <Route path="/room(/:roomId)/roomusers" component={ RoomUsers } />
     </Route>
     <Route path="/newroom" component={ NewRoomParent } >
       <IndexRoute component={ MainNewRoom } />

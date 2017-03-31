@@ -51,6 +51,11 @@ const Nav = React.createClass({
         icon: "close icon",
         nextView: path.slice(0, -9)
       };
+    } else if (path.endsWith("/roomusers")) {
+      return {
+        icon: "close icon",
+        nextView: path.slice(0, -10)
+      };
     }
 
     return leftIconConfig[path];

@@ -152,6 +152,7 @@ const AddUsers = React.createClass({
           user={Meteor.user()}
           addUsersPath={`/room/${this.props.params.roomId}`}
           showAddUsersBtn={false}
+          roomUsersPath={`/room/${this.props.params.roomId}/roomusers`}
           subsReady={this.data.subsReady}
           showInfo={false}
         />
