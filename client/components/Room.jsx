@@ -113,10 +113,6 @@ const Room = React.createClass({
     scroller.scrollTop = scroller.scrollHeight;
   },
 
-  setUserProfile (userId) {
-    this.props.setUserProfile(userId);
-  },
-
   listenScrollEvent () {
     // TODO: throttleeeeee
     const scroller = this.refs.scroller;
@@ -199,7 +195,6 @@ const Room = React.createClass({
             dateBanner={dateBanner}
             nickname={nickname}
             avatar={avatar}
-            setUserProfile={this.setUserProfile}
             timeAgo={timeAgo}
             isAdmin={!_.isEmpty(user) && user.hasOwnProperty("profile") ? user.profile.isChatterAdmin : false}
           />

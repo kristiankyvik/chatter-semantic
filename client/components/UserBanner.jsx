@@ -111,7 +111,7 @@ const UserBanner = React.createClass({
     } else {
       numUsersNotShown = numberOfUsers - 6;
       notSeenHtml = (
-        <div className="notSeen" key={"notSeen"} data-tooltip="view all" data-position="bottom center" onClick={() => router.push(roomUsersPath)}>
+        <div className="notSeen" key={"notSeen"} data-tooltip="View all users" data-position="bottom center" onClick={() => router.push(roomUsersPath)}>
           <i className="plus icon"></i><div className="otherUsers">{numUsersNotShown}</div>
         </div>
       );

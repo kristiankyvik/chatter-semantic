@@ -9,7 +9,6 @@ const Message = React.createClass({
       message,
       dateBanner,
       nickname,
-      setUserProfile,
       avatar,
       timeAgo,
       messageClass,
@@ -34,7 +33,6 @@ const Message = React.createClass({
         <div>
           <a
             className="avatar"
-            onClick={() => setUserProfile(message.userId)}
           >
             {avatarImg}
             <i className={"star icon admin-badge " + admin_badge_class}>
