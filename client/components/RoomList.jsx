@@ -57,6 +57,7 @@ const RoomList = React.createClass({
       return <Loader/>;
     }
 
+
     const { subsReady, hasSupportRoom, allRooms, loadMoreRooms } = this.props;
 
     const helpButton = !_.isEmpty(user.profile.supportUser);
@@ -85,6 +86,7 @@ const RoomList = React.createClass({
 
     const newRoomBtn = (user.profile.isChatterAdmin) ? newRoomBtnHTML : null;
     const shouldShowButton = allRooms.length < this.state.roomCount ? true : false;
+
     const helpChatBtn = helpButton && (user.username !== "admin") && (!hasSupportRoom ) ? helpChatBtnHTML : null;
 
     let activeHTML = [];

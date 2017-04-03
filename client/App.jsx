@@ -22,8 +22,7 @@ const App = React.createClass({
 
   componentDidMount () {
     Session.set({
-      chatOpen: false,
-      msgNotif: 0
+      chatOpen: false
     });
     this.forceUpdate();
   },
@@ -37,6 +36,10 @@ const App = React.createClass({
 
   updateHeader (headerText) {
     this.setState({headerText: headerText});
+  },
+
+  getChatterOpen () {
+    return Session.get("chatOpen");
   },
 
   render ( ) {
@@ -69,7 +72,7 @@ const App = React.createClass({
           toggleChatState={this.toggleChatState}
           children={children}
           user={user}
-          chatClass={Session.get("chatOpen")}
+          chatClass={this.getChatterOpen()}
         />
       </div>
     );

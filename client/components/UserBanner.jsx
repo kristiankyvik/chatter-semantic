@@ -77,7 +77,7 @@ const UserBanner = React.createClass({
             {room.description ? room.description : null }
           </p>
 
-          {user.profile.isChatterAdmin || room.roomType === "support" ? deleteRoomHTML : null}
+          {user.profile.isChatterAdmin || room.deletable ? deleteRoomHTML : null}
 
           <div className="ui toggle checkbox" onClick={this.toggleArchivedState} >
             <label>
