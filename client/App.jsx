@@ -25,6 +25,16 @@ const App = React.createClass({
       chatOpen: false
     });
     this.forceUpdate();
+
+    Tracker.autorun(function () {
+      if(Session.get("chatOpen")) {
+        Meteor.call("rooms.unseen.reset", (error, result)=> {
+          if (error) {
+            console.log("[CHATTER] error: ", error.error);
+          }
+        });
+      }
+    });
   },
 
   componentWillMount () {
@@ -36,10 +46,6 @@ const App = React.createClass({
 
   updateHeader (headerText) {
     this.setState({headerText: headerText});
-  },
-
-  getChatterOpen () {
-    return Session.get("chatOpen");
   },
 
   render ( ) {
@@ -72,7 +78,6 @@ const App = React.createClass({
           toggleChatState={this.toggleChatState}
           children={children}
           user={user}
-          chatClass={this.getChatterOpen()}
         />
       </div>
     );

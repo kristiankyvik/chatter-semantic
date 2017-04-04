@@ -9,13 +9,16 @@ const Widget = React.createClass({
 
     const subsReady = widgetDataHandle.ready();
 
-    let count = 0;
+    let unreadMsgCount = 0;
+    let unseenRoomsCount = 0;
 
     if (subsReady) {
-      count = Counts.get("widgetCounter");
+      unreadMsgCount = Counts.get("unreadMsgCounter");
+      unseenRoomsCount = Counts.get("unseenRoomsCounter");
     }
     return {
-      count,
+      unreadMsgCount,
+      unseenRoomsCount,
       widgetDataHandle
     };
   },
@@ -36,7 +39,7 @@ const Widget = React.createClass({
     return (
       <div className="ui button primary chatter-btn" id="chatter-btn" onClick={this.props.toggleChatState}>
         <i className="comment icon"></i>
-        {this.data.count > 0 ? msgNotifHTML : null}
+        {(this.data.unreadMsgCount + this.data.unseenRoomsCount) > 0 ? msgNotifHTML : null}
       </div>
     );
   }
