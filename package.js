@@ -1,8 +1,8 @@
 Package.describe({
-  name: 'jorgeer:chatter-semantic',
+  name: 'hubroedu:chatter-semantic',
   version: '0.1.0',
   summary: 'UI package for chatter using the Semantic UI framework',
-  git: 'git@github.com:jorgeer/chatter-semantic.git',
+  git: 'git@gitlab.com:hubroedu/chatter-semantic.git',
   documentation: 'README.md'
 });
 
@@ -11,10 +11,10 @@ Package.onUse(function (api) {
 
   api.use([
     'ecmascript',
-    'jorgeer:chatter-core@0.1.0'
+    'hubroedu:chatter-core@0.1.0'
   ]);
 
-  api.imply('jorgeer:chatter-core@0.1.0');
+  api.imply('hubroedu:chatter-core@0.1.0');
 
   api.addFiles([
     'client/chatter.html',
@@ -48,7 +48,7 @@ Package.onUse(function (api) {
 Package.onTest(function (api) {
   api.use('ecmascript');
   api.use('practicalmeteor:chai');
-  api.use('jorgeer:chatter-semantic');
+  api.use('hubroedu:chatter-semantic');
   api.use('xolvio:cleaner');
   api.use('practicalmeteor:sinon');
   api.addFiles('chattersemantic-tests.js');
