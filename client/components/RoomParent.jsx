@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Chatter } from "meteor/jorgeer:chatter-core";
+import { Chatter } from "meteor/hubroedu:chatter-core";
 
 const roomSubs = new SubsCache(5, 60);
 

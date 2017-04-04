@@ -18,10 +18,10 @@ This logic needs to be moved to the Accounts.onCreateUser() call of your meteor 
 By adding it to your packagesfile or running the following command:
 
 ```
-meteor add jorgeer:chatter-semantic
+meteor add hubroedu:chatter-semantic
 ```
 
-### Read the docs for the jorgeer:chatter-core package
+### Read the docs for the hubroedu:chatter-core package
 
 A number of things need to be configured to be able to use the package with your meteor app.
 
