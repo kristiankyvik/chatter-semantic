@@ -45,6 +45,11 @@ Package.onUse(function (api) {
   api.mainModule("main.js", "client");
 });
 
+Npm.depends({
+  "identicon.js": "2.1.0",
+  "react-router": "3.0.3"
+});
+
 Package.onTest(function (api) {
   api.use('ecmascript');
   api.use('practicalmeteor:chai');
